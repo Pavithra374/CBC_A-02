@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - EnginSync</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- Theme Variables (RCB Theme) --- */
+        :root {
+            --bg-primary: #ffffff; --bg-secondary: #f5f5f5; --bg-accent: #111111;
+            --text-primary: #111111; --text-secondary: #555555;
+            --accent-red: #D81B27; --accent-gold: #FFC72C; --accent-black: #111111;
+            --shadow-color: rgba(0, 0, 0, 0.08); /* Softer shadow */
+            --shadow-color-glow: rgba(255, 199, 44, 0.1);
+            --success-color: #28a745; --error-color: #dc3545;
+            --border-color: #e0e0e0; --header-height: 60px;
+            --card-bg: #ffffff; --input-bg: #f8f9fa; /* Match secondary bg */
+            --input-border: #cccccc; --switch-bg-off: #ccc;
+            --transition-speed: 0.3s;
+        }
+        body.dark-mode {
+            --bg-primary: #1a1a1a;      /* Darker primary bg (cards/header) */
+            --bg-secondary: #111111;    /* Dark body bg */
+            --bg-accent: #000000;
+            --text-primary: #f0f0f0; --text-secondary: #cccccc;
+            --accent-red: #ff4d4d; --accent-gold: #FFD700; --accent-black: #111111;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --shadow-color-glow: rgba(255, 77, 77, 0.2);
+            --border-color: #444444; --card-bg: #1f1f1f; /* Slightly lighter card */
+            --input-bg: #2a2a2a; --input-border: #555555;
+            --switch-bg-off: #555;
+        }
+
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; line-height: 1.6; background-color: var(--bg-secondary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; min-height: 100vh; }
+        h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: 1.3; color: var(--text-primary); transition: color 0.3s ease; }
+        a { text-decoration: none; color: var(--accent-red); transition: color 0.3s ease; font-weight: 500; }
+         body.dark-mode a { color: var(--accent-gold);}
+         a:hover { color: var(--accent-gold); }
+         body.dark-mode a:hover { color: var(--accent-red);}
+        p { margin-bottom: 1em; color: var(--text-secondary); transition: color 0.3s ease; font-size: 0.95em; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; border-radius: 25px; font-weight: 600; letter-spacing: 0.5px; transition: all 0.3s ease; cursor: pointer; border: none; box-shadow: 0 4px 10px var(--shadow-color); }
+        .btn i { font-size: 0.9em;} /* Adjust icon size in buttons */
+        .btn-primary { background-color: var(--accent-gold); color: var(--accent-black); }
+        .btn-primary:hover { background-color: #e6b325; transform: translateY(-2px); box-shadow: 0 6px 12px var(--shadow-color); }
+        .btn-secondary { background-color: var(--accent-red); color: white; }
+        .btn-secondary:hover { background-color: #c01822; transform: translateY(-2px); box-shadow: 0 6px 12px var(--shadow-color);}
+
+        /* --- Layout (No Sidebar) --- */
+        .app-container { display: block; }
+        .main-content { margin-left: 0; /* Full width */ }
+
+        /* --- Header --- */
+        .header {
+            height: var(--header-height); background-color: var(--bg-primary);
+            box-shadow: 0 2px 8px var(--shadow-color); /* Soften shadow */
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 30px; position: sticky; top: 0; z-index: 50;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .header-left { display: flex; align-items: center; gap: 15px; } /* Group back button and title */
+        .btn-back {
+            background: none; border: 1px solid var(--border-color);
+            color: var(--text-secondary); width: 36px; height: 36px; padding: 0;
+            border-radius: 50%; font-size: 1rem; /* Icon size */ line-height: 1;
+        }
+        .btn-back:hover { background-color: var(--bg-secondary); border-color: var(--text-secondary); color: var(--text-primary); }
+         body.dark-mode .btn-back { border-color: var(--border-color); color: var(--text-secondary); }
+         body.dark-mode .btn-back:hover { background-color: var(--bg-secondary); border-color: var(--text-primary); color: var(--text-primary); }
+
+        .header-title { font-size: 1.4em; font-weight: 600; color: var(--text-primary); }
+        .header-actions { display: flex; align-items: center; }
+        .header-actions > * { margin-left: 20px; }
+        .notification-icon { position: relative; cursor: pointer; color: var(--text-secondary); font-size: 1.2em; transition: color 0.3s ease; }
+        .notification-icon:hover { color: var(--text-primary); }
+        .notification-badge { position: absolute; top: -5px; right: -8px; width: 18px; height: 18px; background-color: var(--accent-red); color: white; border-radius: 50%; font-size: 0.7em; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .theme-toggle { background: none; border: 1px solid var(--accent-gold); color: var(--accent-gold); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 1em; }
+        .theme-toggle:hover { background-color: var(--accent-gold); color: var(--accent-black); }
+
+        /* --- Content Area --- */
+        .content {
+            padding: 30px;
+            max-width: 1200px; /* Wider content */
+            margin: 20px auto; /* Add vertical margin */
+        }
+        /* Settings Grid Layout */
+         .settings-grid {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); /* Responsive columns */
+             gap: 30px;
+         }
+
+        /* --- Settings Specific Styles --- */
+        .settings-card {
+            background-color: var(--card-bg); border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow-color); /* Slightly softer shadow */
+            margin-bottom: 0; /* Grid handles spacing */
+            padding: 25px; border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex; /* Use flex for consistent height */
+            flex-direction: column;
+        }
+        .settings-card h3 {
+            color: var(--text-primary); margin-bottom: 20px; padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color); font-size: 1.2em; /* Slightly smaller */
+            padding-left: 10px; /* Space for accent border */
+            border-left: 4px solid var(--accent-red); /* Red accent */
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+         body.dark-mode .settings-card h3 { border-left-color: var(--accent-red); }
+
+        .settings-card form {
+             flex-grow: 1; /* Allow form to fill card height */
+             display: flex;
+             flex-direction: column;
+         }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group:last-of-type { margin-bottom: 0; } /* Remove margin on last group */
+
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 500; color: var(--text-primary); font-size: 0.9em; }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group select {
+            width: 100%; padding: 10px 12px; border: 1px solid var(--input-border); border-radius: 6px; /* Less rounded */
+            background-color: var(--input-bg); color: var(--text-primary); font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus { outline: none; border-color: var(--accent-gold); box-shadow: 0 0 0 3px var(--shadow-color-glow); }
+
+         .form-actions {
+             text-align: right;
+             margin-top: auto; /* Push actions to bottom */
+             padding-top: 20px; /* Space above buttons */
+         }
+        .input-hint { font-size: 0.8em; color: var(--text-secondary); margin-top: 6px; }
+
+        /* Redesigned Smaller Toggle Switch */
+        .toggle-switch { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+        .toggle-switch label { margin-bottom: 0; flex: 1; margin-right: 10px; font-weight: 500; font-size: 0.9em; }
+        .switch { position: relative; display: inline-block; width: 38px; height: 20px; flex-shrink: 0; } /* Smaller */
+        .switch input { display: none; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--switch-bg-off); transition: .4s; border-radius: 20px; } /* Rounded */
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; } /* Smaller circle */
+        input:checked + .slider { background-color: var(--accent-gold); }
+        input:checked + .slider:before { transform: translateX(18px); } /* Adjusted translate */
+        input:disabled + .slider { cursor: not-allowed; opacity: 0.6; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+             .content { max-width: 95%; }
+             .settings-grid { grid-template-columns: 1fr; } /* Single column */
+         }
+        @media (max-width: 768px) {
+            .header { padding: 0 15px; }
+            .header-title { font-size: 1.2em; }
+            .content { padding: 20px; }
+            .settings-card { padding: 20px; }
+             .form-actions { text-align: center; }
+             .form-actions .btn { width: 100%; margin-bottom: 10px; }
+             .form-actions .btn:last-child { margin-bottom: 0; }
+        }
+         @media (max-width: 576px) {
+              h3 { font-size: 1.1em;}
+              .header-actions > * { margin-left: 10px; }
+              .settings-card h3 { font-size: 1.1em; margin-bottom: 15px; }
+              .form-group { margin-bottom: 15px; }
+          }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <main class="main-content">
+            <header class="header">
+                 <div class="header-left">
+                     <a href="dashboard.html" class="btn btn-back" aria-label="Go Back">
+                         <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="header-title">Settings</div>
+                 </div>
+                <div class="header-actions">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                        </button>
+                </div>
+            </header>
+
+            <div class="content">
+                <div class="settings-grid">
+
+                    <div class="settings-card">
+                        <h3>Profile Information</h3>
+                        <form id="profile-form">
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" name="firstName" value="John" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" name="lastName" value="Smith" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="john.smith@example.com" required>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Account Settings</h3>
+                        <form id="account-form">
+                            <div class="form-group">
+                                <label for="current-password">Current Password</label>
+                                <input type="password" id="current-password" name="currentPassword" placeholder="Enter current password">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-password">New Password</label>
+                                <input type="password" id="new-password" name="newPassword" placeholder="Leave blank to keep current">
+                                </div>
+                            <div class="form-group">
+                                <label for="confirm-password">Confirm New Password</label>
+                                <input type="password" id="confirm-password" name="confirmPassword" placeholder="Confirm new password">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Update Password</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Learning Preferences</h3>
+                        <form id="learning-form">
+                            <div class="form-group">
+                                <label for="learning-style">Preferred Learning Style</label>
+                                <select id="learning-style" name="learningStyle">
+                                    <option value="visual">Visual</option>
+                                    <option value="auditory">Auditory</option>
+                                    <option value="kinesthetic">Kinesthetic</option>
+                                    <option value="reading_writing" selected>Reading/Writing</option>
+                                </select>
+                                <p class="input-hint">Helps personalize your learning experience.</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="study-goals">Primary Study Goal</label>
+                                <select id="study-goals" name="studyGoals">
+                                    <option value="exam_prep">Exam Preparation</option>
+                                    <option value="skill_mastery" selected>Skill Mastery</option>
+                                    <option value="project_based">Project-Based Learning</option>
+                                    <option value="general_knowledge">General Knowledge</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Preferences</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Notification Settings</h3>
+                        <form id="notification-form">
+                            <div class="toggle-switch">
+                                <label for="email-notifications">Email Notifications</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="email-notifications" name="emailNotifications" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-switch">
+                                <label for="push-notifications">Push Notifications (App)</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="push-notifications" name="pushNotifications" disabled> <span class="slider"></span>
+                                </label>
+                            </div>
+                             <div class="toggle-switch">
+                                <label for="weekly-summary">Weekly Progress Summary</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="weekly-summary" name="weeklySummary" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Notifications</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Privacy Settings</h3>
+                        <form id="privacy-form">
+                            <div class="toggle-switch">
+                                <label for="share-progress">Share Progress Anonymously</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="share-progress" name="shareProgress">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                             <p class="input-hint">Allow EnginSync to use anonymized data to improve the platform.</p>
+                             <div class="form-actions">
+                                  <button type="button" class="btn btn-secondary">Delete Account</button>
+                                 <button type="submit" class="btn btn-primary">Save Privacy</button>
+                             </div>
+                        </form>
+                    </div>
+
+                     </div> </div>
+        </main>
+    </div>
+
+    <script>
+        // Theme Toggle Functionality
+        const body = document.body;
+        const themeToggleButton = document.getElementById('theme-toggle');
+        function setTheme(theme) {
+            if(!themeToggleButton) return;
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+                themeToggleButton.setAttribute('title', 'Switch to light mode');
+            } else {
+                body.classList.remove('dark-mode');
+                themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+                themeToggleButton.setAttribute('title', 'Switch to dark mode');
+            }
+        }
+        const currentTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let initialTheme = 'light';
+        if (currentTheme) { initialTheme = currentTheme; } else if (prefersDark) { initialTheme = 'dark'; }
+        setTheme(initialTheme);
+        if (themeToggleButton) {
+            themeToggleButton.addEventListener('click', () => { setTheme(body.classList.contains('dark-mode') ? 'light' : 'dark'); });
+        }
+
+        // Basic form submission simulation
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                console.log(`Form ${form.id} submitted.`);
+                // Simulate API call & feedback
+                const submitButton = form.querySelector('button[type="submit"]');
+                if (submitButton) {
+                    const originalText = submitButton.textContent;
+                    submitButton.textContent = 'Saving...';
+                    submitButton.disabled = true;
+                    setTimeout(() => {
+                         submitButton.textContent = originalText;
+                         submitButton.disabled = false;
+                        // alert('Settings saved (simulation)!'); // Replace with less intrusive feedback
+                         // Show temporary success message maybe?
+                    }, 1000);
+                }
+            });
+        });
+
+        // Add logic to load actual settings values if needed
+        // window.addEventListener('load', loadSettings);
+
+    </script>
+</body>
+</html>

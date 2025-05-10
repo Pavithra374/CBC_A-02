@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planner Mockup - EnginSync</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- Base Theme Variables (RCB Theme) --- */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-accent: #111111;
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --accent-red: #D81B27;
+            --accent-gold: #FFC72C;
+            --accent-black: #111111;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --info-color: #17a2b8;
+            --border-color: #e0e0e0;
+            --card-bg: var(--bg-primary);
+            --tag-bg-calculus: rgba(216, 27, 39, 0.1);
+            --tag-text-calculus: var(--accent-red);
+            --tag-bg-physics: rgba(255, 199, 44, 0.15);
+            --tag-text-physics: #b38f1f;
+            --tag-bg-general: rgba(85, 85, 85, 0.1);
+            --tag-text-general: var(--text-secondary);
+            --tag-bg-chemistry: rgba(23, 162, 184, 0.1);
+            --tag-text-chemistry: var(--info-color);
+        }
+
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: 1.3; color: var(--text-primary); margin-bottom: 0.75em; }
+        h1 { font-size: 2rem; margin-bottom: 1em; }
+        h2 { font-size: 1.6rem; margin-bottom: 1em; border-bottom: 2px solid var(--border-color); padding-bottom: 0.4em; }
+        h3 { font-size: 1.3rem; }
+        h4 { font-size: 1.1rem; color: var(--text-secondary); }
+
+        a { text-decoration: none; color: var(--accent-red); transition: color 0.3s ease; }
+        a:hover { color: var(--accent-gold); }
+        p { margin-bottom: 1em; color: var(--text-secondary); }
+
+        .container {
+             max-width: 1200px;
+             margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500; /* Slightly less bold for general buttons */
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .btn-primary { /* Gold Button */
+            background-color: var(--accent-gold);
+            color: var(--accent-black);
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background-color: #e6b325;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+        .btn-secondary { /* Red Button */
+            background-color: var(--accent-red);
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #c01822;
+            transform: translateY(-2px);
+        }
+        .btn-icon {
+             background: none;
+             border: none;
+             font-size: 1rem; /* Adjusted size */
+             color: var(--text-secondary);
+             cursor: pointer;
+             padding: 6px 8px;
+             border-radius: 50%;
+             transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .btn-icon:hover { 
+            background-color: var(--bg-secondary); 
+            color: var(--accent-red);
+        }
+        .btn-subtle {
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            box-shadow: none;
+            border: 1px solid var(--border-color);
+        }
+        .btn-subtle:hover {
+             background-color: var(--border-color);
+             color: var(--text-primary);
+        }
+        .btn-small {
+             padding: 6px 12px;
+             font-size: 0.85rem;
+             border-radius: 15px;
+        }
+
+        /* --- Card Styles --- */
+        .widget-card, .content-section {
+            background-color: var(--card-bg);
+            padding: 20px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            margin-bottom: 25px;
+        }
+        .widget-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .widget-card h3 i {
+            margin-right: 10px;
+            color: var(--accent-gold);
+        }
+
+        /* --- Planner Layout --- */
+        .planner-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px; /* Main content | Widgets */
+            gap: 25px;
+        }
+        .planner-main {
+            grid-column: 1 / 2;
+        }
+        .planner-sidebar {
+            grid-column: 2 / 3;
+        }
+
+        /* --- Task List Styles --- */
+        .task-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .task-list-header h3 {
+             margin-bottom: 0; /* Remove margin from h3 in header */
+        }
+        .filter-controls button, .filter-controls select {
+            margin-left: 8px;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 15px;
+        }
+        .task-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item {
+            display: flex;
+            align-items: flex-start; /* Align checkbox to top */
+            padding: 15px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 12px;
+            transition: box-shadow 0.3s ease;
+            position: relative;
+            gap: 15px; /* Add gap between checkbox, details, actions */
+        }
+        .task-item:hover {
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        .task-item.completed {
+             opacity: 0.6;
+        }
+        .task-item.completed .task-title {
+             text-decoration: line-through;
+             color: var(--text-secondary);
+        }
+        .task-checkbox {
+            margin-top: 2px; /* Align checkbox visually */
+            flex-shrink: 0;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-red);
+        }
+        .task-details {
+            flex-grow: 1;
+        }
+        .task-title {
+            font-weight: 500;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 3px;
+            font-size: 1rem;
+        }
+        .task-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping */
+            align-items: center;
+            gap: 5px 15px; /* Row and column gap */
+            margin-bottom: 5px;
+        }
+        .task-meta .due-date {
+            font-weight: 500;
+        }
+         .task-meta .due-date i {
+             margin-right: 4px;
+         }
+        .task-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            border-radius: 10px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .tag-calculus { background-color: var(--tag-bg-calculus); color: var(--tag-text-calculus); }
+        .tag-physics { background-color: var(--tag-bg-physics); color: var(--tag-text-physics); }
+        .tag-general { background-color: var(--tag-bg-general); color: var(--tag-text-general); }
+        .tag-chemistry { background-color: var(--tag-bg-chemistry); color: var(--tag-text-chemistry); }
+
+        .task-actions {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: auto; /* Push to right */
+            flex-shrink: 0;
+        }
+        .video-suggestion-placeholder {
+            font-size: 0.85rem;
+            color: var(--info-color);
+            margin-top: 8px;
+            cursor: pointer;
+            display: inline-block; /* Keep it inline */
+        }
+        .video-suggestion-placeholder i {
+             margin-right: 4px;
+        }
+        .video-suggestion-placeholder:hover { text-decoration: underline; }
+
+        /* --- Widget Styles --- */
+        .widget-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .widget-list-item:last-child { border-bottom: none; }
+        .widget-list-item .item-title { flex-grow: 1; margin-right: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+        .widget-list-item .item-date { font-weight: 500; color: var(--accent-red); flex-shrink: 0; }
+        .widget-list-item .item-time { font-size: 0.85rem; color: var(--text-secondary); flex-shrink: 0; margin-left: 5px; }
+
+        /* --- Modal Styles --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6); /* Darker overlay */
+            align-items: center;
+            justify-content: center;
+        }
+        /* Add animation */
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background-color: var(--bg-primary);
+            margin: auto;
+            padding: 30px;
+            border: none;
+            width: 90%;
+            max-width: 550px; /* Slightly wider modal */
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+         @keyframes slideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-close {
+            color: var(--text-secondary);
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-close:hover { color: var(--accent-red); }
+        .modal h3 {
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .form-group input[type="text"], 
+        .form-group input[type="date"], 
+        .form-group input[type="time"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            background-color: var(--bg-primary);
+             transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+         .form-group input:focus,
+         .form-group select:focus,
+         .form-group textarea:focus {
+             outline: none;
+             border-color: var(--accent-gold);
+             box-shadow: 0 0 0 2px rgba(255, 199, 44, 0.3);
+         }
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .form-actions {
+            text-align: right;
+            margin-top: 30px;
+        }
+        .form-actions button {
+            margin-left: 10px;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 992px) {
+            .planner-layout {
+                grid-template-columns: 1fr; /* Stack columns */
+            }
+            .planner-sidebar {
+                 grid-row: 1; /* Move sidebar to top on smaller screens */
+            }
+             .planner-main {
+                 grid-row: 2;
+            }
+        }
+         @media (max-width: 768px) {
+             h2 { font-size: 1.4rem; }
+             .task-list-header { flex-direction: column; align-items: stretch; gap: 15px; }
+             .filter-controls { display: flex; gap: 8px; width: 100%; }
+             .filter-controls button, .filter-controls select { margin-left: 0; flex-grow: 1; }
+             .task-item { flex-direction: column; align-items: stretch; gap: 10px; }
+             .task-actions { margin-left: 0; justify-content: flex-end; }
+             .modal-content { width: 95%; padding: 20px; }
+         }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="content-section planner-module">
+            <h2><i class="far fa-calendar-alt"></i> Planner</h2>
+
+            <div class="planner-layout">
+                <!-- Main Planner Content -->
+                <div class="planner-main">
+                    <div class="task-list-header">
+                        <h3><i class="fas fa-tasks"></i> Tasks & Events</h3>
+                        <div class="filter-controls">
+                            <!-- Placeholder for Filters -->
+                            <button class="btn btn-subtle btn-small">Filter <i class="fas fa-filter"></i></button>
+                            <button class="btn btn-subtle btn-small">Sort <i class="fas fa-sort"></i></button>
+                            <button class="btn btn-primary btn-small" id="addEventBtn"><i class="fas fa-plus"></i> Add New</button>
+                        </div>
+                    </div>
+
+                    <div class="task-list" id="taskListContainer">
+                        <ul id="taskList">
+                            <!-- Tasks will be rendered here by JavaScript -->
+                            <li style="text-align: center; color: var(--text-secondary); padding: 20px;">Loading tasks...</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sidebar Widgets -->
+                <div class="planner-sidebar">
+                    <div class="widget-card upcoming-deadlines">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Upcoming</h3>
+                        <ul class="widget-list" id="upcomingList">
+                            <!-- Upcoming items loaded by JS -->
+                             <li style="color: var(--text-secondary); font-size: 0.9rem;">Loading...</li>
+                        </ul>
+                    </div>
+
+                    <div class="widget-card today-schedule">
+                        <h3><i class="far fa-calendar-check"></i> Today</h3>
+                         <ul class="widget-list" id="todayList">
+                             <!-- Today's items loaded by JS -->
+                             <li style="color: var(--text-secondary); font-size: 0.9rem;">Loading...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add/Edit Event Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalCloseBtn">&times;</span>
+            <h3 id="modalTitle">Add New Event</h3>
+            <form id="eventForm">
+                <input type="hidden" id="eventId" value="">
+                <div class="form-group">
+                    <label for="eventTitle">Title</label>
+                    <input type="text" id="eventTitle" name="title" required placeholder="e.g., Submit Physics Homework">
+                </div>
+                <div class="form-group">
+                    <label for="eventType">Type</label>
+                    <select id="eventType" name="type">
+                        <option value="assignment">Assignment</option>
+                        <option value="deadline">Deadline</option>
+                        <option value="study">Study Session</option>
+                        <option value="exam">Exam</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                 <div class="form-group">
+                    <label for="eventCourse">Course/Category</label>
+                    <select id="eventCourse" name="category">
+                         <option value="calculus">Calculus</option>
+                        <option value="physics">Physics</option>
+                        <option value="chemistry">Chemistry</option>
+                        <option value="general">General</option>
+                        <!-- TODO: Dynamically load categories/courses -->
+                    </select>
+                </div>
+                 <div class="form-group">
+                    <label for="eventDate">Date</label>
+                    <input type="date" id="eventDate" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventTime">Time (Optional)</label>
+                    <input type="time" id="eventTime" name="time">
+                </div>
+                <div class="form-group">
+                    <label for="eventNotes">Notes (Optional)</label>
+                    <textarea id="eventNotes" name="notes" placeholder="Add any relevant details..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-subtle" id="modalCancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="planner_script.js" defer></script>
+
+</body>
+</html>

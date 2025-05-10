@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnginSync - Power Play Your Engineering Studies!</title>
+    <style>
+        /* --- Theme Variables (RCB Theme - Updated Card Gradients & Text) --- */
+        :root {
+            /* Light Mode Base */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-accent: #111111;
+            --text-primary: #111111;
+            --text-secondary: #ffffff; /* Used for text on dark/red bg */
+            --accent-red: #D81B27;
+            --accent-gold: #FFC72C;
+            --accent-black: #111111; /* Used for text on gold bg */
+            --shadow-color: rgba(0, 0, 0, 0.15);
+            --shadow-color-glow: rgba(255, 199, 44, 0.1);
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --border-color: #e0e0e0;
+            --card-text-primary: #f0f0f0; /* Text on dark gradient cards */
+            --card-text-secondary: #d0d0d0;/* Text on dark gradient cards */
+
+            /* Card Gradients */
+            --card-dark-grad-1: linear-gradient(140deg, #000000, #400000);
+            --card-dark-grad-2: linear-gradient(140deg, #1a1a1a, #333333);
+            --card-dark-grad-3: linear-gradient(140deg, #806000, #4c3a00);
+            --card-dark-grad-4: linear-gradient(140deg, #400000, #8B0000);
+            --card-dark-grad-5: linear-gradient(140deg, #3a2a00, #1a1a1a);
+            --card-dark-grad-6: linear-gradient(140deg, #600000, #202020);
+            --card-dark-grad-7: linear-gradient(140deg, #222222, #444444);
+
+
+            /* Component specific vars */
+            --hero-bg: var(--accent-red);
+            --hero-text: var(--text-secondary); /* White text on red bg */
+            --hero-highlight: var(--accent-gold);
+            --link-color: var(--accent-red);
+            --link-hover-color: var(--accent-gold);
+            --button-primary-bg: var(--accent-gold);
+            --button-primary-text: var(--accent-black);
+            --button-primary-hover-bg: #e6b325;
+            --navbar-bg: var(--accent-black); /* Black navbar */
+            --navbar-link-color: var(--text-secondary); /* White links */
+            --navbar-link-hover-color: var(--accent-gold);
+            --navbar-logo-color: var(--accent-gold);
+            --footer-bg: var(--accent-black); /* Black footer */
+            --footer-text-color: #dddddd; /* Lighter grey footer text */
+            --footer-link-color: var(--accent-gold);
+            --footer-link-hover-color: var(--text-secondary); /* White link hover */
+            --cta-bg: var(--bg-accent); /* Black CTA section */
+            --cta-text-color: var(--text-secondary); /* White CTA text */
+            --cta-title-color: var(--accent-gold); /* Gold CTA title */
+            --transition-speed: 0.3s;
+        }
+
+        body.dark-mode {
+            /* Dark Mode Base Overrides */
+            --bg-primary: #111111;
+            --bg-secondary: #1a1a1a;
+            --bg-accent: #000000;
+            --text-primary: #f0f0f0; /* Light main text */
+            --text-secondary: #cccccc; /* Lighter muted text */
+            --accent-red: #ff4d4d; /* Brighter Red */
+            --accent-gold: #FFD700; /* Brighter Gold */
+            --accent-black: #ffffff; /* Black color becomes white */
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --shadow-color-glow: rgba(255, 77, 77, 0.2); /* Red glow */
+            --border-color: #444444;
+            /* Card text vars remain same (light on dark) */
+            /* Card gradient vars remain same */
+
+            /* Component specific dark overrides */
+            --hero-bg: var(--bg-accent); /* Black hero bg */
+            --hero-text: var(--accent-red); /* Red hero text */
+            --hero-highlight: var(--accent-gold); /* Gold highlight */
+            --link-color: var(--accent-red);
+            --link-hover-color: var(--accent-gold);
+            --button-primary-bg: var(--accent-gold);
+            --button-primary-text: #111111; /* Black text on gold button */
+            --button-primary-hover-bg: #e6b325;
+            --navbar-bg: var(--bg-accent); /* Black navbar */
+            --navbar-link-color: var(--text-primary); /* Light links */
+            --navbar-link-hover-color: var(--accent-gold);
+            --navbar-logo-color: var(--accent-gold);
+            --footer-bg: var(--bg-accent); /* Black footer */
+            --footer-text-color: #aaaaaa; /* Darker grey footer text */
+            --footer-link-color: var(--accent-gold);
+            --footer-link-hover-color: var(--text-primary); /* Light link hover */
+            --cta-bg: var(--bg-accent); /* Black CTA section */
+            --cta-text-color: var(--text-secondary); /* Lighter grey CTA text */
+            --cta-title-color: var(--accent-gold); /* Gold CTA title */
+        }
+
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; line-height: 1.6; background-color: var(--bg-primary); color: var(--text-primary); scroll-behavior: smooth; transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: 1.3; color: var(--text-primary); transition: color var(--transition-speed) ease; }
+        h1 { margin-bottom: 0.75em; } h2 { margin-bottom: 1.2em; } h3 { margin-bottom: 0.5em; }
+        a { text-decoration: none; color: var(--link-color); transition: color var(--transition-speed) ease; font-weight: 500; }
+        a:hover { color: var(--link-hover-color); }
+        p { margin-bottom: 1em; color: var(--text-secondary); transition: color var(--transition-speed) ease; }
+        /* Ensure default P color respects theme */
+        body:not(.dark-mode) p { color: #555; } /* Default light mode p */
+        body.dark-mode p { color: var(--text-secondary); } /* Default dark mode p */
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 80px 0; border-bottom: 1px solid var(--border-color); transition: border-color var(--transition-speed) ease; }
+        section:last-of-type { border-bottom: none; }
+        .btn { display: inline-block; padding: 12px 28px; border-radius: 25px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all var(--transition-speed) ease; cursor: pointer; border: none; box-shadow: 0 4px 10px var(--shadow-color); }
+        .btn-primary { background-color: var(--button-primary-bg); color: var(--button-primary-text); }
+        .btn-primary:hover { background-color: var(--button-primary-hover-bg); color: var(--button-primary-text); box-shadow: 0 6px 15px var(--shadow-color); transform: translateY(-2px); }
+
+        /* --- Header/Navbar --- */
+        .navbar { background-color: var(--navbar-bg); padding: 15px 0; position: fixed; width: 100%; top: 0; left: 0; z-index: 1000; box-shadow: 0 3px 12px var(--shadow-color); transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .navbar .logo { font-size: 1.8em; font-weight: 700; color: var(--navbar-logo-color); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); transition: color var(--transition-speed) ease; }
+        .navbar .nav-links ul { list-style: none; display: flex; align-items: center; }
+        .navbar .nav-links ul li { margin-left: 25px; }
+        .navbar .nav-links ul li a { color: var(--navbar-link-color); font-weight: 500; padding-bottom: 5px; position: relative; transition: color var(--transition-speed) ease; }
+        .navbar .nav-links ul li a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--accent-gold); transition: width var(--transition-speed) ease; }
+        .navbar .nav-links ul li a:hover { color: var(--navbar-link-hover-color); }
+        .navbar .nav-links ul li a:hover::after { width: 100%; }
+        .theme-toggle-button { background: none; border: 1px solid var(--accent-gold); color: var(--accent-gold); font-size: 1.2em; padding: 5px 8px; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; transition: all var(--transition-speed) ease; line-height: 1; margin-left: 20px; display: flex; align-items: center; justify-content: center; }
+        .theme-toggle-button:hover { background-color: var(--accent-gold); color: var(--button-primary-text); transform: rotate(15deg); }
+
+        /* --- Original Hero Section --- */
+        .hero {
+            background-color: var(--hero-bg);
+            color: var(--hero-text); /* Use variable */
+            padding: 180px 0 120px 0;
+            text-align: center; position: relative; overflow: hidden;
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+        }
+        .hero .container { position: relative; z-index: 1; }
+        .hero h1 {
+            font-size: 3.4em; margin-bottom: 20px; line-height: 1.2;
+            color: var(--hero-text); /* Use variable */
+            text-shadow: 0 3px 6px rgba(0,0,0,0.4); transition: color var(--transition-speed) ease;
+        }
+        .hero h1 span {
+            color: var(--hero-highlight); /* Use variable */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5); transition: color var(--transition-speed) ease;
+        }
+        .hero p {
+            font-size: 1.2em; margin-bottom: 40px; max-width: 750px;
+            margin-left: auto; margin-right: auto; opacity: 0.95;
+            color: var(--hero-text); /* Use variable */
+            transition: color var(--transition-speed) ease;
+        }
+        /* Override dark mode p specifically for hero if needed */
+        body.dark-mode .hero p { color: var(--text-secondary); } /* Light grey text on dark hero */
+
+
+        /* --- Original Features Section (Fanned Stack) --- */
+        #features {
+            background-color: var(--bg-secondary);
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+            position: relative; overflow: visible; transition: background-color var(--transition-speed) ease;
+            padding: 80px 0 120px 0;
+        }
+        .features .section-title {
+            text-align: center; margin-bottom: 50px; font-size: 2.5em;
+            color: var(--accent-red); transition: color var(--transition-speed) ease;
+            width: 100%; position: relative; z-index: 5;
+        }
+         body.dark-mode .features .section-title { color: var(--accent-red); }
+
+        .features-stack-container {
+            position: relative; width: 650px; height: 350px;
+            margin-top: 8em; cursor: pointer;
+        }
+        @keyframes glitter { 0%, 100% { opacity: 0; } 50% { opacity: 0.6; } }
+
+        .feature-card {
+            position: absolute; bottom: 0; left: 50%;
+            width: 280px; height: 380px;
+            background: var(--card-dark-grad-1); /* Default gradient */
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 8px 25px -6px var(--shadow-color), 0 0 15px -5px var(--shadow-color-glow);
+            padding: 25px; display: flex; flex-direction: column; align-items: center;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, background var(--transition-speed) ease;
+            transform-origin: bottom center; backface-visibility: hidden;
+            user-select: none; overflow: hidden;
+            color: var(--card-text-primary);
+        }
+         body.dark-mode .feature-card { border-color: #555; }
+
+        /* Apply specific dark gradients */
+        .feature-card:nth-child(1) { background: var(--card-dark-grad-1); }
+        .feature-card:nth-child(2) { background: var(--card-dark-grad-2); }
+        .feature-card:nth-child(3) { background: var(--card-dark-grad-3); }
+        .feature-card:nth-child(4) { background: var(--card-dark-grad-4); }
+        .feature-card:nth-child(5) { background: var(--card-dark-grad-5); }
+        .feature-card:nth-child(6) { background: var(--card-dark-grad-6); }
+        .feature-card:nth-child(7) { background: var(--card-dark-grad-7); }
+
+        /* Original Glitter Effect */
+        .feature-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px), radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px);
+            background-size: 40px 40px, 50px 50px; background-position: 0 0, 20px 20px;
+            animation: glitter 3.5s ease-in-out infinite alternate; pointer-events: none; z-index: 1; opacity: 0; border-radius: inherit;
+        }
+         body.dark-mode .feature-card::before {
+             background-image: radial-gradient(circle, rgba(255, 215, 0, 0.5) 1px, transparent 1px), radial-gradient(circle, rgba(255, 77, 77, 0.4) 1px, transparent 1px);
+         }
+        /* Gradient Vanish */
+        .feature-card::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0, 0.8) 5%, transparent 60%);
+            opacity: 0; transition: opacity 0.4s ease-out; pointer-events: none; z-index: 10;
+        }
+         body.dark-mode .feature-card::after { background: linear-gradient(to top, rgba(17,17,17, 0.9) 10%, transparent 70%); }
+
+        /* Initial Fanned State */
+        .feature-card[data-initial-state="0"] { z-index: 7; transform: translateX(-50%) rotate(-45deg); opacity: 1; }
+        .feature-card[data-initial-state="1"] { z-index: 6; transform: translateX(-50%) rotate(-30deg); opacity: 1; }
+        .feature-card[data-initial-state="2"] { z-index: 5; transform: translateX(-50%) rotate(-15deg); opacity: 1; }
+        .feature-card[data-initial-state="3"] { z-index: 4; transform: translateX(-50%) rotate(0deg); opacity: 1; } /* Center card */
+        .feature-card[data-initial-state="4"] { z-index: 3; transform: translateX(-50%) rotate(15deg); opacity: 1; }
+        .feature-card[data-initial-state="5"] { z-index: 2; transform: translateX(-50%) rotate(30deg); opacity: 1; }
+        .feature-card[data-initial-state="6"] { z-index: 1; transform: translateX(-50%) rotate(45deg); opacity: 1; }
+        .feature-card.hidden-deep { z-index: 0; opacity: 0; transform: translateX(-50%) rotate(45deg) scale(0.9); pointer-events: none;}
+
+        /* Active Card State */
+        .feature-card.active {
+            transform: translateX(-50%) translateY(-60px) scale(1.12) rotate(0deg) !important;
+            z-index: 10 !important; cursor: pointer;
+            box-shadow: 0 15px 30px -8px var(--shadow-color), 0 0 25px -6px var(--shadow-color-glow); /* Adjusted */
+        }
+        .feature-card.active::before { animation-duration: 2s; opacity: 0.75; }
+
+        /* Dismissed State */
+        .feature-card.dismissed { pointer-events: none; opacity: 0 !important; transform: translateY(5px) scale(0.97); transition: transform 0.4s ease-out, opacity 0.4s ease-out; }
+        .feature-card.dismissed::after { opacity: 1; }
+        .feature-card.dismissed::before { opacity: 0 !important; animation: none; }
+
+        /* Finished State */
+        .feature-card.finished { opacity: 0 !important; pointer-events: none; transform: translateY(20px) scale(0.9); z-index: -1 !important; }
+        .feature-card.finished::before, .feature-card.finished::after { display: none; }
+
+        /* Card Content Styles */
+        .feature-card .icon { font-size: 2.8em; margin-bottom: 18px; color: var(--card-text-primary); filter: drop-shadow(0 1px 1px rgba(0,0,0,0.5)); }
+        .feature-card h3 { font-size: 1.3em; margin-bottom: 12px; color: var(--card-text-primary); }
+        .feature-card p { font-size: 0.95em; color: var(--card-text-secondary); line-height: 1.55; flex-grow: 1; }
+
+        /* --- Problem/Solution (Original) --- */
+        .problem-solution { background-color: var(--bg-primary); transition: background-color var(--transition-speed) ease; }
+        .problem-solution .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; align-items: start; }
+        .problem-solution h2.section-title { text-align: left; grid-column: auto; font-size: 2.1em;}
+        .problem-solution h3 { color: var(--accent-red); margin-bottom: 15px; font-size: 1.6em; transition: color var(--transition-speed) ease;}
+        .problem-solution ul { list-style: none; padding-left: 0; }
+        .problem-solution ul li { margin-bottom: 15px; position: relative; padding-left: 30px; line-height: 1.5; color: var(--text-primary); transition: color var(--transition-speed) ease;}
+        body.dark-mode .problem-solution ul li { color: var(--text-primary); }
+        .problem-list li::before { content: '✕'; position: absolute; left: 0; top: 3px; color: var(--error-color); font-weight: bold; font-size: 1.4em; }
+        .solution-list li::before { content: '✓'; position: absolute; left: 0; top: 3px; color: var(--success-color); font-weight: bold; font-size: 1.4em; }
+
+        /* --- CTA Section (Original) --- */
+        .cta-section { background-color: var(--cta-bg); color: var(--cta-text-color); text-align: center; transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; }
+        .cta-section .section-title { color: var(--cta-title-color); font-size: 2.1em; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); transition: color var(--transition-speed) ease; }
+        .cta-section p { font-size: 1.15em; margin-bottom: 35px; opacity: 0.9; max-width: 650px; margin-left: auto; margin-right: auto; color: var(--cta-text-color); transition: color var(--transition-speed) ease; }
+        /* Login prompt styles needed if adding it */
+
+        /* --- Footer (Original) --- */
+        footer { background-color: var(--footer-bg); color: var(--footer-text-color); text-align: center; padding: 30px 0; font-size: 0.9em; transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; border-top: 1px solid var(--border-color); }
+        footer p { margin-bottom: 10px; color: var(--footer-text-color); transition: color var(--transition-speed) ease;}
+        footer a { color: var(--footer-link-color); font-weight: 500; transition: color var(--transition-speed) ease; }
+        footer a:hover { color: var(--footer-link-hover-color); }
+
+        /* --- Responsive Design (Original) --- */
+        @media (max-width: 992px) { .hero h1 { font-size: 2.8em; } .problem-solution .container { grid-template-columns: 1fr; gap: 40px; } .features-stack-container { transform: scale(0.8); margin-top: 5em; } }
+        @media (max-width: 768px) { .navbar .container { flex-direction: column; } .navbar .logo { margin-bottom: 10px; } .navbar .nav-links { margin-top: 10px; width: 100%; justify-content: center; } .navbar .nav-links ul { padding-left: 0; } .navbar .nav-links ul li { margin: 0 10px; } .theme-toggle-button { position: absolute; top: 15px; right: 20px; margin-left: 0;} .hero { padding-top: 150px; padding-bottom: 100px; } .hero h1 { font-size: 2.4em; } .hero p { font-size: 1.05em; } .features .section-title, .problem-solution h2.section-title, .cta-section .section-title { font-size: 2.1em; } .features-stack-container { transform: scale(0.7); margin-top: 3em; height: 300px; } #features { min-height: 80vh; } }
+        @media (max-width: 576px) { .hero h1 { font-size: 2em; } .hero p { font-size: 1em; } .btn { padding: 10px 22px; font-size: 0.9em; } .problem-solution ul li { padding-left: 25px; } .problem-list li::before, .solution-list li::before { font-size: 1.2em; } .features-stack-container { transform: scale(0.55); height: 280px; margin-top: 1em; width: 95%;} .feature-card { width: 260px; height: 360px; } #features { min-height: 75vh; padding-bottom: 60px;} }
+
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">EnginSync</div>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#problem-solution">Why EnginSync?</a></li>
+                    <li><a href="#cta">Get Started</a></li>
+                    <li><button id="theme-toggle" class="theme-toggle-button" title="Toggle theme"></button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Power Play Your Engineering Studies with <span>EnginSync</span></h1>
+                <p>The unified, AI-powered platform built for bold results. Ditch the scattered notes, master complex topics, and step up to your future career challenges.</p>
+                <a href="#features" class="btn btn-primary">Explore Features</a>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2 class="section-title">Core Features</h2>
+            <div id="features-stack" class="features-stack-container">
+                <div class="feature-card" data-initial-state="0"> <div class="icon">📊</div> <h3>Smart Progress Tracking</h3> <p>Visualize skill mastery, track goals, and pinpoint areas needing focus with granular precision.</p> </div>
+                <div class="feature-card" data-initial-state="1"> <div class="icon">🧠</div> <h3>AI-Personalized Learning</h3> <p>Receive content recommendations adapted to your unique learning style, pace, and real-time needs.</p> </div>
+                <div class="feature-card" data-initial-state="2"> <div class="icon">💡</div> <h3>Multimodal Academic Help</h3> <p>Access curated videos, texts, diagrams, and interactive explanations precisely when you need them.</p> </div>
+                <div class="feature-card" data-initial-state="3"> <div class="icon">🤖</div> <h3>Interactive Textbook Bot</h3> <p>Transform static PDFs into dynamic resources. Get summaries, ask questions, and analyze concepts.</p> </div>
+                <div class="feature-card" data-initial-state="4"> <div class="icon">🎯</div> <h3>Adaptive Placement Prep</h3> <p>Bridge the theory-practice gap with training modules linked directly to your academic progress & career goals.</p> </div>
+                <div class="feature-card" data-initial-state="5"> <div class="icon">🏆</div> <h3>Engagement & Gamification</h3> <p>Stay motivated and consistent with points, achievements, and challenges rewarding your learning journey.</p> </div>
+                <div class="feature-card" data-initial-state="6"> <div class="icon">⚙️</div> <h3>Deep Tech Integration</h3> <p>Leverage cutting-edge AI for summaries, Q&A, personalized feedback, and more across the platform.</p> </div>
+            </div>
+        </section>
+
+        <section id="problem-solution" class="problem-solution">
+             <div class="container">
+                 <div class="problem-column">
+                     <h2 class="section-title" style="text-align: left;">The Challenge</h2>
+                     <h3>Facing Scattered Resources & Gaps?</h3>
+                     <ul class="problem-list">
+                         <li>Scattered learning resources across platforms.</li>
+                         <li>Inefficient one-size-fits-all teaching methods.</li>
+                         <li>Passive and underutilized textbooks.</li>
+                         <li>Gap between academic theory and industry skills.</li>
+                         <li>Lack of clear insight into skill mastery.</li>
+                         <li>Difficulty maintaining engagement and motivation.</li>
+                     </ul>
+                 </div>
+                 <div class="solution-column">
+                     <h2 class="section-title" style="text-align: left;">The EnginSync Solution</h2>
+                     <h3>Unified, Smart & Adaptive Learning.</h3>
+                     <ul class="solution-list">
+                         <li>Unified platform integrating all learning aspects.</li>
+                         <li>AI personalization adapting to style and pace.</li>
+                         <li>Interactive AI bot for deep textbook engagement.</li>
+                         <li>Placement training linked directly to academic skills.</li>
+                         <li>Smart tracking for clear progress visualization.</li>
+                         <li>Gamification to boost motivation and consistency.</li>
+                     </ul>
+                 </div>
+             </div>
+        </section>
+
+        <section id="cta" class="cta-section">
+             <div class="container">
+                 <h2 class="section-title">Ready to Play Bold with Your Studies?</h2>
+                 <p>Join the EnginSync revolution. Sign up for early access and get ready to conquer your engineering challenges like never before.</p>
+                 <a href="#" class="btn btn-primary">Sign Up Now</a>
+             </div>
+        </section>
+    </main>
+
+    <footer>
+         <div class="container">
+             <p>&copy; <span id="current-year"></span> EnginSync. Designed with ❤️‍🔥 in Bengaluru.</p>
+             <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+         </div>
+     </footer>
+
+    <script>
+        // --- Theme Toggle ---
+        const themeToggleButton = document.getElementById('theme-toggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const setTheme = (theme) => {
+             if (!themeToggleButton) return;
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggleButton.innerHTML = '☀️';
+                localStorage.setItem('theme', 'dark');
+                 themeToggleButton.setAttribute('title', 'Switch to light mode');
+            } else {
+                body.classList.remove('dark-mode');
+                themeToggleButton.innerHTML = '🌙';
+                localStorage.setItem('theme', 'light');
+                themeToggleButton.setAttribute('title', 'Switch to dark mode');
+            }
+        };
+        let initialTheme = 'light';
+        if (currentTheme) { initialTheme = currentTheme; } else if (prefersDark) { initialTheme = 'dark'; }
+        setTheme(initialTheme);
+        if (themeToggleButton) {
+             themeToggleButton.addEventListener('click', () => {
+                 const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+                 setTheme(newTheme);
+             });
+         }
+
+        // --- Original Feature Card Stack Interaction ---
+        const stackContainer = document.getElementById('features-stack');
+        const cards = stackContainer ? Array.from(stackContainer.querySelectorAll('.feature-card')) : [];
+        let currentCardIndex = 0;
+        let interactionStarted = false; // Keep false for initial state
+        const totalCards = cards.length;
+
+        if (stackContainer && cards.length > 0) { // Check if elements exist
+             const initialTransforms = cards.map(card => {
+                 const style = window.getComputedStyle(card);
+                 // Match potential initial state from CSS, fallback needed if CSS doesn't define it
+                 const state = card.getAttribute('data-initial-state');
+                 switch(state) {
+                     case '0': return style.transform || `translateX(-50%) rotate(-45deg)`;
+                     case '1': return style.transform || `translateX(-50%) rotate(-30deg)`;
+                     case '2': return style.transform || `translateX(-50%) rotate(-15deg)`;
+                     case '3': return style.transform || `translateX(-50%) rotate(0deg)`;
+                     case '4': return style.transform || `translateX(-50%) rotate(15deg)`;
+                     case '5': return style.transform || `translateX(-50%) rotate(30deg)`;
+                     case '6': return style.transform || `translateX(-50%) rotate(45deg)`;
+                     default: return `translateX(-50%) rotate(45deg)`; // Default fallback
+                 }
+             });
+
+             const resetCardClasses = (card) => {
+                 card.classList.remove('active', 'dismissed', 'finished', 'hidden-deep');
+             };
+
+             const applyInitialStyles = (card, index) => {
+                 resetCardClasses(card);
+                 const stateIndex = parseInt(card.getAttribute('data-initial-state') || index);
+                 card.style.zIndex = totalCards - stateIndex; // Use data-initial-state for z-index
+                 card.style.opacity = 1; // Ensure visible
+                 card.style.pointerEvents = 'none'; // Not interactive initially unless active
+                 card.style.transform = initialTransforms[index];
+             }
+
+             const updateCardStack = (isResetting = false) => {
+                 if (!stackContainer) return;
+
+                 cards.forEach((card, index) => {
+                     const cardState = card.getAttribute('data-initial-state');
+                     // Derive relative index based on the intended center card (state "3")
+                      const centerIndex = 3;
+                      const stateIndex = parseInt(cardState || '0', 10);
+
+
+                     if (isResetting) {
+                         applyInitialStyles(card, index);
+                         // Resetting makes the card with state "3" active
+                         if (stateIndex === centerIndex) {
+                             card.classList.add('active');
+                             card.style.pointerEvents = 'auto';
+                             card.style.zIndex = totalCards + 1; // Active is highest z-index
+                              // Apply active transform directly
+                              card.style.transform = 'translateX(-50%) translateY(-60px) scale(1.12) rotate(0deg)';
+                         }
+                         return;
+                     }
+
+                     // Handle finished/dismissed cards
+                     if (card.classList.contains('finished')) {
+                        card.style.zIndex = -1;
+                        card.style.pointerEvents = 'none';
+                        card.style.opacity = 0;
+                         return;
+                     }
+                      if (card.classList.contains('dismissed')) {
+                         card.style.pointerEvents = 'none';
+                         // Keep dismissed styles
+                         return;
+                     }
+
+                     // Handle non-reset cases based on currentCardIndex relative to center
+                     resetCardClasses(card); // Clear previous states first
+
+                     // Calculate relative position in the fan based on *logical* order
+                     // currentCardIndex maps 0-6 to the features, not necessarily visual position
+                     const targetStateForCurrent = (centerIndex + currentCardIndex) % totalCards;
+                      const visibleOffset = stateIndex - targetStateForCurrent;
+                      let displayOffset = visibleOffset;
+
+                     // Handle wrapping around the 7 states
+                      if(visibleOffset > Math.floor(totalCards / 2)) {
+                          displayOffset = visibleOffset - totalCards;
+                      } else if (visibleOffset < -Math.floor(totalCards / 2)) {
+                          displayOffset = visibleOffset + totalCards;
+                      }
+
+
+                      // Determine new state based on displayOffset relative to center (0)
+                      if (displayOffset === 0) { // This card should be active
+                         card.classList.add('active');
+                         card.style.zIndex = totalCards + 1;
+                         card.style.opacity = 1;
+                         card.style.pointerEvents = 'auto';
+                         card.style.transform = 'translateX(-50%) translateY(-60px) scale(1.12) rotate(0deg)';
+                      } else { // Non-active cards in the fan
+                          card.style.pointerEvents = 'none';
+                          const newVisualState = (centerIndex + displayOffset + totalCards) % totalCards; // Find its new visual slot in the fan
+                          card.style.zIndex = totalCards - Math.abs(displayOffset); // Closer cards higher z-index
+                          card.style.opacity = (Math.abs(displayOffset) < 4) ? 1 : 0; // Hide cards too far back
+                          // Apply transform based on newVisualState
+                          switch(newVisualState) {
+                                case 0: card.style.transform = `translateX(-50%) rotate(-45deg)`; break;
+                                case 1: card.style.transform = `translateX(-50%) rotate(-30deg)`; break;
+                                case 2: card.style.transform = `translateX(-50%) rotate(-15deg)`; break;
+                                // case 3: is active
+                                case 4: card.style.transform = `translateX(-50%) rotate(15deg)`; break;
+                                case 5: card.style.transform = `translateX(-50%) rotate(30deg)`; break;
+                                case 6: card.style.transform = `translateX(-50%) rotate(45deg)`; break;
+                                default: card.style.transform = `translateX(-50%) rotate(45deg)`; card.style.opacity = 0; // Hide invalid states
+                           }
+                           if (Math.abs(displayOffset) >= 4) card.classList.add('hidden-deep'); // Mark far cards
+                      }
+                 });
+
+                 if (currentCardIndex >= totalCards) stackContainer.classList.add('completed'); else stackContainer.classList.remove('completed');
+             };
+
+             // Click listener for the container
+             stackContainer.addEventListener('click', (event) => {
+                 const activeCard = stackContainer.querySelector('.feature-card.active');
+
+                 if (currentCardIndex >= totalCards) { // Reset if completed
+                     currentCardIndex = 0;
+                     cards.forEach((card, index) => applyInitialStyles(card, index)); // Reset styles first
+                     updateCardStack(true); // True to activate center card
+                     return;
+                 }
+
+                 // Only proceed if the click is on the currently active card
+                 if (activeCard && (event.target === activeCard || activeCard.contains(event.target))) {
+                     if (!activeCard.classList.contains('dismissed')) {
+                         activeCard.classList.add('dismissed');
+                         activeCard.classList.remove('active'); // Remove active state visually
+
+                         const transitionDuration = 400; // Match CSS transition
+                         setTimeout(() => {
+                            activeCard.classList.add('finished'); // Mark as finished after transition
+                            activeCard.classList.remove('dismissed');
+                            currentCardIndex++;
+                            updateCardStack(); // Update stack to show next active card
+                         }, transitionDuration + 50); // Add slight buffer
+                     }
+                 }
+             });
+
+            // Initial setup
+            cards.forEach(applyInitialStyles); // Apply initial styles based on data-initial-state
+            updateCardStack(true); // Activate center card (state 3) initially
+        }
+
+
+        // --- Footer Year ---
+        const currentYearSpan = document.getElementById('current-year');
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
+
+    </script>
+
+</body>
+</html>

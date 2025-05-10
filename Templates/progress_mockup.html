@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Module - EnginSync</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* --- Base Theme Variables (Derived from dashboard.html - RCB Theme) --- */
+        :root {
+            /* Light Mode Base */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-accent: #111111; /* Used for sidebar, maybe header */
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --accent-red: #D81B27;
+            --accent-gold: #FFC72C;
+            --accent-black: #111111; /* Used for text on gold bg */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --border-color: #e0e0e0;
+            --card-bg: var(--bg-primary);
+        }
+
+        /* --- Global Styles (Derived from dashboard.html) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: 1.3; color: var(--text-primary); margin-bottom: 0.75em; }
+        h1 { font-size: 2rem; margin-bottom: 1em; }
+        h2 { font-size: 1.6rem; margin-bottom: 1em; border-bottom: 2px solid var(--border-color); padding-bottom: 0.4em; }
+        h3 { font-size: 1.3rem; }
+        h4 { font-size: 1.1rem; color: var(--text-secondary); }
+
+        a { text-decoration: none; color: var(--accent-red); transition: color 0.3s ease; }
+        a:hover { color: var(--accent-gold); }
+        p { margin-bottom: 1em; color: var(--text-secondary); }
+
+        .container {
+             max-width: 1200px;
+             margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            text-align: center;
+        }
+        .btn-primary { /* Gold Button */
+            background-color: var(--accent-gold);
+            color: var(--accent-black);
+        }
+        .btn-primary:hover {
+            background-color: #e6b325;
+            transform: translateY(-2px);
+        }
+        .btn-secondary { /* Red Button */
+            background-color: var(--accent-red);
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #c01822;
+            transform: translateY(-2px);
+        }
+        .btn-filter {
+             background-color: var(--bg-secondary);
+             color: var(--text-secondary);
+             border: 1px solid var(--border-color);
+             padding: 8px 15px;
+             border-radius: 15px;
+             font-size: 0.9rem;
+             margin-right: 10px;
+        }
+        .btn-filter:hover {
+            background-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        /* --- Card Styles (Derived from dashboard.html) --- */
+        .widget-card, .content-section {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            margin-bottom: 30px;
+        }
+
+        /* --- Progress Module Specific Styles --- */
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: var(--bg-secondary);
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+            margin-top: 5px;
+            margin-bottom: 15px; /* Add space below progress bars */
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px 0 0 10px; /* Make leading edge round */
+            transition: width 0.5s ease-in-out;
+            background-color: var(--accent-gold); /* Default gold */
+        }
+
+        .progress-goal .progress-bar { background-color: var(--success-color); }
+        .progress-deadline .progress-bar { background-color: var(--accent-red); }
+
+        .goal-item span, .skill-item span {
+            display: block;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+            font-size: 0.95rem;
+        }
+
+        .chart-container {
+            position: relative; /* Needed for chart responsiveness */
+            height: 280px; /* Default height */
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #fff; /* White background for charts */
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: var(--bg-primary);
+            box-shadow: 0 1px 5px var(--shadow-color);
+            border-radius: 6px;
+            overflow: hidden; /* Ensures border radius is applied */
+        }
+        .data-table th, .data-table td {
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 15px;
+            text-align: left;
+        }
+        .data-table th {
+            background-color: var(--bg-secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+        .data-table tbody tr:last-child td {
+             border-bottom: none;
+        }
+        .data-table tbody tr:hover {
+             background-color: #fdf9e5; /* Light gold hover */
+        }
+        .data-table .status-completed {
+            color: var(--success-color);
+            font-weight: 500;
+        }
+        .data-table .status-pending {
+             color: var(--accent-red);
+             font-style: italic;
+         }
+         .data-table .status-watched {
+             color: var(--text-secondary);
+         }
+
+         /* --- Responsive Adjustments --- */
+         @media (max-width: 768px) {
+             .progress-grid {
+                 grid-template-columns: 1fr;
+             }
+             h2 { font-size: 1.4rem; }
+             h3 { font-size: 1.2rem; }
+             .btn {
+                 padding: 8px 15px;
+                 font-size: 0.9rem;
+             }
+             .chart-container {
+                 height: 250px; /* Adjust height for smaller screens */
+             }
+         }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="content-section progress-module">
+            <h2><i class="fas fa-chart-line"></i> Progress Module Mockup</h2>
+
+            <!-- Dashboard Progress Widget Area -->
+            <div class="widget-card progress-widget">
+                <h3><i class="fas fa-tachometer-alt"></i> Your Progress Snapshot</h3>
+                <div class="progress-grid">
+                    <!-- Skill Mastery Chart -->
+                    <div class="skill-item">
+                        <h4><i class="fas fa-star"></i> Skill Mastery</h4>
+                        <div class="chart-container" style="height: 240px;">
+                             <canvas id="skillMasteryChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Goals & Deadlines -->
+                    <div class="goal-item">
+                        <h4><i class="fas fa-bullseye"></i> Current Goals & Deadlines</h4>
+                        <div class="progress-goal">
+                            <span>Complete Calculus Module 1</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                         <div class="progress-goal">
+                            <span>Read Physics Chapter 4</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                         <div class="progress-deadline">
+                            <span>Project: Thermodynamics Sim</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 40%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Progress View Section -->
+            <div class="detailed-progress-view content-section">
+                <h3><i class="fas fa-search-plus"></i> Detailed Progress Analysis</h3>
+                <div style="margin-bottom: 20px;">
+                     <button class="btn-filter"><i class="fas fa-filter"></i> Course: All</button>
+                     <button class="btn-filter"><i class="far fa-calendar-alt"></i> Time: Last 30 Days</button>
+                 </div>
+                 <div class="progress-grid">
+                     <div class="chart-container">
+                        <h4>Progress Over Time (Activities Completed)</h4>
+                        <canvas id="progressOverTimeChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h4>Assignment Completion Rate (%)</h4>
+                        <canvas id="completionRateChart"></canvas>
+                    </div>
+                 </div>
+
+                 <h4><i class="fas fa-history"></i> Recent Activity & Assignments</h4>
+                 <table class="data-table">
+                     <thead>
+                         <tr>
+                             <th>Date</th>
+                             <th>Activity/Assignment</th>
+                             <th>Duration/Score</th>
+                             <th>Status</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         <tr>
+                             <td>2025-04-08</td>
+                             <td>Calculus Practice Problems (Set 3)</td>
+                             <td>45 mins</td>
+                             <td class="status-completed">Completed</td>
+                         </tr>
+                         <tr>
+                             <td>2025-04-07</td>
+                             <td>Physics Lecture: Kinematics</td>
+                             <td>60 mins</td>
+                             <td class="status-watched">Watched</td>
+                         </tr>
+                         <tr>
+                             <td>2025-04-06</td>
+                             <td>Assignment 1: Mechanics</td>
+                             <td>85%</td>
+                             <td class="status-completed">Graded</td>
+                         </tr>
+                          <tr>
+                             <td>2025-04-05</td>
+                             <td>Chemistry Lab Simulation</td>
+                             <td>--</td>
+                             <td class="status-pending">Pending</td>
+                         </tr>
+                     </tbody>
+                 </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Mock Data
+        const skillMasteryData = {
+            labels: ['Calculus', 'Linear Algebra', 'Thermodynamics', 'Statics', 'Programming', 'Circuits'],
+            datasets: [{
+                label: 'Current Mastery',
+                data: [75, 60, 80, 55, 90, 70],
+                backgroundColor: 'rgba(255, 199, 44, 0.3)', // Accent Gold Transparent
+                borderColor: 'rgba(255, 199, 44, 1)', // Accent Gold Solid
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(255, 199, 44, 1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(255, 199, 44, 1)'
+            }]
+        };
+
+        const progressOverTimeData = {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+            datasets: [{
+                label: 'Activities Completed',
+                data: [5, 8, 10, 7, 12, 15],
+                fill: false,
+                borderColor: '#D81B27', // Accent Red
+                tension: 0.1
+            }]
+        };
+
+        const completionRateData = {
+            labels: ['Assign 1', 'Quiz 1', 'Assign 2', 'Lab 1', 'Quiz 2', 'Assign 3'],
+            datasets: [{
+                label: 'Score (%)',
+                data: [85, 92, 78, 95, 88, null], // Example with a pending assignment
+                backgroundColor: [
+                    'rgba(216, 27, 39, 0.7)', // Accent Red slightly transparent
+                    'rgba(40, 167, 69, 0.7)', // Success Green
+                    'rgba(216, 27, 39, 0.7)',
+                    'rgba(40, 167, 69, 0.7)',
+                    'rgba(40, 167, 69, 0.7)',
+                    'rgba(200, 200, 200, 0.7)' // Grey for pending
+                ],
+                borderColor: [
+                     '#D81B27',
+                     '#28a745',
+                     '#D81B27',
+                     '#28a745',
+                     '#28a745',
+                     '#ccc'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Chart Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctxSkill = document.getElementById('skillMasteryChart');
+            if (ctxSkill) {
+                 new Chart(ctxSkill, {
+                    type: 'radar',
+                    data: skillMasteryData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                                grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                                pointLabels: { font: { size: 11 } },
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                            }
+                        }
+                    }
+                });
+            }
+
+            const ctxProgress = document.getElementById('progressOverTimeChart');
+             if (ctxProgress) {
+                 new Chart(ctxProgress, {
+                    type: 'line',
+                    data: progressOverTimeData,
+                     options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                         plugins: { legend: { display: false } },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                suggestedMax: 20
+                            }
+                        }
+                    }
+                });
+             }
+
+             const ctxCompletion = document.getElementById('completionRateChart');
+            if (ctxCompletion) {
+                new Chart(ctxCompletion, {
+                    type: 'bar',
+                    data: completionRateData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                suggestedMax: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+    </script>
+
+</body>
+</html>

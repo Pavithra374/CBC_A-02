@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRise - Power Play Your Engineering Studies!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* --- Theme Variables (RCB Theme - Enhanced) --- */
+        :root {
+            /* Light Mode Base */
+            --bg-primary: #ffffff; --bg-secondary: #f5f5f5; --bg-accent: #111111;
+            --text-primary: #111111; --text-secondary: #555555; --text-on-dark: #ffffff;
+            --text-on-red: #ffffff; --accent-red: #D81B27; --accent-red-darker: #a7161f; /* Added */
+            --accent-gold: #FFC72C; --accent-gold-darker: #d9a824; /* Added */
+            --accent-black: #111111; --shadow-color: rgba(0, 0, 0, 0.1);
+            --shadow-color-hover: rgba(0, 0, 0, 0.2); --shadow-color-card: rgba(0, 0, 0, 0.08);
+            --shadow-color-scrolled: rgba(0, 0, 0, 0.12);
+            --border-color: #e0e0e0; --feature-bg: #ffffff; --feature-icon-color: var(--accent-red);
+            --success-color: #28a745; --error-color: #dc3545; --info-color: #17a2b8; --warning-color: #ffc107;
+
+            /* Gradients */
+            --hero-gradient: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-black) 100%);
+            --cta-gradient: linear-gradient(135deg, var(--accent-gold) 0%, var(--bg-accent) 90%); /* This is still defined but not used by CTA now */
+            --button-gradient: linear-gradient(45deg, var(--accent-gold) 0%, var(--accent-gold-darker) 100%);
+            --button-hover-gradient: linear-gradient(45deg, var(--accent-gold-darker) 0%, var(--accent-gold) 100%);
+            --feature-card-gradient: linear-gradient(145deg, var(--feature-bg) 0%, #f9f9f9 100%);
+            --feature-card-hover-gradient: linear-gradient(145deg, #ffffff 0%, #fef0c5 120%); /* Gold tint */
+
+            --hero-text-color: var(--text-on-red); --hero-highlight: var(--accent-gold);
+            --link-color: var(--accent-red); --link-hover-color: var(--accent-gold);
+            --button-primary-text: var(--accent-black);
+            --navbar-bg: var(--accent-black);
+            --navbar-link-color: var(--text-on-dark); --navbar-link-hover-color: var(--accent-gold);
+            --navbar-logo-color: var(--accent-gold); --footer-bg: var(--bg-accent);
+            --footer-text-color: #f5f5f5; --footer-link-color: var(--accent-gold);
+            --footer-link-hover-color: #ffffff; --cta-text-color: var(--text-on-dark); /* Check contrast on new gradient */
+            --cta-title-color: var(--accent-gold); /* Check contrast on new gradient */ --transition-speed: 0.3s;
+            --transition-bezier: cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-slow: 0.6s; --transition-bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Added */
+            --neutral-gray: #aaaaaa;
+            --theme-toggle-color-light: var(--accent-gold);
+            --theme-toggle-hover-light: var(--accent-red);
+            --flash-bg-error: rgba(220, 53, 69, 0.1); --flash-border-error: var(--error-color);
+            --flash-bg-success: rgba(40, 167, 69, 0.1); --flash-border-success: var(--success-color);
+            --flash-bg-info: rgba(23, 162, 184, 0.1); --flash-border-info: var(--info-color);
+            --flash-bg-warning: rgba(255, 193, 7, 0.1); --flash-border-warning: var(--warning-color);
+        }
+
+        body.dark-mode {
+            --bg-primary: #111111; --bg-secondary: #1a1a1a; --bg-accent: #050505; /* Slightly darker */
+            --text-primary: #f0f0f0; --text-secondary: #adb5bd; --text-on-dark: #f0f0f0;
+            --text-on-red: #f0f0f0; --accent-red: #ff4d4d; --accent-red-darker: #e63939;
+            --accent-gold: #FFD700; --accent-gold-darker: #e0bd00;
+            --accent-black: #111111; --shadow-color: rgba(0, 0, 0, 0.3);
+            --shadow-color-hover: rgba(0, 0, 0, 0.5); --shadow-color-card: rgba(0, 0, 0, 0.25);
+            --shadow-color-scrolled: rgba(0, 0, 0, 0.4);
+            --border-color: #444444; --feature-bg: #2a2a2a; --feature-icon-color: var(--accent-gold);
+             --success-color: #4caf50; --error-color: #cf6679; --info-color: #4dd0e1; --warning-color: #ffecb3;
+
+            /* Dark Mode Gradients */
+            --hero-gradient: linear-gradient(135deg, #3a0a0f 0%, #000000 100%); /* Darker red start */
+            --cta-gradient: linear-gradient(135deg, var(--accent-gold-darker) 0%, var(--bg-accent) 90%); /* This is still defined but not used by CTA now */
+            --button-gradient: linear-gradient(45deg, var(--accent-gold) 0%, var(--accent-gold-darker) 100%);
+            --button-hover-gradient: linear-gradient(45deg, var(--accent-gold-darker) 0%, var(--accent-gold) 100%);
+            --feature-card-gradient: linear-gradient(145deg, var(--feature-bg) 0%, #333333 100%);
+            --feature-card-hover-gradient: linear-gradient(145deg, #3a3a3a 0%, #4d421d 120%); /* Dark gold tint */
+
+            --hero-text-color: var(--text-on-red);
+            --hero-highlight: var(--accent-gold); --link-color: var(--accent-red);
+            --link-hover-color: var(--accent-gold);
+            --button-primary-text: var(--accent-black);
+            --navbar-bg: var(--bg-accent); --navbar-link-color: var(--text-primary);
+            --navbar-link-hover-color: var(--accent-gold); --navbar-logo-color: var(--accent-gold);
+            --footer-bg: var(--bg-accent); --footer-text-color: #aaaaaa;
+            --footer-link-color: var(--accent-gold); --footer-link-hover-color: var(--text-primary);
+            --cta-text-color: var(--text-on-dark); /* Check contrast on new gradient */
+            --cta-title-color: var(--accent-gold); /* Check contrast on new gradient */ --neutral-gray: #666666;
+            --theme-toggle-color-dark: var(--accent-red);
+            --theme-toggle-hover-dark: var(--accent-gold);
+            --flash-bg-error: rgba(207, 102, 121, 0.15); --flash-border-error: var(--error-color);
+            --flash-bg-success: rgba(40, 167, 69, 0.15); --flash-border-success: var(--success-color);
+            --flash-bg-info: rgba(23, 162, 184, 0.15); --flash-border-info: var(--info-color);
+            --flash-bg-warning: rgba(255, 193, 7, 0.15); --flash-border-warning: var(--warning-color);
+        }
+
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+        body { font-family: 'Poppins', sans-serif; line-height: 1.6; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; overflow-x: hidden; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 80px 0; border-bottom: 1px solid var(--border-color); transition: border-color var(--transition-speed) ease; position: relative; /* Needed for potential absolute elements */ }
+        section:last-of-type { border-bottom: none; }
+        h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: 1.3; color: var(--text-primary); transition: color var(--transition-speed) ease; }
+        h1 { font-size: clamp(2.2rem, 5vw, 3.2em); margin-bottom: 0.75em; }
+        h2 { font-size: clamp(1.8rem, 4vw, 2.3em); margin-bottom: 1.2em; }
+        h3 { font-size: clamp(1.1rem, 2.5vw, 1.3em); margin-bottom: 0.5em; }
+        p { margin-bottom: 1em; color: var(--text-secondary); font-size: clamp(0.95rem, 2vw, 1.05rem); transition: color var(--transition-speed) ease; }
+        a { color: var(--link-color); text-decoration: none; transition: color var(--transition-speed) ease; font-weight: 500; }
+        a:hover { color: var(--link-hover-color); }
+        body.dark-mode .problem-solution p { color: var(--text-primary); }
+
+        /* Enhanced Button Styles */
+        .btn { display: inline-block; padding: 14px 32px; /* Slightly larger */ border-radius: 30px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all var(--transition-speed) var(--transition-bezier); cursor: pointer; border: none; box-shadow: 0 5px 12px var(--shadow-color); position: relative; /* For magnetic effect */ overflow: hidden; /* Optional: for potential inner effects */ }
+        .btn-primary { background: var(--button-gradient); color: var(--button-primary-text); }
+        .btn-primary:hover { background: var(--button-hover-gradient); color: var(--button-primary-text); box-shadow: 0 8px 18px var(--shadow-color-hover); transform: translateY(-4px) scale(1.04); /* Enhanced hover pop */ }
+        /* Style for magnetic effect (JS will handle transform) */
+        .magnetic-button { will-change: transform; }
+
+        /* --- Header/Navbar --- */
+        .navbar { background-color: var(--navbar-bg); padding: 15px 0; position: fixed; width: 100%; top: 0; left: 0; z-index: 1000; box-shadow: 0 3px 12px var(--shadow-color); transition: background-color var(--transition-speed) ease, padding var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
+        .navbar.scrolled { padding: 10px 0; background-color: rgba(0, 0, 0, 0.8); /* Darker, slightly transparent */ backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); /* Glassmorphism */ box-shadow: 0 5px 15px var(--shadow-color-scrolled); }
+        body.dark-mode .navbar.scrolled { background-color: rgba(5, 5, 5, 0.8); } /* Dark mode scrolled bg */
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .navbar .logo { font-size: 1.8em; font-weight: 700; color: var(--navbar-logo-color); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); transition: color var(--transition-speed) ease; display: flex; align-items: center; gap: 10px; }
+        .rcb-logo { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-gold); box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: width var(--transition-speed) ease, height var(--transition-speed) ease, transform 0.3s var(--transition-bounce); /* Added transform transition */ }
+        .navbar .logo:hover .rcb-logo { transform: rotate(-10deg) scale(1.1); } /* Logo hover effect */
+        .navbar.scrolled .rcb-logo { width: 40px; height: 40px; }
+        .navbar .nav-links ul { list-style: none; display: flex; align-items: center; gap: 5px; }
+        .navbar .nav-links ul li { margin-left: 20px; }
+        .navbar .nav-links ul li a { color: var(--navbar-link-color); font-weight: 500; padding-bottom: 5px; position: relative; transition: color var(--transition-speed) ease; font-size: 0.95rem; }
+        .navbar .nav-links ul li a::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); /* Center align */ width: 0; height: 2px; background-color: var(--accent-gold); transition: width var(--transition-speed) var(--transition-bezier); }
+        .navbar .nav-links ul li a:hover { color: var(--navbar-link-hover-color); }
+        .navbar .nav-links ul li a:hover::after { width: 100%; }
+
+        #theme-toggle { background: none; border: none; color: var(--theme-toggle-color-light); font-size: 1.5em; padding: 0 5px; border-radius: 0; cursor: pointer; transition: color 0.3s ease, transform 0.3s var(--transition-bounce); line-height: 1; margin-left: 15px; width: auto; height: auto; display: flex; align-items: center; justify-content: center; }
+        #theme-toggle:hover { color: var(--theme-toggle-hover-light); transform: scale(1.1) rotate(15deg); }
+        body.dark-mode #theme-toggle { color: var(--theme-toggle-color-dark); }
+        body.dark-mode #theme-toggle:hover { color: var(--theme-toggle-hover-dark); transform: scale(1.1) rotate(-15deg); }
+
+        /* --- Hero Section Styling --- */
+        .hero {
+            color: var(--hero-text-color);
+            padding: 180px 0 120px 0; /* More padding */
+            text-align: center;
+            position: relative; /* Needed for particle container */
+            overflow: hidden;
+            background: var(--hero-gradient); /* Apply gradient */
+            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+        }
+        /* Particle container */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0; /* Behind content */
+        }
+        .hero .container { position: relative; z-index: 1; display: block; text-align: center; } /* Ensure content is above particles */
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 3.8em); margin-bottom: 25px; line-height: 1.2; color: var(--hero-text-color); text-shadow: 0 4px 8px rgba(0,0,0,0.5); transition: color var(--transition-speed) ease; }
+        .hero h1 span#typed-text { color: var(--hero-highlight); text-shadow: 0 3px 6px rgba(0,0,0,0.6); transition: color var(--transition-speed) ease; display: inline; position: relative; }
+        .hero h1 span#typed-text::after { content: '|'; position: absolute; right: -10px; bottom: 0; animation: blink 1s step-end infinite; color: var(--hero-highlight); opacity: 1; }
+        @keyframes blink { from, to { opacity: 1; } 50% { opacity: 0; } }
+        body.dark-mode .hero h1 span#typed-text::after { color: var(--accent-gold); }
+
+        .hero p { font-size: 1.2em; /* Slightly larger */ margin-bottom: 45px; max-width: 750px; margin-left: auto; margin-right: auto; opacity: 0.95; color: var(--hero-text-color); transition: color var(--transition-speed) ease; }
+        body.dark-mode .hero p { color: var(--text-secondary); }
+        .hero .btn-primary { background: var(--button-gradient); } /* Use gradient */
+        .hero .btn-primary:hover { background: var(--button-hover-gradient); transform: translateY(-4px) scale(1.04); }
+
+        /* --- Features Section --- */
+        #features { background-color: var(--bg-secondary); position: relative; padding: 90px 0; overflow: hidden; transition: background-color var(--transition-speed) ease; }
+        #features .container-fullwidth { max-width: 100%; padding: 0; text-align: center; }
+        #features .section-title { margin-bottom: 60px; font-size: 2.4em; color: var(--accent-red); transition: color var(--transition-speed) ease; display: block; width: 100%; text-align: center; }
+        body.dark-mode #features .section-title { color: var(--accent-red); }
+        .features-loop-container { width: 100%; overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+        @keyframes horizontalLoop { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+        .features-loop-track { display: flex; width: calc((340px + 30px) * 7 * 2); animation: horizontalLoop 30s linear infinite; will-change: transform; /* Increased duration */ }
+        .feature-card-loop {
+            background: var(--feature-card-gradient); /* Use gradient */
+            padding: 25px 30px; border-radius: 15px; /* Slightly more rounded */
+            box-shadow: 0 8px 20px var(--shadow-color-card); flex-shrink: 0;
+            width: 340px; height: 190px; margin-right: 30px; display: flex; gap: 20px;
+            align-items: center; border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) var(--transition-bezier), background var(--transition-speed) ease; /* Added background transition */
+            transform-origin: center center;
+        }
+        .feature-card-loop:hover {
+            border-color: var(--accent-gold);
+            background: var(--feature-card-hover-gradient); /* Hover gradient */
+            box-shadow: 0 12px 25px var(--shadow-color-hover);
+            transform: translateY(-5px) scale(1.02); /* Subtle scale */
+        }
+        .feature-card-loop .icon {
+            font-size: 2.8rem; flex-shrink: 0; color: var(--feature-icon-color);
+            transition: color var(--transition-speed) ease, transform 0.4s var(--transition-bounce); /* Icon transition */
+        }
+        .feature-card-loop:hover .icon {
+             transform: scale(1.1) rotate(-10deg); /* Icon animation */
+         }
+        .feature-card-loop .feature-content { text-align: left; flex-grow: 1; }
+        .feature-card-loop .feature-content h3 { margin-bottom: 5px; color: var(--text-primary); font-size: 1.15rem; transition: color var(--transition-speed) ease;}
+        .feature-card-loop .feature-content p { margin-bottom: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; transition: color var(--transition-speed) ease;}
+
+        /* --- Problem/Solution Section --- */
+        #problem-solution { background-color: var(--bg-primary); transition: background-color var(--transition-speed) ease; }
+        #problem-solution .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 60px; align-items: start; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        #problem-solution h2.section-title { text-align: left; grid-column: auto; font-size: 2.1em;}
+        #problem-solution h3 { color: var(--accent-red); margin-bottom: 15px; font-size: 1.6em; transition: color var(--transition-speed) ease;}
+        #problem-solution ul { list-style: none; padding-left: 0; }
+        #problem-solution ul li { margin-bottom: 18px; /* Increased spacing */ position: relative; padding-left: 35px; line-height: 1.5; color: var(--text-primary); transition: color var(--transition-speed) ease, transform var(--transition-speed) ease; }
+        #problem-solution ul li:hover { transform: translateX(8px); color: var(--accent-red); /* Highlight text on hover */ }
+        body.dark-mode #problem-solution ul li { color: var(--text-primary); }
+        body.dark-mode #problem-solution ul li:hover { color: var(--accent-red); }
+        .problem-list li::before, .solution-list li::before {
+             content: ''; /* Use background image or keep text */
+             position: absolute; left: 0; top: 5px; color: var(--error-color);
+             font-weight: bold; font-size: 1.4em;
+             transition: color var(--transition-speed) ease, transform 0.4s var(--transition-bounce); /* Enhanced icon transition */
+             display: flex; align-items: center; justify-content: center;
+             width: 22px; height: 22px; /* Make space for icon anim */
+             text-align: center;
+         }
+        .problem-list li::before { content: '✕'; color: var(--error-color); }
+        .solution-list li::before { content: '✓'; color: var(--success-color); }
+        #problem-solution ul li:hover::before {
+             transform: scale(1.3) rotate(15deg); /* Animate icon on hover */
+             color: var(--accent-gold); /* Change icon color on hover */
+         }
+
+        /* --- CTA Section --- */
+        #cta {
+            color: var(--cta-text-color);
+            text-align: center;
+            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+            /* --- MODIFICATION HERE --- */
+            background: var(--hero-gradient); /* Use hero gradient instead of --cta-gradient */
+            /* --- END MODIFICATION --- */
+            padding: 90px 0;
+        }
+        #cta .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        #cta .section-title { color: var(--cta-title-color); font-size: 2.3em; margin-bottom: 25px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); transition: color var(--transition-speed) ease; }
+        /* Ensure text color contrasts well with the new red/black background */
+        #cta p { font-size: 1.2em; margin-bottom: 40px; opacity: 0.9; max-width: 650px; margin-left: auto; margin-right: auto; color: var(--cta-text-color); transition: color var(--transition-speed) ease; }
+        .login-prompt { margin-top: 30px; font-size: 1em; color: var(--footer-text-color); } /* Adjust if needed for contrast */
+        .login-link { color: var(--accent-red); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: color 0.3s ease, transform 0.3s ease; }
+        .login-link:hover { color: var(--accent-gold); transform: translateY(-2px); }
+        body.dark-mode .login-link { color: var(--accent-red); }
+        body.dark-mode .login-link:hover { color: var(--accent-gold); }
+        .login-link i { font-size: 1.1em; transition: transform 0.3s ease; }
+        .login-link:hover i { transform: translateX(3px); }
+
+        /* --- Footer --- */
+        footer { background-color: var(--footer-bg); color: var(--footer-text-color); text-align: center; padding: 35px 0; font-size: 0.9em; transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; border-top: 1px solid var(--border-color); }
+        footer .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        footer p { margin-bottom: 10px; color: var(--footer-text-color); transition: color var(--transition-speed) ease;}
+        footer a { color: var(--footer-link-color); font-weight: 500; transition: color var(--transition-speed) ease; }
+        footer a:hover { color: var(--footer-link-hover-color); text-decoration: underline; }
+
+         /* --- Flashed Messages --- */
+         .flash-messages { padding: 0 20px; max-width: 1100px; margin: 10px auto; }
+         .alert { padding: 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid transparent; font-size: 0.95em; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
+         .alert-error { color: var(--error-color); background-color: var(--flash-bg-error); border-color: var(--flash-border-error); }
+         .alert-success { color: var(--success-color); background-color: var(--flash-bg-success); border-color: var(--flash-border-success); }
+         .alert-info { color: var(--info-color); background-color: var(--flash-bg-info); border-color: var(--flash-border-info); }
+         .alert-warning { color: var(--warning-color); background-color: var(--flash-bg-warning); border-color: var(--flash-border-warning); }
+         body.dark-mode .alert-error { color: #ffaaaa; }
+         body.dark-mode .alert-success { color: #aaffaa; }
+         body.dark-mode .alert-info { color: #aae0ff; }
+         body.dark-mode .alert-warning { color: #fff0aa; }
+
+        /* --- Scroll Animation Styles (Enhanced) --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px) rotate(-2deg); /* Start lower and slightly rotated */
+            transition: opacity var(--transition-slow) ease-out, transform calc(var(--transition-slow) * 1.2) var(--transition-bounce); /* Use bounce */
+            will-change: opacity, transform;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg); /* Straighten out */
+        }
+        /* List item stagger animation */
+        #problem-solution ul li {
+            opacity: 0;
+            transform: translateX(-30px) scale(0.95); /* Start left and slightly smaller */
+            transition: opacity 0.5s ease-out, transform 0.6s var(--transition-bounce);
+            will-change: opacity, transform;
+        }
+         #problem-solution ul li.is-visible {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+         }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+             #problem-solution .container { grid-template-columns: 1fr; gap: 40px; }
+             .features-loop-container { -webkit-mask-image: none; mask-image: none; }
+             .hero { padding: 160px 0 100px 0; }
+         }
+        @media (max-width: 768px) {
+             html { scroll-padding-top: 120px; }
+             .navbar .container { flex-direction: column; align-items: flex-start; }
+             .navbar .logo { margin-bottom: 10px; font-size: 1.6em;}
+             .rcb-logo { width: 40px; height: 40px;}
+             .navbar.scrolled .rcb-logo { width: 35px; height: 35px;}
+             .navbar .nav-links { margin-top: 10px; width: 100%; }
+             .navbar .nav-links ul { padding-left: 0; justify-content: flex-start; flex-wrap: wrap; gap: 0px 15px; }
+             .navbar .nav-links ul li { margin: 5px 0; margin-left: 0;}
+             #theme-toggle { position: absolute; top: 18px; right: 15px; margin-left: 0;}
+             section { padding: 60px 0; }
+             .hero { padding-top: 140px; padding-bottom: 80px; }
+             .hero h1 { font-size: clamp(2rem, 7vw, 2.5em); } /* Adjust clamp */
+             .hero p { font-size: 1.05em; }
+             #features .section-title, #problem-solution h2.section-title, #cta .section-title { font-size: 1.9em; }
+             .feature-card-loop { width: 280px; height: 170px; margin-right: 20px; padding: 20px;}
+             .features-loop-track { width: calc((280px + 20px) * 7 * 2); animation-duration: 35s; } /* Slower loop */
+             .feature-card-loop .icon { font-size: 2rem;}
+             .feature-card-loop .feature-content h3 { font-size: 1rem;}
+             .feature-card-loop .feature-content p { font-size: 0.8rem;}
+             #problem-solution .container { gap: 30px; }
+             #problem-solution h2.section-title { text-align: center; }
+             .stat-highlight, .solution-highlight {
+                 padding: 15px;
+                 margin: 20px 0;
+             }
+             .stat-number {
+                 font-size: 2em;
+             }
+             .solution-text {
+                 font-size: 1.1em;
+             }
+         }
+        @media (max-width: 576px) {
+            html { scroll-padding-top: 110px; }
+            .hero { padding-top: 130px; }
+            .hero h1 { font-size: clamp(1.8rem, 8vw, 2.2em); } /* Adjust clamp */
+            .hero p { font-size: 1em; }
+            .btn { padding: 12px 25px; font-size: 0.9em; }
+            #problem-solution ul li { padding-left: 25px; }
+            .problem-list li::before, .solution-list li::before { font-size: 1.2em; top: 5px; }
+             .feature-card-loop { width: 250px; height: auto; min-height: 160px; margin-right: 15px;} /* Wider card */
+             .features-loop-track { width: calc((250px + 15px) * 7 * 2); animation-duration: 38s; }
+             #features { padding: 50px 0;}
+             .navbar .nav-links ul { justify-content: center; }
+             #theme-toggle { top: 15px; right: 10px;}
+             .flash-messages { padding: 0 10px; }
+             .alert { padding: 12px; font-size: 0.9rem; }
+        }
+
+        /* Enhanced Problem-Solution Styling */
+        .stat-highlight, .solution-highlight {
+            background: var(--feature-card-gradient);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+            border: 2px solid var(--accent-red);
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transform: translateY(0);
+            transition: all 0.3s var(--transition-bounce);
+        }
+
+        .stat-highlight:hover, .solution-highlight:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px var(--shadow-color-hover);
+            border-color: var(--accent-gold);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--accent-red);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px var(--shadow-color);
+        }
+
+        .stat-text {
+            font-size: 1.1em;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .solution-highlight {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .solution-icon {
+            font-size: 2em;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .solution-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #problem-solution ul li {
+            background: var(--bg-secondary);
+            padding: 15px 20px 15px 35px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px var(--shadow-color);
+            transform: translateX(0);
+            transition: all 0.3s var(--transition-bounce);
+        }
+
+        #problem-solution ul li:hover {
+            transform: translateX(10px);
+            background: var(--feature-card-hover-gradient);
+            box-shadow: 0 5px 15px var(--shadow-color-hover);
+        }
+
+        #problem-solution ul li::before {
+            top: 50%;
+            transform: translateY(-50%);
+            left: 10px;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            box-shadow: 0 2px 5px var(--shadow-color);
+        }
+
+        /* Enhanced Problem-Solution Styling */
+        #problem-solution .container {
+            gap: 40px;
+            max-width: 1200px;
+        }
+
+        #problem-solution .section-title {
+            text-align: center !important;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            background: linear-gradient(45deg, var(--accent-red), var(--accent-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-primary);
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: var(--feature-card-gradient);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            text-align: center;
+            border: 2px solid var(--accent-red);
+            box-shadow: 0 10px 25px var(--shadow-color);
+            transform: translateY(0);
+            transition: all 0.4s var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .highlight-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px var(--shadow-color-hover);
+            border-color: var(--accent-gold);
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .highlight-box:hover::before {
+            opacity: 1;
+            transform: rotate(45deg) translate(10%, 10%);
+        }
+
+        .highlight-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: 800;
+            color: var(--accent-red);
+            text-shadow: 2px 2px 4px var(--shadow-color);
+            margin: 10px 0;
+            background: linear-gradient(45deg, var(--accent-red), var(--accent-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-text, .solution-title {
+            font-size: 1.3em;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin: 5px 0;
+        }
+
+        .stat-subtext, .solution-subtext {
+            font-size: 1em;
+            color: var(--text-secondary);
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .solution-metric {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin: 10px 0;
+            background: linear-gradient(45deg, var(--accent-gold), var(--accent-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #problem-solution ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        #problem-solution ul li {
+            background: var(--bg-secondary);
+            padding: 20px 25px 20px 40px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transform: translateX(0);
+            transition: all 0.4s var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        #problem-solution ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent-red), var(--accent-gold));
+            transition: all 0.3s ease;
+        }
+
+        #problem-solution ul li:hover {
+            transform: translateX(10px) translateY(-2px);
+            background: var(--feature-card-hover-gradient);
+            box-shadow: 0 8px 20px var(--shadow-color-hover);
+        }
+
+        #problem-solution ul li:hover::before {
+            width: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .highlight-box {
+                padding: 20px;
+                min-height: 180px;
+            }
+
+            .stat-number, .solution-metric {
+                font-size: 2.2em;
+            }
+
+            .stat-text, .solution-title {
+                font-size: 1.1em;
+            }
+
+            #problem-solution ul li {
+                padding: 15px 20px 15px 35px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar" id="main-navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="static/img/vr.png" alt="EnginSync Logo" class="rcb-logo"> VRise
+            </a>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#problem-solution">Why VRise?</a></li>
+                    <li><a href="#cta">Get Started</a></li>
+                    <li>
+                        <button id="theme-toggle" title="Toggle theme"></button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="flash-messages-container container">
+             </div>
+
+        <section class="hero">
+             <div id="particles-js"></div>
+             <div class="container animate-on-scroll">
+                 <h1>Transform Your Interview Journey with <span id="typed-text"></span></h1>
+                 <p>Bridge the gap between academics and industry readiness. Experience immersive VR interview simulations, AI-powered training, and personalized preparation that adapts to your learning style.</p>
+                 <a href="#features" class="btn btn-primary magnetic-button">Discover Your Edge</a>
+             </div>
+        </section>
+
+        <section id="features" class="animate-on-scroll">
+            <div class="container-fullwidth">
+                <h2 class="section-title">Empowering Features</h2>
+                <div class="features-loop-container">
+                    <div class="features-loop-track" id="features-loop-track">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem-solution" class="problem-solution animate-on-scroll">
+            <div class="container">
+                <div class="problem-column">
+                    <h2 class="section-title">The Challenge</h2>
+                    <h3 class="section-subtitle">Beyond Academic Excellence</h3>
+                    <div class="highlight-box stat-highlight">
+                        <div class="highlight-icon">📊</div>
+                        <span class="stat-number" data-count="1.5">1.5M+</span>
+                        <span class="stat-text">Engineering Graduates Yearly in India</span>
+                        <span class="stat-subtext">Only a small percentage secure direct placements</span>
+                    </div>
+                    <ul class="problem-list">
+                        <li data-stagger="1">High CGPA but limited placement success</li>
+                        <li data-stagger="2">Lack of real-world interview exposure</li>
+                        <li data-stagger="3">Communication and confidence barriers</li>
+                        <li data-stagger="4">Technical application challenges</li>
+                        <li data-stagger="5">Interview anxiety and preparation gaps</li>
+                    </ul>
+                </div>
+                <div class="solution-column">
+                    <h2 class="section-title">VRise Solution</h2>
+                    <h3 class="section-subtitle">Smart & Adaptive Learning</h3>
+                    <div class="highlight-box solution-highlight">
+                        <div class="highlight-icon">🎯</div>
+                        <span class="solution-title">Complete Success Platform</span>
+                        <span class="solution-metric">100% Interview Ready</span>
+                        <span class="solution-subtext">AI-Powered & VR-Enhanced Training</span>
+                    </div>
+                    <ul class="solution-list">
+                        <li data-stagger="1">Immersive VR interview simulations</li>
+                        <li data-stagger="2">AI-personalized learning paths</li>
+                        <li data-stagger="3">Gamified skill development</li>
+                        <li data-stagger="4">Real-time progress tracking</li>
+                        <li data-stagger="5">Industry-aligned preparation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="cta-section animate-on-scroll">
+             <div class="container">
+                 <h2 class="section-title">Ready to Transform Your Interview Journey?</h2>
+                 <p>Join thousands of engineering students who are bridging the gap between academics and industry readiness. Experience the power of VR simulation and AI-driven preparation.</p>
+                 <a href="{{ url_for('signup') }}" class="btn btn-primary magnetic-button">Start Your Journey</a>
+                 <div class="login-prompt">
+                     Already on the path to success?
+                     <a href="{{ url_for('login') }}" class="login-link">
+                         <i class="fas fa-sign-in-alt"></i>&nbsp;Sign in
+                     </a>
+                 </div>
+             </div>
+        </section>
+    </main>
+
+    <footer>
+         <div class="container">
+             <p>&copy; <span id="current-year"></span> VRise . Designed with ❤️‍🔥 in Bengaluru.</p>
+             
+         </div>
+     </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Theme Toggle ---
+            const themeToggleButton = document.getElementById('theme-toggle');
+            const body = document.body;
+            const setTheme = (theme) => {
+                if (!themeToggleButton) return;
+                localStorage.setItem('theme', theme);
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode'); body.classList.remove('light-mode');
+                    themeToggleButton.innerHTML = '☀️'; themeToggleButton.setAttribute('title', 'Switch to light mode');
+                } else {
+                    body.classList.add('light-mode'); body.classList.remove('dark-mode');
+                    themeToggleButton.innerHTML = '🌙'; themeToggleButton.setAttribute('title', 'Switch to dark mode');
+                }
+                // Re-initialize particles on theme change if needed (colors might depend on CSS vars)
+                if (window.pJSDom && window.pJSDom.length > 0) {
+                    // particlesJS will automatically pick up new CSS variable values if config uses them
+                    // No need to destroy and recreate unless config is hardcoded
+                    // Destroy existing particles instance to re-read CSS variables correctly
+                     window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                     window.pJSDom = []; // Clear the array
+                     initParticles(); // Re-initialize
+                } else {
+                     initParticles(); // Initial load
+                }
+            };
+            const currentTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let initialTheme = 'light';
+            if (currentTheme) { initialTheme = currentTheme; } else if (prefersDark) { initialTheme = 'dark'; }
+            // Set theme *before* initializing particles
+            setTheme(initialTheme);
+            if (themeToggleButton) {
+                themeToggleButton.addEventListener('click', () => {
+                     setTheme(body.classList.contains('dark-mode') ? 'light' : 'dark');
+                 });
+             }
+
+
+            // --- Feature Data & Loop ---
+            const featuresData = [
+                { icon: '🎯', title: 'The Chase', desc: 'Find and apply to your dream job opportunities with personalized recommendations.' },
+                { icon: '⏰', title: 'Strategic Time Out', desc: 'AI-powered study planning and optimization for maximum learning efficiency.' },
+                { icon: '👔', title: 'Coach', desc: 'Expert guidance and practice for technical interviews with real-time feedback.' },
+                { icon: '💻', title: 'Training', desc: 'Master DSA and improve your problem-solving skills with structured practice.' },
+                { icon: '🎮', title: 'Gamification', desc: 'Stay motivated with points, achievements, and competitive challenges.' },
+                { icon: '🥽', title: 'VR Simulation', desc: 'Experience immersive interview practice in virtual reality environments.' }
+            ];
+            const featuresLoopTrack = document.getElementById('features-loop-track');
+            if (featuresLoopTrack) {
+                const allFeatures = [...featuresData, ...featuresData]; // Duplicate for seamless loop
+                featuresLoopTrack.innerHTML = ''; // Clear existing if any (safer for re-runs)
+                allFeatures.forEach(feature => {
+                    const card = document.createElement('div');
+                    card.classList.add('feature-card-loop');
+                    card.innerHTML = `<div class="icon">${feature.icon}</div> <div class="feature-content"><h3>${feature.title}</h3><p>${feature.desc}</p></div>`;
+                    featuresLoopTrack.appendChild(card);
+                });
+            }
+
+            // --- Footer Year ---
+            const currentYearSpan = document.getElementById('current-year');
+            if (currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
+
+            // --- Navbar Scroll Effect ---
+            const navbar = document.getElementById('main-navbar');
+            if (navbar) {
+                const scrollThreshold = 50;
+                const handleScroll = () => { window.scrollY > scrollThreshold ? navbar.classList.add('scrolled') : navbar.classList.remove('scrolled'); };
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                handleScroll(); // Check initial state
+            }
+
+            // --- Typewriter Effect ---
+            const typedTextSpan = document.getElementById('typed-text');
+            if (typedTextSpan) {
+                const textToType = "VRise"; let charIndex = 0; const typingSpeed = 120;
+                function type() { if (charIndex < textToType.length) { typedTextSpan.textContent += textToType.charAt(charIndex); charIndex++; setTimeout(type, typingSpeed); } }
+                typedTextSpan.textContent = ''; // Clear initially
+                setTimeout(type, 500); // Start typing after a short delay
+            }
+
+             // --- Intersection Observer for Scroll Animations ---
+             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+             const observerCallback = (entries, observer) => {
+                 entries.forEach((entry) => {
+                     if (entry.isIntersecting) {
+                        const target = entry.target;
+                        target.style.transitionDelay = '0ms'; // Reset delay if re-intersecting quickly
+                        if (target.tagName === 'LI' && target.dataset.stagger) {
+                             const delay = parseInt(target.dataset.stagger) * 100; // Stagger delay in ms
+                             // Use setTimeout for stagger, or direct class add with CSS transition-delay
+                             // Using setTimeout is often simpler
+                             setTimeout(() => target.classList.add('is-visible'), delay);
+                        } else {
+                            target.classList.add('is-visible');
+                        }
+                         // Optional: Stop observing after first animation
+                         // observer.unobserve(target);
+                     } else {
+                         // Optional: Remove class if you want animation to repeat on scroll up
+                          // entry.target.classList.remove('is-visible');
+                     }
+                 });
+             };
+             const observer = new IntersectionObserver(observerCallback, observerOptions);
+             document.querySelectorAll('.animate-on-scroll, #problem-solution ul li').forEach(el => {
+                if (el.tagName === 'LI') {
+                    // Add stagger property dynamically if needed, or rely on data-stagger attribute
+                    // For simplicity, assume data-stagger is present as in HTML
+                }
+                observer.observe(el)
+            });
+
+
+            // --- Particles.js Initialization ---
+            function initParticles() {
+                 // Ensure DOM is ready and styles are computed
+                 requestAnimationFrame(() => {
+                     const rootStyle = getComputedStyle(document.documentElement);
+                     const particleColorLight = rootStyle.getPropertyValue('--accent-red').trim() || '#D81B27';
+                     const particleColorDark = rootStyle.getPropertyValue('--accent-gold').trim() || '#FFD700';
+                     const linkColorLight = rootStyle.getPropertyValue('--accent-gold').trim() || '#FFC72C';
+                     const linkColorDark = rootStyle.getPropertyValue('--accent-red').trim() || '#ff4d4d';
+
+                     const isDarkMode = document.body.classList.contains('dark-mode');
+                     const particleColor = isDarkMode ? particleColorDark : particleColorLight;
+                     const lineColor = isDarkMode ? linkColorDark : linkColorLight;
+
+                     const particlesElement = document.getElementById('particles-js');
+                     if (!particlesElement) {
+                         console.error("Particles container #particles-js not found.");
+                         return;
+                     }
+
+                     particlesJS('particles-js', {
+                         "particles": {
+                             "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                             "color": { "value": particleColor }, // Use dynamic color
+                             "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" }, "polygon": { "nb_sides": 5 } },
+                             "opacity": { "value": 0.6, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
+                             "size": { "value": 3, "random": true, "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false } },
+                             "line_linked": { "enable": true, "distance": 150, "color": lineColor, "opacity": 0.4, "width": 1 }, // Use dynamic color
+                             "move": { "enable": true, "speed": 3, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 } }
+                         },
+                         "interactivity": {
+                             "detect_on": "canvas",
+                             "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                             "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 200, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } }
+                         },
+                         "retina_detect": true
+                     });
+                }); // end requestAnimationFrame
+            }
+             // Initial particle load is triggered by setTheme, which now includes initParticles
+
+             // --- Magnetic Button Effect ---
+             const magneticButtons = document.querySelectorAll('.magnetic-button');
+             const magneticStrength = 0.4; // How much it moves (0-1)
+             const distanceThreshold = 80; // Pixels away mouse activates effect
+
+             magneticButtons.forEach(button => {
+                let isHovering = false; // Track hover state
+
+                 button.addEventListener('mouseenter', () => { isHovering = true; });
+
+                 button.addEventListener('mousemove', (e) => {
+                     const rect = button.getBoundingClientRect();
+                     const buttonCenterX = rect.left + rect.width / 2;
+                     const buttonCenterY = rect.top + rect.height / 2;
+                     const mouseX = e.clientX;
+                     const mouseY = e.clientY;
+
+                     const distance = Math.sqrt(Math.pow(mouseX - buttonCenterX, 2) + Math.pow(mouseY - buttonCenterY, 2));
+                     const baseTransform = isHovering ? 'translateY(-4px) scale(1.04)' : ''; // Get base hover/non-hover state
+
+                     if (distance < distanceThreshold) {
+                         const deltaX = (mouseX - buttonCenterX) * magneticStrength;
+                         const deltaY = (mouseY - buttonCenterY) * magneticStrength;
+                         // Combine magnetic effect with base hover transform
+                         button.style.transform = `translate(${deltaX}px, ${deltaY}px) ${baseTransform}`;
+                     } else {
+                         // Reset magnetic effect, keep base transform
+                         button.style.transform = `translate(0px, 0px) ${baseTransform}`;
+                     }
+                 });
+
+                 button.addEventListener('mouseleave', () => {
+                     isHovering = false;
+                     // Smoothly return to original position (no hover effect)
+                     button.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
+                     button.style.transform = 'translate(0px, 0px)';
+                     // Remove temporary transition after animation
+                     setTimeout(() => {
+                          button.style.transition = ''; // Rely on main button transition again
+                     }, 300);
+                 });
+             });
+
+
+        }); // End DOMContentLoaded
+    </script>
+
+</body>
+</html>
