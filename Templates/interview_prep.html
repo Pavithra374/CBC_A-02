@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Prep with AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- Base Theme Variables (RCB Theme) --- */
+        :root {
+            /* Light Mode - RCB Inspired */
+            --bg-primary: #ffffff;          /* White */
+            --bg-secondary: #f5f5f5;       /* Light Grey */
+            --card-bg: #ffffff;           /* White Cards */
+            --text-primary: #111111;       /* Black */
+            --text-secondary: #555555;      /* Grey */
+            --accent-red: #D81B27;        /* RCB Red */
+            --accent-gold: #FFC72C;       /* RCB Gold */
+            --accent-black: #111111;      /* Black */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --success-color: #1D8348;     /* Green */
+            --error-color: #D81B27;        /* Red */
+            --info-color: #17a2b8;         /* Info Blue */
+            --border-color: #e0e0e0;
+            --input-bg: #ffffff;
+            --input-border: #cccccc;
+            --header-height: 60px;
+            --border-radius-lg: 12px;
+            --border-radius-md: 8px;
+        }
+        
+        body.dark-mode {
+            /* Dark Mode - RCB Inspired */
+            --bg-primary: #1a1a1a;      /* Dark primary */
+            --bg-secondary: #111111;    /* Dark secondary */
+            --card-bg: #1f1f1f;         /* Slightly lighter card */
+            --text-primary: #f0f0f0;     /* Light text */
+            --text-secondary: #cccccc;    /* Grey text */
+            --accent-red: #ff4d4d;      /* Brighter Red */
+            --accent-gold: #FFD700;     /* Brighter Gold */
+            --accent-black: #111111;    /* Dark black */
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --border-color: #444444;
+            --input-bg: #2a2a2a;
+            --input-border: #555555;
+        }
+
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        h1 i {
+            color: var(--accent-red);
+        }
+        
+        h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--accent-red);
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        a:hover {
+            color: var(--accent-gold);
+        }
+        
+        body.dark-mode a {
+            color: var(--accent-gold);
+        }
+        
+        body.dark-mode a:hover {
+            color: var(--accent-red);
+        }
+        
+        p {
+            margin-bottom: 1em;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 80px;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background-color: var(--bg-primary);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+        
+        /* --- Buttons --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 0.9rem;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #bb1720;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: var(--accent-gold);
+            color: var(--accent-black);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e6b325;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+        
+        .btn-back {
+            color: var(--text-primary);
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-back:hover {
+            background-color: var(--bg-secondary);
+            color: var(--accent-red);
+        }
+        
+        /* --- Theme Toggle --- */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            color: var(--accent-gold);
+            transition: color 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            color: var(--accent-red);
+        }
+        
+        body.dark-mode .theme-toggle {
+            color: var(--accent-red);
+        }
+        
+        body.dark-mode .theme-toggle:hover {
+            color: var(--accent-gold);
+        }
+        
+        /* --- Cards --- */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 2px 12px var(--shadow-color);
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .card-header h3 {
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        /* --- Interview Prep Specific Styles --- */
+        .interview-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+        }
+        
+        @media (max-width: 992px) {
+            .interview-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .nags-avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 4px solid var(--accent-gold);
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        
+        .nags-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .interviewer-profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .interviewer-profile h3 {
+            margin: 10px 0 5px;
+        }
+        
+        .interviewer-profile p {
+            font-style: italic;
+        }
+        
+        .interview-step {
+            display: none;
+        }
+        
+        .interview-step.active {
+            display: block;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--accent-gold);
+        }
+        
+        .upload-area i {
+            font-size: 40px;
+            color: var(--accent-red);
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent-gold);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 199, 44, 0.3);
+        }
+        
+        .question-card {
+            padding: 20px;
+            border-radius: var(--border-radius-md);
+            background-color: var(--card-bg);
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-red);
+        }
+        
+        .question-number {
+            font-weight: 700;
+            color: var(--accent-red);
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .recording-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-red);
+            font-weight: 500;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        .answer-transcript {
+            padding: 15px;
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius-md);
+            margin-top: 15px;
+        }
+        
+        .assessment-card {
+            border-left: 5px solid var(--accent-gold);
+            margin-bottom: 25px;
+        }
+        
+        .rating-stars {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+        
+        .rating-justification {
+            background-color: var(--bg-secondary);
+            padding: 15px;
+            border-radius: var(--border-radius-md);
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .rating-summary {
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius-md);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .average-rating {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--accent-red);
+        }
+        
+        .rating-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .progress-item {
+            margin-bottom: 15px;
+        }
+        
+        .progress-label {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+        
+        /* --- Additional Styles for Interview Prep --- */
+        .listening {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .assessment-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+        
+        .question-num {
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+        
+        .answer-section {
+            margin: 10px 0;
+        }
+        
+        .answer-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .answer-text {
+            background-color: var(--bg-secondary);
+            padding: 10px;
+            border-radius: var(--border-radius-md);
+            font-style: italic;
+        }
+        
+        .assessment-section {
+            margin-top: 15px;
+        }
+        
+        .answer-rating {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .star-rating {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+        }
+        
+        .assessment-feedback {
+            background-color: var(--bg-secondary);
+            padding: 10px;
+            border-radius: var(--border-radius-md);
+            border-left: 3px solid var(--accent-gold);
+        }
+        
+        .rating-summary {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .average-rating {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .rating-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+        }
+        
+        /* Additional styles for file upload */
+        .file-selected {
+            border-color: var(--accent-gold);
+            background-color: rgba(255, 199, 44, 0.1);
+        }
+        
+        #file-name-display {
+            background-color: var(--bg-secondary);
+            padding: 8px 12px;
+            border-radius: var(--border-radius-md);
+            margin-top: 10px;
+            display: inline-block;
+            color: var(--text-primary);
+        }
+        
+        .improvement-areas {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius-md);
+            border-left: 3px solid var(--accent-gold);
+        }
+        
+        .improvement-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--accent-gold);
+        }
+        
+        .improvement-list {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <a href="{{ back_url or url_for('dashboard') }}" class="btn-back" aria-label="Go Back">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <span class="header-title">Interview Prep with AI</span>
+        </div>
+        <div class="header-right">
+            <button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode">
+                🌙
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1><i class="fas fa-user-tie"></i> Interview Prep with Radhakrishnan</h1>
+        <p>Practice your interview skills with our AI interviewer . Get personalized questions and feedback based on your resume.</p>
+        
+        <div class="interview-layout">
+            <div class="interview-main">
+                <!-- Setup Step -->
+                <div id="setup-step" class="interview-step active">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-cog"></i> Interview Setup</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Let's prepare for your mock interview. Start by uploading your resume and defining the target job role.</p>
+                            
+                            <div class="upload-area" id="resume-upload-area">
+                                <i class="fas fa-file-upload"></i>
+                                <h3>Upload Resume (PDF)</h3>
+                                <p>Drag and drop your resume file here or click to browse</p>
+                                <input type="file" id="resume-file" accept=".pdf" style="display: none;">
+                                <button class="btn btn-primary mt-3" id="browse-resume">
+                                    <i class="fas fa-folder-open"></i> Browse Files
+                                </button>
+                                <div id="file-name-display" class="mt-3" style="display: none;">
+                                    <i class="fas fa-file-pdf"></i> <span id="pdf-filename">No file selected</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="job-role">Target Job Role</label>
+                                <input type="text" id="job-role" class="form-control" placeholder="e.g., Data Analyst">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="experience-level">Experience Level</label>
+                                <select id="experience-level" class="form-control">
+                                    <option value="Junior">Junior</option>
+                                    <option value="Mid">Mid</option>
+                                    <option value="Senior">Senior</option>
+                                </select>
+                            </div>
+                            
+                            <button id="generate-questions" class="btn btn-primary" disabled>
+                                <i class="fas fa-rocket"></i> Generate Questions & Start
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Interview Questions Step -->
+                <div id="interview-step" class="interview-step">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-question-circle"></i> <span id="question-number">Question 1 of 4</span></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="question-card">
+                                <div class="question-number">Question <span id="current-q-num">1</span></div>
+                                <div class="question-text" id="question-text">
+                                    Loading question...
+                                </div>
+                                <button id="ask-aloud" class="btn btn-outline">
+                                    <i class="fas fa-volume-up"></i> Ask Aloud
+                                </button>
+                            </div>
+                            
+                            <div class="audio-controls">
+                                <button id="start-recording" class="btn btn-primary">
+                                    <i class="fas fa-microphone"></i> Record Answer
+                                </button>
+                                <button id="stop-recording" class="btn btn-secondary" style="display: none;">
+                                    <i class="fas fa-stop"></i> Stop
+                                </button>
+                                <div class="recording-indicator" id="recording-indicator" style="display: none;">
+                                    <i class="fas fa-circle"></i> Recording...
+                                </div>
+                            </div>
+                            
+                            <div id="audio-player-container" style="display: none; margin-top: 20px;">
+                                <p>Your recorded answer:</p>
+                                <audio id="answer-audio" controls style="width: 100%;"></audio>
+                            </div>
+                            
+                            <div id="answer-transcript-container" style="display: none;">
+                                <h4>Your Transcribed Answer:</h4>
+                                <div class="answer-transcript" id="answer-transcript">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Assessment Step -->
+                <div id="assessment-step" class="interview-step">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-bar"></i> Final Assessment</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Here's how you performed in the mock interview with Mr. Nags:</p>
+                            
+                            <div class="rating-summary">
+                                <h3>Overall Performance</h3>
+                                <div class="average-rating" id="average-rating">0.0</div>
+                                <div class="rating-label" id="rating-label">Not Rated</div>
+                            </div>
+                            
+                            <h3>Question Reviews</h3>
+                            <div id="assessment-results"></div>
+                            
+                            <button id="restart-interview" class="btn btn-primary">
+                                <i class="fas fa-redo"></i> Start New Interview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interview-sidebar">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="interviewer-profile">
+                            <div class="nags-avatar">
+                                <img src="{{ url_for('static', filename='int.png') }}" alt="Mr. Nags" id="nags-avatar">
+                            </div>
+                            <h3>Radhakrishnan</h3>
+                            <p>AI Interview Specialist</p>
+                        </div>
+                        
+                        <div id="interview-progress" style="display: none;">
+                            <h4><i class="fas fa-tasks"></i> Interview Progress</h4>
+                            <div id="progress-bars"></div>
+                        </div>
+                        
+                        <div id="interview-tips">
+                            <h4><i class="fas fa-lightbulb"></i> Interview Tips</h4>
+                            <ul>
+                                <li>Speak clearly and at a moderate pace</li>
+                                <li>Use the STAR method for behavioral questions</li>
+                                <li>Provide specific examples from your experience</li>
+                                <li>Match your answers to the job requirements</li>
+                                <li>Be concise but thorough in your responses</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Theme Toggle Functionality ---
+        const body = document.body;
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggleBtn.innerHTML = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                themeToggleBtn.innerHTML = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+        
+        // Load theme preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let initialTheme = 'light';
+        
+        if (savedTheme) {
+            initialTheme = savedTheme;
+        } else if (prefersDark) {
+            initialTheme = 'dark';
+        }
+        
+        setTheme(initialTheme);
+        
+        themeToggleBtn.addEventListener('click', () => {
+            if (body.classList.contains('dark-mode')) {
+                setTheme('light');
+            } else {
+                setTheme('dark');
+            }
+        });
+        
+        // --- Interview Functionality ---
+        
+        // DOM Elements
+        const setupStep = document.getElementById('setup-step');
+        const interviewStep = document.getElementById('interview-step');
+        const assessmentStep = document.getElementById('assessment-step');
+        
+        const resumeUploadArea = document.getElementById('resume-upload-area');
+        const resumeUpload = document.getElementById('resume-file');
+        const browseResumeBtn = document.getElementById('browse-resume');
+        const jobRoleInput = document.getElementById('job-role');
+        const experienceSelect = document.getElementById('experience-level');
+        const generateQuestionsBtn = document.getElementById('generate-questions');
+        
+        const questionNumber = document.getElementById('question-number');
+        const currentQNum = document.getElementById('current-q-num');
+        const questionText = document.getElementById('question-text');
+        const askAloudBtn = document.getElementById('ask-aloud');
+        
+        const startRecordingBtn = document.getElementById('start-recording');
+        const stopRecordingBtn = document.getElementById('stop-recording');
+        const recordingIndicator = document.getElementById('recording-indicator');
+        const audioPlayerContainer = document.getElementById('audio-player-container');
+        const answerAudio = document.getElementById('answer-audio');
+        const answerTranscriptContainer = document.getElementById('answer-transcript-container');
+        const answerTranscript = document.getElementById('answer-transcript');
+        
+        const interviewProgress = document.getElementById('interview-progress');
+        const progressBars = document.getElementById('progress-bars');
+        
+        const assessmentResults = document.getElementById('assessment-results');
+        const averageRating = document.getElementById('average-rating');
+        const ratingLabel = document.getElementById('rating-label');
+        const restartInterviewBtn = document.getElementById('restart-interview');
+        
+        const nagsAvatar = document.getElementById('nags-avatar');
+        
+        // Interview state
+        let interviewState = {
+            questions: [],
+            currentQuestionIndex: 0,
+            answers: {},
+            assessments: {},
+            recordingStatus: false,
+            mediaRecorder: null,
+            audioChunks: [],
+            audioBlob: null,
+            audioURL: null,
+            complete: false
+        };
+        
+        // Check if form is valid to enable the generate questions button
+        function checkFormValidity() {
+            generateQuestionsBtn.disabled = !resumeUpload.files.length || !jobRoleInput.value.trim();
+        }
+        
+        resumeUpload.addEventListener('change', function() {
+            checkFormValidity();
+            
+            // Show filename when file is selected
+            if (resumeUpload.files.length > 0) {
+                const fileNameDisplay = document.getElementById('file-name-display');
+                const pdfFilename = document.getElementById('pdf-filename');
+                const fileName = resumeUpload.files[0].name;
+                
+                pdfFilename.textContent = fileName;
+                fileNameDisplay.style.display = 'block';
+                resumeUploadArea.classList.add('file-selected');
+            }
+        });
+        
+        jobRoleInput.addEventListener('input', checkFormValidity);
+        
+        browseResumeBtn.addEventListener('click', function() {
+            resumeUpload.click();
+        });
+        
+        // Handle dropping resume files
+        resumeUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            resumeUploadArea.classList.add('dragover');
+        });
+        
+        resumeUploadArea.addEventListener('dragleave', function() {
+            resumeUploadArea.classList.remove('dragover');
+        });
+        
+        resumeUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            resumeUploadArea.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length) {
+                resumeUpload.files = e.dataTransfer.files;
+                checkFormValidity();
+            }
+        });
+        
+        // Update question display
+        function updateQuestionDisplay() {
+            if (interviewState.questions.length === 0) return;
+            
+            const currentIndex = interviewState.currentQuestionIndex;
+            const totalQuestions = interviewState.questions.length;
+            
+            questionNumber.textContent = `Question ${currentIndex + 1} of ${totalQuestions}`;
+            currentQNum.textContent = currentIndex + 1;
+            questionText.textContent = interviewState.questions[currentIndex];
+            
+            // Show transcript if already answered
+            const currentQuestion = interviewState.questions[currentIndex];
+            if (interviewState.answers[currentQuestion]) {
+                answerTranscriptContainer.style.display = 'block';
+                answerTranscript.textContent = interviewState.answers[currentQuestion];
+                startRecordingBtn.disabled = true;
+            } else {
+                answerTranscriptContainer.style.display = 'none';
+                startRecordingBtn.disabled = false;
+            }
+            
+            // Update progress bars
+            updateProgressBars();
+        }
+        
+        // Initialize progress bars
+        function initializeProgressBars() {
+            progressBars.innerHTML = '';
+            if (!interviewState.questions.length) return;
+            
+            interviewProgress.style.display = 'block';
+            
+            for (let i = 0; i < interviewState.questions.length; i++) {
+                const progressItem = document.createElement('div');
+                progressItem.className = 'progress-item';
+                
+                const progressLabel = document.createElement('div');
+                progressLabel.className = 'progress-label';
+                progressLabel.textContent = `Question ${i + 1}`;
+                
+                const progressBar = document.createElement('div');
+                progressBar.className = 'progress-bar';
+                
+                const progressFill = document.createElement('div');
+                progressFill.className = 'progress-fill';
+                progressFill.id = `progress-fill-${i}`;
+                progressFill.style.width = '0%';
+                
+                progressBar.appendChild(progressFill);
+                progressItem.appendChild(progressLabel);
+                progressItem.appendChild(progressBar);
+                progressBars.appendChild(progressItem);
+            }
+        }
+        
+        // Update progress bars based on current state
+        function updateProgressBars() {
+            if (!interviewState.questions.length) return;
+            
+            for (let i = 0; i < interviewState.questions.length; i++) {
+                const progressFill = document.getElementById(`progress-fill-${i}`);
+                if (!progressFill) continue;
+                
+                const question = interviewState.questions[i];
+                
+                if (i < interviewState.currentQuestionIndex) {
+                    // Completed questions
+                    progressFill.style.width = '100%';
+                } else if (i === interviewState.currentQuestionIndex) {
+                    // Current question
+                    progressFill.style.width = interviewState.answers[question] ? '100%' : '50%';
+                } else {
+                    // Future questions
+                    progressFill.style.width = '0%';
+                }
+            }
+        }
+        
+        // Setup media recorder for audio recording
+        function setupMediaRecorder() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        interviewState.mediaRecorder = new MediaRecorder(stream);
+                        
+                        interviewState.mediaRecorder.ondataavailable = e => {
+                            if (e.data.size > 0) {
+                                interviewState.audioChunks.push(e.data);
+                            }
+                        };
+                        
+                        interviewState.mediaRecorder.onstop = () => {
+                            interviewState.audioBlob = new Blob(interviewState.audioChunks, { type: 'audio/wav' });
+                            interviewState.audioURL = URL.createObjectURL(interviewState.audioBlob);
+                            
+                            // Display the audio player
+                            audioPlayerContainer.style.display = 'block';
+                            answerAudio.src = interviewState.audioURL;
+                            
+                            // Process the audio via AJAX
+                            processAudio();
+                        };
+                    })
+                    .catch(err => {
+                        console.error('Error accessing microphone:', err);
+                        alert('Error accessing your microphone. Please check your browser permissions and try again.');
+                    });
+            } else {
+                alert('Audio recording is not supported in your browser.');
+            }
+        }
+        
+        // Start recording
+        startRecordingBtn.addEventListener('click', function() {
+            if (!interviewState.mediaRecorder) {
+                setupMediaRecorder();
+                return;
+            }
+            
+            interviewState.audioChunks = [];
+            interviewState.recordingStatus = true;
+            interviewState.mediaRecorder.start();
+            
+            startRecordingBtn.style.display = 'none';
+            stopRecordingBtn.style.display = 'inline-flex';
+            recordingIndicator.style.display = 'flex';
+            
+            // Animate Mr. Nags (optional visual feedback)
+            nagsAvatar.classList.add('listening');
+        });
+        
+        // Stop recording
+        stopRecordingBtn.addEventListener('click', function() {
+            if (interviewState.recordingStatus && interviewState.mediaRecorder) {
+                interviewState.recordingStatus = false;
+                interviewState.mediaRecorder.stop();
+                
+                stopRecordingBtn.style.display = 'none';
+                recordingIndicator.style.display = 'none';
+                
+                // Show loading indicator
+                startRecordingBtn.style.display = 'inline-flex';
+                startRecordingBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                startRecordingBtn.disabled = true;
+                
+                // Reset Mr. Nags animation
+                nagsAvatar.classList.remove('listening');
+            }
+        });
+        
+        // Process audio recording via AJAX
+        function processAudio() {
+            if (!interviewState.audioBlob) return;
+            
+            const formData = new FormData();
+            formData.append('audio', interviewState.audioBlob, 'answer.wav');
+            formData.append('question_index', interviewState.currentQuestionIndex);
+            
+            fetch('/record_interview_answer', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Store the transcript
+                    const currentQuestion = interviewState.questions[interviewState.currentQuestionIndex];
+                    interviewState.answers[currentQuestion] = data.transcript;
+                    
+                    // Display the transcript
+                    answerTranscriptContainer.style.display = 'block';
+                    answerTranscript.textContent = data.transcript;
+                    
+                    // Reset recording UI
+                    startRecordingBtn.innerHTML = '<i class="fas fa-microphone"></i> Record Answer';
+                    startRecordingBtn.disabled = true;
+                    
+                    // Move to next question or complete interview if done
+                    if (data.interview_complete) {
+                        completeInterview();
+                    } else if (data.next_question > interviewState.currentQuestionIndex) {
+                        interviewState.currentQuestionIndex = data.next_question;
+                        updateQuestionDisplay();
+                    }
+                } else {
+                    alert('Error processing your answer: ' + data.error);
+                    startRecordingBtn.innerHTML = '<i class="fas fa-microphone"></i> Record Answer';
+                    startRecordingBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting audio:', error);
+                alert('Failed to process your answer. Please try again.');
+                startRecordingBtn.innerHTML = '<i class="fas fa-microphone"></i> Record Answer';
+                startRecordingBtn.disabled = false;
+            });
+        }
+        
+        // Ask question aloud using browser's built-in TTS API
+        askAloudBtn.addEventListener('click', function() {
+            if ('speechSynthesis' in window) {
+                const currentQuestion = interviewState.questions[interviewState.currentQuestionIndex];
+                const utterance = new SpeechSynthesisUtterance(currentQuestion);
+                speechSynthesis.speak(utterance);
+            } else {
+                // Call backend TTS as fallback
+                fetch('/ask_question_aloud', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `question_index=${interviewState.currentQuestionIndex}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        alert('Text-to-speech is not supported in your browser.');
+                    }
+                });
+            }
+        });
+        
+        // Complete interview and move to assessment
+        function completeInterview() {
+            interviewState.complete = true;
+            
+            // Update UI
+            interviewStep.classList.remove('active');
+            assessmentStep.classList.add('active');
+            
+            // Final progress update
+            for (let i = 0; i < interviewState.questions.length; i++) {
+                const progressFill = document.getElementById(`progress-fill-${i}`);
+                if (progressFill) progressFill.style.width = '100%';
+            }
+            
+            // Get assessments from server
+            fetch('/assess_interview_answers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    interviewState.assessments = data.assessments;
+                    
+                    // Display results
+                    displayAssessmentResults(data);
+                } else {
+                    alert('Error analyzing your answers: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error getting assessments:', error);
+                alert('Failed to analyze your answers. Please try again.');
+            });
+        }
+        
+        // Display assessment results
+        function displayAssessmentResults(data) {
+            // Update average rating
+            const avgRating = data.stats.average_rating;
+            averageRating.textContent = avgRating.toFixed(1) + '/5.0';
+            ratingLabel.textContent = data.stats.performance_level;
+            
+            // Set color based on performance
+            if (avgRating >= 4.0) {
+                averageRating.style.color = '#1D8348'; // Green
+            } else if (avgRating >= 3.0) {
+                averageRating.style.color = '#F39C12'; // Orange/gold
+            } else {
+                averageRating.style.color = '#C0392B'; // Red
+            }
+            
+            // Clear any existing results
+            assessmentResults.innerHTML = '';
+            
+            // Display each question and assessment
+            interviewState.questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'assessment-item';
+                
+                // Create question header
+                const questionHeader = document.createElement('h4');
+                questionHeader.innerHTML = `<span class="question-num">Q${index + 1}:</span> ${question}`;
+                
+                // Create answer section
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-section';
+                
+                const answerLabel = document.createElement('div');
+                answerLabel.className = 'answer-label';
+                answerLabel.textContent = 'Your Answer:';
+                
+                const answerText = document.createElement('div');
+                answerText.className = 'answer-text';
+                answerText.textContent = interviewState.answers[question] || 'No answer provided';
+                
+                answerDiv.appendChild(answerLabel);
+                answerDiv.appendChild(answerText);
+                
+                // Create assessment section
+                const assessmentDiv = document.createElement('div');
+                assessmentDiv.className = 'assessment-section';
+                
+                // Get assessment data
+                const assessment = data.assessments[question];
+                
+                if (assessment) {
+                    const rating = assessment.rating;
+                    const justification = assessment.justification;
+                    
+                    // Create rating stars
+                    const ratingDiv = document.createElement('div');
+                    ratingDiv.className = 'answer-rating';
+                    
+                    if (rating && rating > 0) {
+                        // Create star rating display
+                        const starRating = document.createElement('div');
+                        starRating.className = 'star-rating';
+                        
+                        const filledStars = '★'.repeat(rating);
+                        const emptyStars = '☆'.repeat(5 - rating);
+                        starRating.textContent = filledStars + emptyStars + ` (${rating}/5)`;
+                        
+                        ratingDiv.appendChild(starRating);
+                    } else {
+                        ratingDiv.textContent = 'Not rated';
+                    }
+                    
+                    assessmentDiv.appendChild(ratingDiv);
+                } else {
+                    const noAssessment = document.createElement('div');
+                    noAssessment.className = 'no-assessment';
+                    noAssessment.textContent = 'Answer not assessed';
+                    assessmentDiv.appendChild(noAssessment);
+                }
+                
+                // Add all elements to question div
+                questionDiv.appendChild(questionHeader);
+                questionDiv.appendChild(answerDiv);
+                questionDiv.appendChild(assessmentDiv);
+                
+                // Add question div to results
+                assessmentResults.appendChild(questionDiv);
+                
+                // Add separator if not the last item
+                if (index < interviewState.questions.length - 1) {
+                    const separator = document.createElement('hr');
+                    assessmentResults.appendChild(separator);
+                }
+            });
+            
+            // Areas for improvement section has been removed as requested
+        }
+        
+        // Generate questions and start interview
+        generateQuestionsBtn.addEventListener('click', function() {
+            // Validate form
+            if (!resumeUpload.files.length || !jobRoleInput.value.trim()) {
+                alert('Please upload your resume and specify a job role.');
+                return;
+            }
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('resume', resumeUpload.files[0]);
+            formData.append('job_role', jobRoleInput.value.trim());
+            formData.append('experience_level', experienceSelect.value);
+            
+            // Show loading state
+            generateQuestionsBtn.disabled = true;
+            generateQuestionsBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            
+            // Submit to backend
+            fetch('/generate_interview_questions', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Store questions
+                    interviewState.questions = data.questions;
+                    interviewState.currentQuestionIndex = 0;
+                    interviewState.answers = {};
+                    interviewState.assessments = {};
+                    interviewState.complete = false;
+                    
+                    // Move to interview step
+                    setupStep.classList.remove('active');
+                    interviewStep.classList.add('active');
+                    
+                    // Initialize media recorder
+                    setupMediaRecorder();
+                    
+                    // Initialize progress bars
+                    initializeProgressBars();
+                    
+                    // Update question display
+                    updateQuestionDisplay();
+                } else {
+                    alert('Error generating questions: ' + data.error);
+                    generateQuestionsBtn.disabled = false;
+                    generateQuestionsBtn.innerHTML = '<i class="fas fa-rocket"></i> Generate Questions & Start';
+                }
+            })
+            .catch(error => {
+                console.error('Error generating questions:', error);
+                alert('Failed to generate interview questions. Please try again.');
+                generateQuestionsBtn.disabled = false;
+                generateQuestionsBtn.innerHTML = '<i class="fas fa-rocket"></i> Generate Questions & Start';
+            });
+        });
+        
+        // Restart interview
+        restartInterviewBtn.addEventListener('click', function() {
+            // Reset interview state
+            interviewState = {
+                questions: [],
+                currentQuestionIndex: 0,
+                answers: {},
+                assessments: {},
+                recordingStatus: false,
+                mediaRecorder: null,
+                audioChunks: [],
+                audioBlob: null,
+                audioURL: null,
+                complete: false
+            };
+            
+            // Reset UI
+            assessmentStep.classList.remove('active');
+            setupStep.classList.add('active');
+            
+            // Reset form
+            resumeUpload.value = '';
+            jobRoleInput.value = '';
+            experienceSelect.value = 'Mid';
+            generateQuestionsBtn.disabled = true;
+            
+            // Reset progress display
+            interviewProgress.style.display = 'none';
+            progressBars.innerHTML = '';
+            
+            // Call the reset endpoint
+            fetch('/reset_interview', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .catch(error => {
+                console.error('Error resetting interview:', error);
+            });
+        });
+        
+        // Add CSS for recording animation
+        const style = document.createElement('style');
+        style.textContent = `
+            .listening {
+                animation: pulse 1.5s infinite;
+            }
+            
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            .assessment-item {
+                margin-bottom: 20px;
+                padding: 15px;
+                background-color: var(--card-bg);
+                border-radius: var(--border-radius-md);
+                box-shadow: 0 2px 4px var(--shadow-color);
+            }
+            
+            .question-num {
+                color: var(--accent-red);
+                font-weight: bold;
+            }
+            
+            .answer-section {
+                margin: 10px 0;
+            }
+            
+            .answer-label {
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+            
+            .answer-text {
+                background-color: var(--bg-secondary);
+                padding: 10px;
+                border-radius: var(--border-radius-md);
+                font-style: italic;
+            }
+            
+            .assessment-section {
+                margin-top: 15px;
+            }
+            
+            .answer-rating {
+                margin-bottom: 5px;
+                font-weight: 600;
+            }
+            
+            .star-rating {
+                color: var(--accent-gold);
+                font-size: 1.2rem;
+            }
+            
+            .assessment-feedback {
+                background-color: var(--bg-secondary);
+                padding: 10px;
+                border-radius: var(--border-radius-md);
+                border-left: 3px solid var(--accent-gold);
+            }
+            
+            .rating-summary {
+                text-align: center;
+                margin: 30px 0;
+            }
+            
+            .average-rating {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin: 10px 0;
+            }
+            
+            .rating-label {
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: var(--accent-gold);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

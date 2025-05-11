@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Module - EnginSync (RCB Theme)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+    <style>
+        /* --- Base Theme Variables (RCB Theme) --- */
+        :root {
+            /* Light Mode Base */
+            --bg-primary: #ffffff;          /* White */
+            --bg-secondary: #f5f5f5;       /* Light Grey */
+            --card-bg: #ffffff;           /* White Cards */
+            --text-primary: #111111;       /* Black */
+            --text-secondary: #555555;      /* Grey */
+            --accent-red: #D81B27;        /* RCB Red */
+            --accent-gold: #FFC72C;       /* RCB Gold */
+            --accent-black: #111111;      /* Black for text on gold */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --success-color: #1D8348;     /* Darker Green */
+            --error-color: #D81B27;        /* Use Accent Red for errors too */
+            --border-color: #e0e0e0;
+            --input-bg: #ffffff;
+            --input-border: #cccccc;
+            --chart-grid-color: rgba(0, 0, 0, 0.08); /* Light grid */
+            --chart-label-color: #555555;
+            --theme-toggle-color-light: var(--accent-gold);
+            --theme-toggle-hover-light: var(--accent-red);
+        }
+
+        body.dark-mode {
+             /* Dark Mode Overrides */
+             --bg-primary: #111111;         /* Black/Very Dark */
+             --bg-secondary: #1a1a1a;      /* Dark Grey */
+             --card-bg: #1f1f1f;           /* Slightly Lighter Dark */
+             --text-primary: #f0f0f0;       /* Light Grey/White */
+             --text-secondary: #cccccc;      /* Lighter Grey */
+             --accent-red: #E52531;        /* Brighter Red */
+             --accent-gold: #FFD700;       /* Gold */
+             --accent-black: #111111;
+             --shadow-color: rgba(0, 0, 0, 0.4);
+             --success-color: #2ECC71;     /* Brighter Green */
+             --error-color: #E52531;        /* Use Brighter Red */
+             --border-color: #444444;
+             --input-bg: #2c2c2c;
+             --input-border: #555555;
+             --chart-grid-color: rgba(255, 255, 255, 0.1); /* Dark grid */
+             --chart-label-color: #cccccc;
+             --theme-toggle-color-dark: var(--accent-red);
+             --theme-toggle-hover-dark: var(--accent-gold);
+        }
+
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-padding-top: 60px; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: 1.3; color: var(--text-primary); margin-bottom: 0.75em; transition: color 0.3s ease;}
+        h1 { font-size: 2rem; margin-bottom: 1em; color: var(--accent-red);} /* Red H1 */
+        h2 { font-size: 1.6rem; margin-bottom: 1em; border-bottom: 2px solid var(--border-color); padding-bottom: 0.4em; color: var(--accent-red); transition: border-color 0.3s ease;} /* Red H2 */
+        h2 i { margin-right: 10px; }
+        h3 { font-size: 1.3rem; /* Default h3 size */ color: var(--text-primary); /* Default h3 color */ margin-bottom: 15px;}
+        h4 { font-size: 1.1rem; color: var(--text-primary); font-weight: 500; margin-bottom: 10px;} /* Primary Text H4 */
+
+        a { text-decoration: none; color: var(--accent-red); transition: color 0.3s ease; font-weight: 500;}
+        a:hover { color: var(--accent-gold); }
+        body.dark-mode a { color: var(--accent-gold); }
+        body.dark-mode a:hover { color: var(--accent-red); }
+
+        p { margin-bottom: 1em; color: var(--text-secondary); font-size: 0.95rem;}
+
+        /* Invisible Sticky Header */
+        .top-controls-header {
+            position: sticky; top: 0; left: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 20px; z-index: 100; background-color: transparent;
+            border: none; box-shadow: none;
+            margin-bottom: 10px; min-height: 50px;
+        }
+
+        .container {
+            max-width: 1200px; margin: 0 auto; position: relative;
+            padding: 0 20px 20px 20px;
+        }
+
+        /* --- Buttons --- */
+         .btn {
+             display: inline-block; padding: 10px 20px; border-radius: 25px;
+             font-weight: 600; letter-spacing: 0.5px; transition: all 0.3s ease;
+             cursor: pointer; border: none; box-shadow: 0 4px 10px var(--shadow-color);
+             text-align: center; font-size: 0.95rem;
+         }
+         .btn-primary { background-color: var(--accent-gold); color: var(--accent-black); }
+         .btn-primary:hover { background-color: #e6b325; transform: translateY(-2px); }
+         .btn-secondary { background-color: var(--accent-red); color: white; }
+         .btn-secondary:hover { background-color: #c01822; transform: translateY(-2px); }
+         .btn-filter {
+             background-color: var(--card-bg); color: var(--text-secondary);
+             border: 1px solid var(--border-color); padding: 8px 15px;
+             border-radius: 15px; font-size: 0.9rem; margin-right: 10px;
+             transition: all 0.2s ease;
+         }
+         .btn-filter:hover { border-color: var(--accent-gold); color: var(--accent-gold); background-color: var(--card-bg); }
+         .btn-filter i { margin-right: 5px; }
+
+        /* Back Button Styles (No Position) */
+         .btn-back {
+             background: none; border: 1px solid var(--border-color);
+             color: var(--text-secondary); width: 36px; height: 36px;
+             padding: 0; border-radius: 50%; font-size: 0.9rem; line-height: 1;
+             display: inline-flex; align-items: center; justify-content: center;
+             transition: all 0.3s ease;
+         }
+         .btn-back:hover { background-color: var(--card-bg); border-color: var(--accent-red); color: var(--accent-red); }
+
+         /* Theme Toggle Button (No Position) */
+         .theme-toggle {
+             background: none; border: none; color: var(--theme-toggle-color-light);
+             width: auto; height: auto; padding: 5px; border-radius: 0;
+             cursor: pointer; transition: color 0.3s ease; display: flex;
+             align-items: center; justify-content: center; font-size: 1.5em;
+         }
+         .theme-toggle:hover { color: var(--theme-toggle-hover-light); }
+         body.dark-mode .theme-toggle { color: var(--theme-toggle-color-dark); }
+         body.dark-mode .theme-toggle:hover { color: var(--theme-toggle-hover-dark); }
+
+        /* --- Card Styles --- */
+        .widget-card, .content-section {
+            background-color: var(--card-bg); padding: 25px; border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow-color); margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* --- Progress Module Specific Styles --- */
+        /* Make specific widget headings gold */
+        .progress-widget > h3,
+        .detailed-progress-view > h3 { /* Changed h2 selector here */
+            color: var(--accent-gold);
+            font-size: 1.3rem; /* Ensure consistent size */
+             border-bottom: none; /* Remove potential border from h2 */
+             padding-bottom: 0; /* Remove potential padding */
+             margin-bottom: 20px; /* Consistent margin */
+        }
+        .progress-widget > h3 i,
+        .detailed-progress-view > h3 i {
+             color: var(--accent-gold); /* Match icon color to heading */
+             margin-right: 8px;
+        }
+
+        .progress-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 20px; }
+        .progress-bar-container { width: 100%; background-color: var(--bg-secondary); border-radius: 10px; height: 12px; overflow: hidden; margin-top: 5px; margin-bottom: 15px; transition: background-color 0.3s ease; }
+        .progress-bar { height: 100%; border-radius: 10px; transition: width 0.5s ease-in-out; background-color: var(--accent-gold); }
+        .progress-goal .progress-bar { background-color: var(--success-color); }
+        .progress-deadline .progress-bar { background-color: var(--accent-red); }
+
+        .goal-item, .skill-item { margin-bottom: 15px; }
+        .goal-item span, .skill-item span { display: block; color: var(--text-primary); margin-bottom: 3px; font-size: 0.95rem; font-weight: 500; }
+        .goal-item h4, .skill-item h4 { color: var(--text-primary); margin-bottom: 15px; font-size: 1.1rem; display: flex; align-items: center; }
+        .goal-item h4 i, .skill-item h4 i { margin-right: 8px; color: var(--accent-red); }
+
+        .chart-container { position: relative; height: 280px; width: 100%; margin-bottom: 20px; padding: 20px; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--card-bg); transition: background-color 0.3s ease, border-color 0.3s ease; }
+        .chart-container h4 { margin-bottom: 15px; }
+
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: var(--card-bg); box-shadow: 0 1px 5px var(--shadow-color); border-radius: 8px; overflow: hidden; transition: background-color 0.3s ease; }
+        .data-table th, .data-table td { border-bottom: 1px solid var(--border-color); padding: 12px 15px; text-align: left; transition: border-color 0.3s ease; }
+        .data-table th { background-color: var(--bg-secondary); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); transition: background-color 0.3s ease, color 0.3s ease; }
+        .data-table tbody tr:last-child td { border-bottom: none; }
+        .data-table tbody tr:hover { background-color: rgba(255, 215, 0, 0.08); }
+         body.dark-mode .data-table tbody tr:hover { background-color: rgba(255, 215, 0, 0.1); }
+        .data-table .status-completed { color: var(--success-color); font-weight: 500; }
+        .data-table .status-pending { color: var(--accent-red); font-style: italic; }
+        .data-table .status-watched { color: var(--text-secondary); }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+             .container { padding-top: 0; }
+             .top-controls-header { padding: 6px 15px; min-height: 45px; margin-bottom: 5px;}
+             .btn-back { width: 34px; height: 34px; font-size: 0.85rem; }
+             .theme-toggle { font-size: 1.4em; }
+             .progress-grid { grid-template-columns: 1fr; }
+             h1 {font-size: 1.8rem;}
+             h2 { font-size: 1.4rem; }
+             h3 { font-size: 1.2rem; }
+             /* Adjust specific headings if needed */
+              .progress-widget > h3, .detailed-progress-view > h3 { font-size: 1.2rem;}
+             .btn { padding: 8px 15px; font-size: 0.9rem; }
+             .chart-container { height: 250px; padding: 15px;}
+        }
+         @media (max-width: 576px) {
+             body { padding: 10px;}
+             .container { padding-left: 10px; padding-right: 10px; padding-bottom: 10px; padding-top: 0;}
+             .top-controls-header { padding: 4px 10px; min-height: 40px; margin-bottom: 0;}
+             .btn-back { width: 32px; height: 32px; font-size: 0.8rem;}
+             .theme-toggle { font-size: 1.3em; }
+              .widget-card, .content-section { padding: 20px; }
+              h1 { font-size: 1.6rem; }
+              h2, .progress-widget > h3, .detailed-progress-view > h3 { font-size: 1.1rem; } /* Make h2 same size as h3 */
+             .chart-container { height: 220px; padding: 10px;}
+             .data-table th, .data-table td { padding: 10px; }
+         }
+
+    </style>
+</head>
+<body class="light-mode">
+
+    <header class="top-controls-header">
+         <a href="dashboard.html" class="btn-back" aria-label="Go Back">
+             <i class="fas fa-arrow-left"></i>
+         </a>
+         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+             </button>
+    </header>
+
+    <div class="container">
+        <section class="content-section progress-module">
+            <h1><i class="fas fa-tasks"></i> Your Progress</h1>
+
+            <div class="widget-card progress-widget">
+                <h3><i class="fas fa-tachometer-alt"></i> Progress Snapshot</h3>
+                <div class="progress-grid">
+                    <div class="skill-item">
+                        <h4><i class="fas fa-star"></i> Skill Mastery</h4>
+                        <div class="chart-container" style="height: 240px;">
+                            <canvas id="skillMasteryChart"></canvas> </div>
+                    </div>
+                    <div class="goal-item">
+                        <h4><i class="fas fa-bullseye"></i> Current Goals & Deadlines</h4>
+                        <div class="progress-goal">
+                            <span>Complete Calculus Module 1</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                         <div class="progress-goal">
+                            <span>Read Physics Chapter 4</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                         <div class="progress-deadline">
+                            <span>Project: Thermodynamics Sim</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 40%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detailed-progress-view content-section">
+                 <h3><i class="fas fa-search-plus"></i> Detailed Analysis</h3>
+                <div style="margin-bottom: 20px;">
+                     <button class="btn-filter"><i class="fas fa-filter"></i> Course: All</button>
+                     <button class="btn-filter"><i class="far fa-calendar-alt"></i> Time: Last 30 Days</button>
+                 </div>
+                 <div class="progress-grid">
+                     <div class="chart-container">
+                         <h4>Progress Over Time <small>(Activities Completed)</small></h4>
+                         <canvas id="progressOverTimeChart"></canvas>
+                     </div>
+                     <div class="chart-container">
+                         <h4>Assignment Completion Rate (%)</h4>
+                         <canvas id="completionRateChart"></canvas>
+                     </div>
+                 </div>
+
+                 <h4><i class="fas fa-history"></i> Recent Activity & Assignments</h4>
+                 <table class="data-table">
+                     <thead>
+                         <tr>
+                             <th>Date</th>
+                             <th>Activity/Assignment</th>
+                             <th>Duration/Score</th>
+                             <th>Status</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         <tr>
+                             <td>2025-04-08</td>
+                             <td>Calculus Practice Problems (Set 3)</td>
+                             <td>45 mins</td>
+                             <td class="status-completed">Completed</td>
+                         </tr>
+                         <tr>
+                             <td>2025-04-07</td>
+                             <td>Physics Lecture: Kinematics</td>
+                             <td>60 mins</td>
+                             <td class="status-watched">Watched</td>
+                         </tr>
+                         <tr>
+                             <td>2025-04-06</td>
+                             <td>Assignment 1: Mechanics</td>
+                             <td>85%</td>
+                             <td class="status-completed">Graded</td>
+                         </tr>
+                          <tr>
+                             <td>2025-04-05</td>
+                             <td>Chemistry Lab Simulation</td>
+                             <td>--</td>
+                             <td class="status-pending">Pending</td>
+                         </tr>
+                     </tbody>
+                 </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Chart Instances (global scope for re-rendering)
+        let skillChartInstance = null;
+        let progressChartInstance = null;
+        let completionChartInstance = null;
+
+        // Function to get current theme colors for charts
+        function getChartThemeColors() {
+            const computedStyle = getComputedStyle(document.documentElement);
+            const getColor = (varName, fallback) => computedStyle.getPropertyValue(varName).trim() || fallback;
+            return {
+                primaryText: getColor('--text-primary', '#111'),
+                secondaryText: getColor('--text-secondary', '#555'),
+                gridColor: getColor('--chart-grid-color', 'rgba(0,0,0,0.08)'),
+                accentRed: getColor('--accent-red', '#D81B27'),
+                accentGold: getColor('--accent-gold', '#FFC72C'),
+                successColor: getColor('--success-color', '#28a745'),
+                cardBg: getColor('--card-bg', '#ffffff')
+            };
+        }
+
+        // Chart Initialization / Re-initialization Function
+        function initializeCharts() {
+            const themeColors = getChartThemeColors();
+
+            if (skillChartInstance) skillChartInstance.destroy();
+            if (progressChartInstance) progressChartInstance.destroy();
+            if (completionChartInstance) completionChartInstance.destroy();
+            skillChartInstance = null; progressChartInstance = null; completionChartInstance = null;
+
+             // --- Mock Data ---
+             // UPDATED Skill Mastery to use RED
+             const skillMasteryData = {
+                 labels: ['Calculus', 'Linear Algebra', 'Thermodynamics', 'Statics', 'Programming', 'Circuits'],
+                 datasets: [{
+                     label: 'Current Mastery',
+                     data: [75, 60, 80, 55, 90, 70],
+                     backgroundColor: themeColors.accentRed + '4D', // RED transparent (~30%)
+                     borderColor: themeColors.accentRed, // RED solid
+                     borderWidth: 2,
+                     pointBackgroundColor: themeColors.accentRed,
+                     pointBorderColor: themeColors.cardBg,
+                     pointHoverBackgroundColor: themeColors.cardBg,
+                     pointHoverBorderColor: themeColors.accentRed
+                 }]
+             };
+
+             const progressOverTimeData = {
+                 labels: ['Wk 1', 'Wk 2', 'Wk 3', 'Wk 4', 'Wk 5', 'Wk 6'],
+                 datasets: [{
+                     label: 'Activities Completed',
+                     data: [5, 8, 10, 7, 12, 15],
+                     fill: false,
+                     borderColor: themeColors.accentRed, // Red line
+                     tension: 0.1,
+                     pointBackgroundColor: themeColors.accentRed,
+                     pointBorderColor: themeColors.cardBg,
+                     pointHoverBackgroundColor: themeColors.cardBg,
+                     pointHoverBorderColor: themeColors.accentRed,
+                 }]
+             };
+
+             const completionRateData = {
+                 labels: ['Assign 1', 'Quiz 1', 'Assign 2', 'Lab 1', 'Quiz 2', 'Assign 3'],
+                 datasets: [{
+                     label: 'Score (%)',
+                     data: [85, 92, 78, 95, 88, null],
+                     backgroundColor: [
+                         themeColors.accentRed + 'B3', themeColors.successColor + 'B3',
+                         themeColors.accentRed + 'B3', themeColors.successColor + 'B3',
+                         themeColors.successColor + 'B3', themeColors.secondaryText + 'B3'
+                     ],
+                     borderColor: [
+                         themeColors.accentRed, themeColors.successColor,
+                         themeColors.accentRed, themeColors.successColor,
+                         themeColors.successColor, themeColors.secondaryText
+                     ],
+                     borderWidth: 1, borderRadius: 4,
+                 }]
+             };
+
+            // --- Chart Configurations ---
+            const ctxSkill = document.getElementById('skillMasteryChart');
+            if (ctxSkill) {
+                 skillChartInstance = new Chart(ctxSkill, {
+                    type: 'radar', data: skillMasteryData,
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                        scales: { r: { angleLines: { color: themeColors.gridColor }, grid: { color: themeColors.gridColor }, pointLabels: { color: themeColors.secondaryText, font: { size: 11 } }, suggestedMin: 0, suggestedMax: 100, ticks: { color: themeColors.secondaryText, backdropColor: 'transparent' } } } } });
+            }
+
+            const ctxProgress = document.getElementById('progressOverTimeChart');
+             if (ctxProgress) {
+                  progressChartInstance = new Chart(ctxProgress, {
+                    type: 'line', data: progressOverTimeData,
+                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, suggestedMax: 20, grid: { color: themeColors.gridColor }, ticks: { color: themeColors.secondaryText } }, x: { grid: { display: false }, ticks: { color: themeColors.secondaryText } } } } });
+             }
+
+             const ctxCompletion = document.getElementById('completionRateChart');
+             if (ctxCompletion) {
+                 completionChartInstance = new Chart(ctxCompletion, {
+                    type: 'bar', data: completionRateData,
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, suggestedMax: 100, grid: { color: themeColors.gridColor }, ticks: { color: themeColors.secondaryText, callback: function(value) { return value + '%' } } }, x: { grid: { display: false }, ticks: { color: themeColors.secondaryText } } } } });
+            }
+        }
+
+        // --- Theme Toggle Functionality ---
+        const body = document.body;
+        const themeToggleButton = document.getElementById('theme-toggle');
+
+        function setTheme(theme) {
+            if (skillChartInstance) skillChartInstance.destroy();
+            if (progressChartInstance) progressChartInstance.destroy();
+            if (completionChartInstance) completionChartInstance.destroy();
+            skillChartInstance = null; progressChartInstance = null; completionChartInstance = null;
+
+            localStorage.setItem('theme', theme);
+             if (theme === 'dark') {
+                 body.classList.add('dark-mode'); body.classList.remove('light-mode');
+                 if(themeToggleButton) themeToggleButton.innerHTML = '☀️';
+                 if(themeToggleButton) themeToggleButton.setAttribute('title', 'Switch to light mode');
+             } else {
+                 body.classList.add('light-mode'); body.classList.remove('dark-mode');
+                 if(themeToggleButton) themeToggleButton.innerHTML = '🌙';
+                 if(themeToggleButton) themeToggleButton.setAttribute('title', 'Switch to dark mode');
+             }
+             setTimeout(initializeCharts, 50);
+         }
+
+         const savedTheme = localStorage.getItem('theme');
+         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+         let initialTheme = 'light';
+         if (savedTheme) { initialTheme = savedTheme; } else if (prefersDark) { initialTheme = 'dark'; }
+
+         if (initialTheme === 'dark') { body.classList.add('dark-mode'); body.classList.remove('light-mode'); }
+         else { body.classList.add('light-mode'); body.classList.remove('dark-mode'); }
+         if(themeToggleButton) { themeToggleButton.innerHTML = initialTheme === 'dark' ? '☀️' : '🌙'; themeToggleButton.setAttribute('title', initialTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'); }
+
+         document.addEventListener('DOMContentLoaded', () => { initializeCharts(); });
+
+         if (themeToggleButton) { themeToggleButton.addEventListener('click', () => { setTheme(body.classList.contains('dark-mode') ? 'light' : 'dark'); }); }
+
+    </script>
+
+</body>
+</html>

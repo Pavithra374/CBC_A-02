@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
+    <title>{{ page_title | default('Dashboard') }} - EnginSync</title>
+=======
     <title>Dashboard - EnginSync</title>
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<<<<<<< HEAD
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+=======
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
     <style>
         /* --- Theme Variables (RCB Theme) --- */
         :root {
@@ -16,9 +26,25 @@
             --text-sidebar-muted: #cccccc; --accent-red: #D81B27; --accent-gold: #FFC72C;
             --accent-black: #111111; --shadow-color: rgba(0, 0, 0, 0.1);
             --shadow-color-glow: rgba(255, 199, 44, 0.1); --success-color: #28a745;
+<<<<<<< HEAD
+            --error-color: #dc3545; --info-color: #17a2b8; --warning-color: #ffc107;
+            --border-color: #e0e0e0; --sidebar-width: 250px;
+            --header-height: 60px; --card-bg: #ffffff; --nav-item-hover-bg: rgba(255, 199, 44, 0.1);
+            --nav-item-active-bg: rgba(255, 199, 44, 0.15);
+            --theme-toggle-color-light: var(--accent-gold);
+            --theme-toggle-hover-light: var(--accent-red);
+            --theme-toggle-color-dark: var(--accent-red);
+            --theme-toggle-hover-dark: var(--accent-gold);
+            --flash-bg-error: rgba(220, 53, 69, 0.1); --flash-border-error: var(--error-color);
+            --flash-bg-success: rgba(40, 167, 69, 0.1); --flash-border-success: var(--success-color);
+            --flash-bg-info: rgba(23, 162, 184, 0.1); --flash-border-info: var(--info-color);
+            --flash-bg-warning: rgba(255, 193, 7, 0.1); --flash-border-warning: var(--warning-color);
+            --chart-grid-color: rgba(0,0,0,0.08); /* Added for chart grids */
+=======
             --error-color: #dc3545; --border-color: #e0e0e0; --sidebar-width: 250px;
             --header-height: 60px; --card-bg: #ffffff; --nav-item-hover-bg: rgba(255, 199, 44, 0.1);
             --nav-item-active-bg: rgba(255, 199, 44, 0.15);
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
         }
         body.dark-mode {
             --bg-primary: #111111; --bg-secondary: #1a1a1a; --bg-accent: #000000;
@@ -28,6 +54,16 @@
             --shadow-color-glow: rgba(255, 77, 77, 0.2); --border-color: #444444;
             --card-bg: #1a1a1a; --nav-item-hover-bg: rgba(255, 215, 0, 0.1);
             --nav-item-active-bg: rgba(255, 215, 0, 0.2);
+<<<<<<< HEAD
+            --theme-toggle-color-dark: var(--accent-red);
+            --theme-toggle-hover-dark: var(--accent-gold);
+            --flash-bg-error: rgba(255, 77, 77, 0.15);
+            --flash-bg-success: rgba(40, 167, 69, 0.15);
+            --flash-bg-info: rgba(23, 162, 184, 0.15);
+            --flash-bg-warning: rgba(255, 193, 7, 0.15);
+            --chart-grid-color: rgba(255,255,255,0.1); /* Added for chart grids */
+=======
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
         }
         /* --- Global Styles --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,11 +74,411 @@
          a:hover { color: var(--accent-gold); }
          body.dark-mode a:hover { color: var(--accent-red);}
         p { margin-bottom: 1em; color: var(--text-secondary); transition: color 0.3s ease; }
+<<<<<<< HEAD
+        .btn { display: inline-block; padding: 10px 20px; border-radius: 25px; font-weight: 600; letter-spacing: 0.5px; transition: all 0.3s ease; cursor: pointer; border: none; box-shadow: 0 4px 10px var(--shadow-color); text-align: center; }
+=======
         .btn { display: inline-block; padding: 10px 20px; border-radius: 25px; font-weight: 600; letter-spacing: 0.5px; transition: all 0.3s ease; cursor: pointer; border: none; box-shadow: 0 4px 10px var(--shadow-color); }
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
         .btn-primary { background-color: var(--accent-gold); color: var(--accent-black); }
         .btn-primary:hover { background-color: #e6b325; transform: translateY(-2px); }
         .btn-secondary { background-color: var(--accent-red); color: white; }
         .btn-secondary:hover { background-color: #c01822; transform: translateY(-2px); }
+<<<<<<< HEAD
+        .btn-sm { padding: 5px 12px; font-size: 0.85em; }
+
+        /* --- Layout --- */
+        .app-container { position: relative; min-height: 100vh; overflow: hidden; }
+
+        /* --- Central Logo --- */
+        #central-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            animation: fadeInScale 1.2s ease-out forwards;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rcb-logo {
+            width: 180px; /* Extra large logo */
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--accent-gold);
+            box-shadow: 0 0 50px var(--shadow-color-glow);
+        }
+
+        .logo-text {
+            font-size: 2.5em; /* Larger text */
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-shadow: 0 3px 8px var(--shadow-color);
+            letter-spacing: 1px;
+        }
+
+        /* --- Navigation Container --- */
+        #bubble-nav-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            perspective: 1000px;
+        }
+
+        /* Feature Rectangle (replacing nav-bubble) */
+        .nav-bubble {
+            position: absolute;
+            background-color: transparent;
+            color: var(--text-sidebar);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            pointer-events: auto;
+            font-weight: 500;
+            text-align: center;
+            opacity: 0;
+            width: 200px;
+            height: 160px;
+            border: 2px solid var(--accent-red);
+            box-shadow: 0 0 15px var(--accent-red),
+                       inset 0 0 8px var(--accent-red);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: center center;
+            animation: featureAppear 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation-delay: calc(var(--delay) * 0.2s);
+        }
+
+        body.light-mode .nav-bubble {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 15px rgba(216, 27, 39, 0.3),
+                       inset 0 0 8px rgba(216, 27, 39, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-bubble i {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            color: var(--accent-gold);
+            filter: drop-shadow(0 0 8px var(--accent-red));
+            transition: all 0.3s ease;
+        }
+
+        .nav-bubble span {
+            font-size: 1.2em;
+            color: var(--text-primary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 5px var(--accent-red);
+            transition: all 0.3s ease;
+        }
+
+        .nav-bubble:hover {
+            transform: scale(1.05) translateZ(20px);
+            border-color: var(--accent-red);
+            box-shadow: 0 0 25px var(--accent-red),
+                       inset 0 0 15px var(--accent-red);
+        }
+
+        .nav-bubble:hover i {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 12px var(--accent-red));
+        }
+
+        .nav-bubble:hover span {
+            text-shadow: 0 0 8px var(--accent-red);
+        }
+
+        /* Feature Appearance Animation */
+        @keyframes featureAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(100px);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(1.1) translateY(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Click Animation */
+        @keyframes featureClick {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(0.95);
+                box-shadow: 0 0 30px var(--accent-red),
+                           inset 0 0 20px var(--accent-red);
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* --- User Panel --- */
+        #user-panel {
+            position: fixed;
+            bottom: 20px; /* Moved to bottom as requested */
+            right: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 200px;
+            animation: slideInRight 0.5s ease-out forwards;
+            border: 2px solid var(--accent-gold);
+            backdrop-filter: blur(10px);
+        }
+        .user-info { display: flex; align-items: center; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--accent-red); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 10px; font-size: 0.9em; text-transform: uppercase; }
+        .user-details { flex: 1; overflow: hidden; /* Prevent long names breaking layout */}
+        .user-name {
+            font-weight: 700;
+            font-size: 1.1em;
+            background: linear-gradient(45deg, var(--accent-red), var(--accent-gold));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: 0.5px;
+        }
+        .user-role { font-size: 0.8em; color: var(--text-primary); font-weight: 500; }
+        .logout-btn { margin-top: 15px; width: 100%; display: flex; justify-content: center; align-items: center; }
+        .logout-btn i { margin-right: 8px;}
+
+        /* --- Content Container --- */
+        #content-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px;
+            scroll-behavior: smooth;
+            scroll-padding-top: 60px;
+        }
+
+        /* Dashboard header title */
+        .dashboard-title {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--text-primary);
+            z-index: 100;
+            background-color: var(--card-bg);
+            padding: 10px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* Welcome message CSS is removed */
+
+        /* --- Animations --- */
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes bubbleFadeIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            70% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideInRight {
+            0% { transform: translateX(50px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes popEffect {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        @keyframes fadeIn { /* Used for Dashboard Title and Theme Toggle */
+             0% { opacity: 0; }
+             100% { opacity: 1; }
+        }
+
+        /* fadeInOut animation removed */
+
+        /* --- Feature Highlights Section --- */
+        #feature-highlights {
+            margin-top: 100vh;
+            padding: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 50px;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-red));
+            border-radius: 2px;
+        }
+
+        .feature-card {
+            display: flex;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-icon {
+            width: 120px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-accent);
+            color: var(--accent-gold);
+            font-size: 3em;
+            transition: all 0.3s ease;
+        }
+
+        .feature-content {
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        .feature-content h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            color: var(--text-primary);
+        }
+
+        .feature-content p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .feature-content ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .feature-content li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .feature-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--accent-gold);
+            color: var(--accent-black);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .feature-link:hover {
+            background-color: var(--accent-red);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Dark mode specific styling */
+        body.dark-mode .feature-icon {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: var(--accent-red);
+        }
+
+        body.dark-mode .feature-card {
+            border: 1px solid rgba(255, 199, 44, 0.2);
+            background-color: rgba(26, 26, 26, 0.8);
+        }
+
+        body.dark-mode .feature-link {
+            background-color: var(--accent-red);
+            color: white;
+        }
+
+        body.dark-mode .feature-link:hover {
+            background-color: var(--accent-gold);
+            color: var(--accent-black);
+        }
+
+        /* Theme Toggle Button (Emoji Only in Header) */
+        /* (Note: Theme Toggle is now in its own container, see below) */
+
+        .content { padding: 30px; }
+
+         /* --- Flashed Messages --- */
+         .flash-messages { margin-bottom: 20px; }
+         .alert { padding: 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid transparent; font-size: 0.95em; }
+         .alert-error { color: var(--error-color); background-color: var(--flash-bg-error); border-color: var(--flash-border-error); }
+         .alert-success { color: var(--success-color); background-color: var(--flash-bg-success); border-color: var(--flash-border-success); }
+         .alert-info { color: var(--info-color); background-color: var(--flash-bg-info); border-color: var(--flash-border-info); }
+         .alert-warning { color: var(--warning-color); background-color: var(--flash-bg-warning); border-color: var(--flash-border-warning); }
+         body.dark-mode .alert-error { color: #ffaaaa; }
+         body.dark-mode .alert-success { color: #aaffaa; }
+         body.dark-mode .alert-info { color: #aae0ff; }
+         body.dark-mode .alert-warning { color: #fff0aa; }
+
+        /* User Welcome CSS is removed */
+
+=======
         .btn-sm { padding: 5px 12px; font-size: 0.85em; } /* Added small button class */
 
         /* --- Layout --- */
@@ -82,6 +518,7 @@
         .theme-toggle:hover { background-color: var(--accent-gold); color: var(--accent-black); }
         .content { padding: 30px; }
 
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
         /* --- Dashboard Components --- */
         .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; margin-bottom: 30px; }
         .dashboard-card { background-color: var(--card-bg); border-radius: 10px; box-shadow: 0 5px 15px var(--shadow-color); padding: 25px; transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; border: 1px solid var(--border-color); }
@@ -101,6 +538,166 @@
         .trend-down { color: var(--error-color); }
         .trend i { margin-right: 5px; }
 
+<<<<<<< HEAD
+        /* --- Skill Styling --- */
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+            font-size: 0.9em;
+        }
+
+        /* --- Progress Module Specific Styles --- */
+        /* Make specific widget headings gold */
+        .progress-widget > h3,
+        .detailed-progress-view > h3 {
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 20px;
+        }
+        .progress-widget > h3 i,
+        .detailed-progress-view > h3 i {
+            color: var(--accent-gold);
+            margin-right: 8px;
+        }
+
+        /* --- Theme Toggle Container --- */
+        #theme-toggle-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 26px; /* Larger size as requested */
+            color: var(--theme-toggle-color-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.2));
+            padding: 0;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg) scale(1.1);
+            /* Remove background hover effect */
+            background: none;
+        }
+
+        body.dark-mode .theme-toggle {
+             color: var(--theme-toggle-color-dark);
+        }
+        body.dark-mode .theme-toggle:hover {
+             background: none;
+             color: var(--theme-toggle-hover-dark);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .rcb-logo { width: 100px; height: 100px; }
+            .logo-text { font-size: 2em; }
+            #user-panel { min-width: 180px; }
+            .theme-toggle { font-size: 26px; } /* Consistent size */
+            .dashboard-title { font-size: 1.8em; padding: 8px 15px;}
+            #theme-toggle-container { top: 15px; right: 15px;}
+            #user-panel { bottom: 15px; right: 15px; padding: 12px;}
+            .feature-card { flex-direction: column; }
+            .feature-icon { width: 100%; height: 80px; font-size: 2.5em;}
+            .feature-content { padding: 20px;}
+            .bubble-description { width: 240px; padding: 15px; }
+            .bubble-description h4 { font-size: 1.1em; }
+            .bubble-description p { font-size: 0.9em; }
+        }
+
+        @media (max-width: 576px) {
+            .rcb-logo { width: 90px; height: 90px; }
+            .logo-text { font-size: 1.8em; }
+            .dashboard-title { font-size: 1.6em; }
+             #user-panel {
+                 min-width: 160px;
+                 padding: 10px;
+            }
+            .user-name { font-size: 1em; }
+            .logout-btn { font-size: 0.9em; padding: 8px 15px;}
+            .section-title { font-size: 2em;}
+            .feature-content h3 { font-size: 1.5em;}
+            .feature-content p { font-size: 1em;}
+            .feature-link { font-size: 0.9em; padding: 8px 16px;}
+            .nav-bubble span { font-size: 1em; } /* Adjusted bubble text for smaller screen */
+             .nav-bubble i { font-size: 2.2em; } /* Adjusted bubble icon for smaller screen */
+        }
+
+        /* Add back hover descriptions with updated styling */
+        .bubble-description {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid var(--accent-red);
+            border-radius: 12px;
+            padding: 20px;
+            width: 280px;
+            color: var(--text-primary);
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 100;
+            box-shadow: 0 0 20px var(--accent-red),
+                       inset 0 0 10px var(--accent-red);
+            backdrop-filter: blur(8px);
+        }
+
+        body.dark-mode .bubble-description {
+            background: rgba(0, 0, 0, 0.95);
+        }
+
+        body.light-mode .bubble-description {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: var(--accent-red);
+            box-shadow: 0 0 20px rgba(216, 27, 39, 0.3),
+                       inset 0 0 10px rgba(216, 27, 39, 0.2);
+        }
+
+        .bubble-description.left {
+            right: calc(100% + 20px);
+            transform: translateX(-20px);
+        }
+
+        .bubble-description.right {
+            left: calc(100% + 20px);
+            transform: translateX(20px);
+        }
+
+        .nav-bubble:hover .bubble-description {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .bubble-description h4 {
+            color: var(--accent-red);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-shadow: 0 0 5px var(--accent-red);
+        }
+
+        .bubble-description p {
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin: 0;
+            color: var(--text-primary);
+        }
+=======
         /* --- Recent Activity Section --- */
         .section-title { margin-bottom: 25px; font-size: 1.6em; color: var(--text-primary); }
         .activity-list { background-color: var(--card-bg); border-radius: 10px; box-shadow: 0 5px 15px var(--shadow-color); overflow: hidden; border: 1px solid var(--border-color); transition: background-color 0.3s ease, border-color 0.3s ease; }
@@ -124,10 +721,448 @@
         @media (max-width: 992px) { .main-content { margin-left: 0; } }
         @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } .header { padding: 0 15px; } .header-title { font-size: 1.2em; } .activity-item { flex-wrap: wrap; } .activity-action { margin-left: 0; width: 100%; text-align: right; padding-top: 10px;} }
         @media (max-width: 576px) { .header-actions > * { margin-left: 10px; } .content { padding: 20px; } .dashboard-card { padding: 20px; } .stat-value { font-size: 1.8em; } }
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
     </style>
 </head>
 <body>
     <div class="app-container">
+<<<<<<< HEAD
+        <div class="dashboard-title">Dashboard</div>
+
+        <div id="central-logo">
+            <div class="logo-container">
+                <div class="logo-icon" title="EnginSync Logo">
+                    <img src="{{ url_for('static', filename='img/vr.png') }}" alt="EnginSync Logo" class="rcb-logo">
+                </div>
+                
+            </div>
+        </div>
+
+        <div id="bubble-nav-container">
+            </div>
+
+        <div id="theme-toggle-container">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        </div>
+
+        <div id="user-panel">
+            {% if g.user %}
+            <div class="user-info">
+                <div class="user-avatar">
+                    {% set name_parts = g.user.full_name.split(' ') %}
+                    {% if name_parts|length > 0 %}
+                        {{ name_parts[0][0]|upper }}{% if name_parts|length > 1 %}{{ name_parts[-1][0]|upper }}{% endif %}
+                    {% else %}
+                        U
+                    {% endif %}
+                </div>
+                <div class="user-details">
+                    <div class="user-name">{{ g.user.full_name }}</div>
+                    </div>
+            </div>
+            <a href="{{ url_for('logout') }}" class="btn btn-secondary logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            {% else %}
+            <div class="user-info">
+                <div class="user-avatar">?</div>
+                <div class="user-details">
+                    <div class="user-name">Not Logged In</div>
+                </div>
+            </div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary logout-btn">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            {% endif %}
+        </div>
+
+        <div id="nav-data" style="display: none;">
+            <div class="nav-item" data-href="{{ url_for('jobsearch') }}" data-icon="fa-briefcase">Job Search</div>
+            <div class="nav-item" data-href="{{ url_for('ai_planner') }}" data-icon="fa-brain">AI Planner</div>
+            <div class="nav-item" data-href="{{ url_for('interview_prep') }}" data-icon="fa-user-tie">AI Interviewer</div>
+            <div class="nav-item" data-href="{{ url_for('practice') }}" data-icon="fa-code">DSA Training</div>
+        </div>
+
+        <div id="content-container">
+
+            
+
+                <div id="feature-highlights">
+                    <div class="section-title">Feature Highlights</div>
+
+                    <div class="feature-card" data-feature="jobsearch">
+                        <div class="feature-icon"><i class="fas fa-briefcase"></i></div>
+                        <div class="feature-content">
+                            <h3>Job Search</h3>
+                            <p>Find the perfect career opportunities tailored to your skills and experience.</p>
+                            <ul>
+                                <li>Search thousands of job listings</li>
+                                <li>Filter by role, location, and salary</li>
+                                <li>Get personalized job recommendations</li>
+                            </ul>
+                            <a href="{{ url_for('jobsearch') }}" class="feature-link">Search Jobs <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="feature-card" data-feature="ai_planner">
+                        <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                        <div class="feature-content">
+                            <h3>AI Planner</h3>
+                            <p>Let our advanced AI create personalized study plans optimized for your learning goals.</p>
+                            <ul>
+                                <li>Generate custom study plans</li>
+                                <li>Optimize for exams or projects</li>
+                                <li>Adapt to your learning style</li>
+                            </ul>
+                            <a href="{{ url_for('ai_planner') }}" class="feature-link">Generate Plan <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="feature-card" data-feature="interview_prep">
+                        <div class="feature-icon"><i class="fas fa-user-tie"></i></div>
+                        <div class="feature-content">
+                            <h3>AI Interviewer</h3>
+                            <p>Practice and prepare for technical interviews with our comprehensive tools.</p>
+                            <ul>
+                                <li>Practice with real interview questions</li>
+                                <li>Get feedback on your answers</li>
+                                <li>Prepare for different interview formats</li>
+                            </ul>
+                            <a href="{{ url_for('interview_prep') }}" class="feature-link">Start Practicing <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="feature-card" data-feature="practice">
+                        <div class="feature-icon"><i class="fas fa-code"></i></div>
+                        <div class="feature-content">
+                            <h3>DSA Training</h3>
+                            <p>Master data structures and algorithms with our curated collection of practice problems.</p>
+                            <ul>
+                                <li>Access hundreds of DSA problems</li>
+                                <li>Filter by difficulty and topic</li>
+                                <li>Track your progress and improvements</li>
+                            </ul>
+                            <a href="{{ url_for('practice') }}" class="feature-link">Practice Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Static Bubble Navigation System ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Feature cards scroll animation
+            const featureCards = document.querySelectorAll('.feature-card');
+
+            // Set initial delays for staggered appearance
+            featureCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.1}s`;
+            });
+
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Make visible when 15% is in view
+            });
+
+            // Observe all feature cards
+            featureCards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // --- Bubble Navigation Generation ---
+            function generateBubbles() {
+                const navItems = document.querySelectorAll('#nav-data .nav-item');
+                const bubbleContainer = document.getElementById('bubble-nav-container');
+                bubbleContainer.innerHTML = '';
+
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const centerX = viewportWidth / 2;
+                const centerY = viewportHeight / 2;
+                const distance = Math.min(viewportWidth, viewportHeight) * 0.3;
+
+                const positions = [
+                    { x: 0, y: -1 },  // Top
+                    { x: 1, y: 0 },   // Right
+                    { x: 0, y: 1 },   // Bottom
+                    { x: -1, y: 0 }   // Left
+                ];
+
+                const descriptions = {
+                    'The Chase': 'Find and apply to your dream job opportunities with personalized AI-powered recommendations and matching.',
+                    'Strategic Time Out': 'Optimize your preparation with AI-driven study planning that adapts to your learning style and goals.',
+                    'Coach': 'Master technical interviews with expert guidance, real-time feedback, and performance analytics.',
+                    'Training': 'Level up your DSA and problem-solving skills through structured practice and gamified learning.',
+                    // Backup descriptions for alternate names
+                    'Job Search': 'Find and apply to your dream job opportunities with personalized AI-powered recommendations and matching.',
+                    'AI Planner': 'Optimize your preparation with AI-driven study planning that adapts to your learning style and goals.',
+                    'AI Interviewer': 'Master technical interviews with expert guidance, real-time feedback, and performance analytics.',
+                    'DSA Training': 'Level up your DSA and problem-solving skills through structured practice and gamified learning.'
+                };
+
+                navItems.forEach((item, index) => {
+                    const feature = document.createElement('div');
+                    feature.className = 'nav-bubble';
+
+                    const pos = positions[index];
+                    const x = centerX + (pos.x * distance);
+                    const y = centerY + (pos.y * distance);
+                    
+                    const featureName = item.textContent;
+                    const description = descriptions[featureName] || 'Explore this feature to enhance your preparation journey.';
+
+                    feature.innerHTML = `
+                        <i class="fas ${item.dataset.icon}"></i>
+                        <span>${featureName}</span>
+                        <div class="bubble-description ${pos.x < 0 ? 'left' : 'right'}">
+                            <h4>${featureName}</h4>
+                            <p>${description}</p>
+                        </div>
+                    `;
+
+                    feature.style.left = `${x - 100}px`;
+                    feature.style.top = `${y - 80}px`;
+                    feature.style.setProperty('--delay', index + 1);
+
+                    feature.addEventListener('click', () => {
+                        feature.style.animation = 'featureClick 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+                        setTimeout(() => {
+                            window.location.href = item.dataset.href;
+                        }, 300);
+                    });
+
+                    bubbleContainer.appendChild(feature);
+                });
+            }
+
+            // Initial generation
+            generateBubbles();
+
+            // Handle window resize - reposition bubbles
+             let resizeTimeout;
+             window.addEventListener('resize', () => {
+                 clearTimeout(resizeTimeout);
+                 resizeTimeout = setTimeout(generateBubbles, 150); // Debounce resize event
+             });
+        }); // End DOMContentLoaded for Bubble Nav & Features
+
+        // --- Theme Toggle Functionality ---
+        const body = document.body;
+        const themeToggleButton = document.getElementById('theme-toggle');
+        const themeChangeEvent = new Event('themeChanged'); // Custom event for charts
+
+        function setTheme(theme) {
+             localStorage.setItem('theme', theme); // Store preference
+             if (theme === 'dark') {
+                 body.classList.add('dark-mode');
+                 body.classList.remove('light-mode');
+                 if(themeToggleButton) themeToggleButton.innerHTML = '☀️'; // Sun emoji for dark mode
+                 if(themeToggleButton) themeToggleButton.setAttribute('title', 'Switch to light mode');
+             } else {
+                 body.classList.add('light-mode');
+                 body.classList.remove('dark-mode');
+                 if(themeToggleButton) themeToggleButton.innerHTML = '🌙'; // Moon emoji for light mode
+                 if(themeToggleButton) themeToggleButton.setAttribute('title', 'Switch to dark mode');
+             }
+             // Dispatch the custom event for charts
+             document.dispatchEvent(themeChangeEvent);
+        }
+
+        // Check for saved theme preference or use device preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let initialTheme = 'light'; // Default to light
+        if (savedTheme) {
+            initialTheme = savedTheme;
+        } else if (prefersDark) {
+            initialTheme = 'dark';
+        }
+
+        // Apply initial theme class *before* DOMContentLoaded listener completes if possible
+        // This reduces the flash of the unstyled theme
+        if (initialTheme === 'dark') {
+             body.classList.add('dark-mode');
+             body.classList.remove('light-mode');
+        } else {
+             body.classList.add('light-mode');
+             body.classList.remove('dark-mode');
+        }
+
+        // Set initial emoji and title *after* DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+             if(themeToggleButton) {
+                 themeToggleButton.innerHTML = initialTheme === 'dark' ? '☀️' : '🌙';
+                 themeToggleButton.setAttribute('title', initialTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+             }
+        });
+
+
+        // Add click listener for the toggle button
+        if (themeToggleButton) {
+            themeToggleButton.addEventListener('click', () => {
+                const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+                setTheme(newTheme);
+            });
+        }
+
+        // Welcome Message JS is removed
+
+        // Update header title based on active nav item (Server-side preferred)
+        // This client-side version might not always be accurate if routing changes
+        document.addEventListener('DOMContentLoaded', function() {
+            const headerTitle = document.querySelector('.dashboard-title');
+            // Title is static "Dashboard" for this page
+        });
+
+    </script>
+
+    <script>
+        // Chart Instances (global scope for re-rendering)
+        let skillChartInstance = null;
+        let progressChartInstance = null;
+        let completionChartInstance = null;
+
+        // Function to get current theme colors for charts
+        function getChartThemeColors() {
+            const computedStyle = getComputedStyle(document.documentElement);
+            const getColor = (varName, fallback) => computedStyle.getPropertyValue(varName).trim() || fallback;
+            return {
+                primaryText: getColor('--text-primary', '#111'),
+                secondaryText: getColor('--text-secondary', '#555'),
+                gridColor: getColor('--chart-grid-color', 'rgba(0,0,0,0.08)'), // Use defined variable
+                accentRed: getColor('--accent-red', '#D81B27'),
+                accentGold: getColor('--accent-gold', '#FFC72C'),
+                successColor: getColor('--success-color', '#28a745'),
+                cardBg: getColor('--card-bg', '#ffffff')
+            };
+        }
+
+        // Chart Initialization / Re-initialization Function
+        function initializeCharts() {
+            const themeColors = getChartThemeColors();
+
+            // Destroy existing charts if they exist
+            if (skillChartInstance) skillChartInstance.destroy();
+            if (progressChartInstance) progressChartInstance.destroy();
+            if (completionChartInstance) completionChartInstance.destroy();
+            skillChartInstance = null; progressChartInstance = null; completionChartInstance = null;
+
+            // --- Dummy Data (Replace with actual Jinja variables if available) ---
+            const skills = [
+                { name: "Algorithms", proficiency_level: 75 },
+                { name: "Data Structures", proficiency_level: 80 },
+                { name: "System Design", proficiency_level: 60 },
+                { name: "Problem Solving", proficiency_level: 85 },
+                { name: "Python", proficiency_level: 90 },
+                { name: "SQL", proficiency_level: 70 }
+            ];
+            const weekly_progress = [
+                { week: "W1", count: 5 }, { week: "W2", count: 8 }, { week: "W3", count: 7 },
+                { week: "W4", count: 10 }, { week: "W5", count: 12 }, { week: "W6", count: 9 }
+            ];
+            const assignments = [
+                 { description: "Assign 1", score: 92 }, { description: "Assign 2", score: 78 },
+                 { description: "Assign 3", score: 88 }, { description: "Assign 4", score: null }, // Example null score
+                 { description: "Assign 5", score: 95 }, { description: "Assign 6", score: 81 }
+            ];
+            // --- End Dummy Data ---
+
+            // --- Real Skill Data using the dummy data structure ---
+            const skillMasteryData = {
+                 labels: skills.map(skill => skill.name),
+                 datasets: [{
+                     label: 'Current Mastery',
+                     data: skills.map(skill => skill.proficiency_level),
+                     backgroundColor: themeColors.accentRed + '4D', // RED transparent (~30%)
+                     borderColor: themeColors.accentRed, // RED solid
+                     borderWidth: 2,
+                     pointBackgroundColor: themeColors.accentRed,
+                     pointBorderColor: themeColors.cardBg,
+                     pointHoverBackgroundColor: themeColors.cardBg,
+                     pointHoverBorderColor: themeColors.accentRed
+                 }]
+            };
+
+            // --- Weekly Progress Data ---
+            const progressOverTimeData = {
+                 labels: weekly_progress.map(week => week.week),
+                 datasets: [{
+                     label: 'Activities Completed',
+                     data: weekly_progress.map(week => week.count),
+                     fill: false,
+                     borderColor: themeColors.accentRed, // Red line
+                     tension: 0.1,
+                     pointBackgroundColor: themeColors.accentRed,
+                     pointBorderColor: themeColors.cardBg,
+                     pointHoverBackgroundColor: themeColors.cardBg,
+                     pointHoverBorderColor: themeColors.accentRed,
+                 }]
+            };
+
+            // --- Assignment Completion Data ---
+            const completionRateData = {
+                 labels: assignments.map(a => a.description.substring(0, 10) + (a.description.length > 10 ? '...' : '')), // Shorten labels
+                 datasets: [{
+                     label: 'Score (%)',
+                     data: assignments.map(a => a.score), // Handles null scores correctly
+                     backgroundColor: assignments.map(a => a.score && a.score > 85 ? themeColors.successColor + 'B3' : themeColors.accentRed + 'B3'), // Transparent colors
+                     borderColor: assignments.map(a => a.score && a.score > 85 ? themeColors.successColor : themeColors.accentRed), // Solid colors
+                     borderWidth: 1,
+                     borderRadius: 4,
+                 }]
+             };
+
+             // --- Chart Configurations ---
+             // Note: These assume you have canvas elements with these IDs in your actual content section
+             // Since they are not in the provided HTML structure, these will only run if the elements exist.
+             const ctxSkill = document.getElementById('skillMasteryChart');
+             if (ctxSkill) {
+                  skillChartInstance = new Chart(ctxSkill, {
+                      type: 'radar', data: skillMasteryData,
+                      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: themeColors.cardBg, titleColor: themeColors.primaryText, bodyColor: themeColors.secondaryText } },
+                           scales: { r: { angleLines: { color: themeColors.gridColor }, grid: { color: themeColors.gridColor }, pointLabels: { color: themeColors.secondaryText, font: { size: 11 } }, suggestedMin: 0, suggestedMax: 100, ticks: { color: themeColors.secondaryText, backdropColor: 'transparent' } } } } });
+             }
+
+             const ctxProgress = document.getElementById('progressOverTimeChart');
+              if (ctxProgress) {
+                   progressChartInstance = new Chart(ctxProgress, {
+                       type: 'line', data: progressOverTimeData,
+                       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: themeColors.cardBg, titleColor: themeColors.primaryText, bodyColor: themeColors.secondaryText } },
+                           scales: { y: { beginAtZero: true, suggestedMax: Math.max(...progressOverTimeData.datasets[0].data, 15) + 5, grid: { color: themeColors.gridColor }, ticks: { color: themeColors.secondaryText } }, x: { grid: { display: false }, ticks: { color: themeColors.secondaryText } } } } });
+              }
+
+              const ctxCompletion = document.getElementById('completionRateChart');
+              if (ctxCompletion) {
+                  completionChartInstance = new Chart(ctxCompletion, {
+                      type: 'bar', data: completionRateData,
+                      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: themeColors.cardBg, titleColor: themeColors.primaryText, bodyColor: themeColors.secondaryText, callbacks: { label: function(context) { let label = context.dataset.label || ''; if (label) { label += ': '; } if (context.parsed.y !== null) { label += context.parsed.y + '%'; } else { label += 'N/A'; } return label; } } } },
+                          scales: { y: { beginAtZero: true, suggestedMax: 100, grid: { color: themeColors.gridColor }, ticks: { color: themeColors.secondaryText, callback: function(value) { return value + '%' } } }, x: { grid: { display: false }, ticks: { color: themeColors.secondaryText } } } } });
+             }
+        }
+
+        // Initialize charts when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+             initializeCharts(); // Initial chart draw
+        });
+
+        // Re-initialize charts when theme is changed (listen for the custom event)
+        document.addEventListener('themeChanged', () => {
+             // Use a small timeout to allow CSS variables to potentially update
+             setTimeout(initializeCharts, 50);
+        });
+    </script>
+
+=======
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">EnginSync</div>
@@ -288,5 +1323,6 @@
         fetchUserData(); // Fetch data on dashboard load
 
     </script>
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
 </body>
 </html>

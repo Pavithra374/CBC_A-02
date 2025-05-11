@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title | default('Dashboard') }} - EnginSync</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        /* --- Theme Variables (RCB Theme) --- */
+        :root {
+            --bg-primary: #ffffff; --bg-secondary: #f5f5f5; --bg-accent: #111111;
+            --text-primary: #111111; --text-secondary: #555555; --text-sidebar: #f0f0f0;
+            --text-sidebar-muted: #cccccc; --accent-red: #D81B27; --accent-gold: #FFC72C;
+            --accent-black: #111111; --shadow-color: rgba(0, 0, 0, 0.1);
+            --shadow-color-glow: rgba(255, 199, 44, 0.1); --success-color: #28a745;
+            --error-color: #dc3545; --info-color: #17a2b8; --warning-color: #ffc107;
+            --border-color: #e0e0e0; --sidebar-width: 250px;
+            --header-height: 60px; --card-bg: #ffffff; --nav-item-hover-bg: rgba(255, 199, 44, 0.1);
+            --nav-item-active-bg: rgba(255, 199, 44, 0.15);
+            --theme-toggle-color-light: var(--accent-gold);
+            --theme-toggle-hover-light: var(--accent-red);
+            --theme-toggle-color-dark: var(--accent-red);
+            --theme-toggle-hover-dark: var(--accent-gold);
+            --flash-bg-error: rgba(220, 53, 69, 0.1); --flash-border-error: var(--error-color);
+            --flash-bg-success: rgba(40, 167, 69, 0.1); --flash-border-success: var(--success-color);
+            --flash-bg-info: rgba(23, 162, 184, 0.1); --flash-border-info: var(--info-color);
+            --flash-bg-warning: rgba(255, 193, 7, 0.1); --flash-border-warning: var(--warning-color);
+        }
+        body.dark-mode {
+            --bg-primary: #111111; --bg-secondary: #1a1a1a; --bg-accent: #000000;
+            --text-primary: #f0f0f0; --text-secondary: #cccccc; --text-sidebar: #f0f0f0;
+            --text-sidebar-muted: #aaaaaa; --accent-red: #ff4d4d; --accent-gold: #FFD700;
+            --accent-black: #111111; --shadow-color: rgba(0, 0, 0, 0.3);
+            --shadow-color-glow: rgba(255, 77, 77, 0.2); --border-color: #444444;
+            --card-bg: #1a1a1a; --nav-item-hover-bg: rgba(255, 215, 0, 0.1);
+            --nav-item-active-bg: rgba(255, 215, 0, 0.2);
+            --theme-toggle-color-dark: var(--accent-red);
+            --theme-toggle-hover-dark: var(--accent-gold);
+            --flash-bg-error: rgba(255, 77, 77, 0.15);
+            --flash-bg-success: rgba(40, 167, 69, 0.15);
+            --flash-bg-info: rgba(23, 162, 184, 0.15);
+            --flash-bg-warning: rgba(255, 193, 7, 0.15);
+        }
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; line-height: 1.6; background-color: var(--bg-secondary); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; min-height: 100vh; }
+        h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: 1.3; color: var(--text-primary); transition: color 0.3s ease; }
+        a { text-decoration: none; color: var(--accent-red); transition: color 0.3s ease; }
+         body.dark-mode a { color: var(--accent-gold);}
+         a:hover { color: var(--accent-gold); }
+         body.dark-mode a:hover { color: var(--accent-red);}
+        p { margin-bottom: 1em; color: var(--text-secondary); transition: color 0.3s ease; }
+        .btn { display: inline-block; padding: 10px 20px; border-radius: 25px; font-weight: 600; letter-spacing: 0.5px; transition: all 0.3s ease; cursor: pointer; border: none; box-shadow: 0 4px 10px var(--shadow-color); text-align: center; }
+        .btn-primary { background-color: var(--accent-gold); color: var(--accent-black); }
+        .btn-primary:hover { background-color: #e6b325; transform: translateY(-2px); }
+        .btn-secondary { background-color: var(--accent-red); color: white; }
+        .btn-secondary:hover { background-color: #c01822; transform: translateY(-2px); }
+        .btn-sm { padding: 5px 12px; font-size: 0.85em; }
+
+        /* --- Layout --- */
+        .app-container { position: relative; min-height: 100vh; overflow: hidden; }
+
+        /* --- Central Logo --- */
+        #central-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            animation: fadeInScale 1.2s ease-out forwards;
+        }
+        
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .rcb-logo { 
+            width: 180px; /* Extra large logo */
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--accent-gold);
+            box-shadow: 0 0 50px var(--shadow-color-glow);
+        }
+        
+        .logo-text {
+            font-size: 2.5em; /* Larger text */
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-shadow: 0 3px 8px var(--shadow-color);
+            letter-spacing: 1px;
+        }
+        
+        /* --- Bubble Navigation --- */
+        #bubble-nav-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Let clicks pass through to bubbles */
+        }
+        
+        .nav-bubble {
+            position: absolute;
+            border-radius: 50%;
+            background-color: var(--bg-accent);
+            color: var(--text-sidebar);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* Enhanced shadow for more professional look */
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2), 
+                        inset 0 -2px 10px rgba(255,255,255,0.07),
+                        inset 0 2px 5px rgba(255,255,255,0.15);
+            cursor: pointer;
+            user-select: none;
+            pointer-events: auto; /* Make bubbles clickable */
+            font-weight: 500;
+            text-align: center;
+            opacity: 0;
+            /* Only animate on appearance, no movement */
+            animation: bubbleFadeIn 1s ease forwards;
+            animation-delay: calc(var(--delay) * 0.2s);
+            /* Gradient border for more attractive look */
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            /* Subtle glow effect */
+            filter: drop-shadow(0 0 8px rgba(255, 199, 44, 0.2));
+            /* No transitions on position - static placement */
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+        
+        /* Special styling removed since dashboard bubble is gone */
+        
+        .nav-bubble i {
+            font-size: 2.6em; /* Extra large icons */
+            margin-bottom: 10px;
+            color: var(--accent-gold);
+            /* Enhanced glow effect */
+            filter: drop-shadow(0 0 8px rgba(255, 199, 44, 0.4));
+        }
+        
+        .nav-bubble span {
+            font-size: 1.2em; /* Larger text */
+            max-width: 85%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .nav-bubble:hover {
+            transform: scale(1.15);
+            box-shadow: 0 10px 30px var(--shadow-color-glow), 
+                      inset 0 -3px 10px rgba(255,255,255,0.1);
+            border-color: var(--accent-gold);
+        }
+        
+        /* Bubble hover descriptions */
+        .bubble-description {
+            position: absolute;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            width: 250px;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--accent-gold);
+            z-index: 20;
+            backdrop-filter: blur(8px);
+            transform: translateY(10px);
+            line-height: 1.5;
+        }
+        
+        .bubble-description.left {
+            right: calc(100% + 20px);
+            text-align: right;
+        }
+        
+        .bubble-description.right {
+            left: calc(100% + 20px);
+            text-align: left;
+        }
+        
+        .bubble-description h4 {
+            margin: 0 0 10px 0;
+            color: var(--accent-gold);
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+        
+        .bubble-description p {
+            margin: 0;
+            line-height: 1.5;
+            color: var(--text-primary);
+            font-size: 0.95em;
+        }
+        
+        .bubble-description:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .bubble-description.left:after {
+            border-width: 8px 0 8px 8px;
+            border-color: transparent transparent transparent var(--accent-gold);
+            right: -8px;
+        }
+        
+        .bubble-description.right:after {
+            border-width: 8px 8px 8px 0;
+            border-color: transparent var(--accent-gold) transparent transparent;
+            left: -8px;
+        }
+        
+        .nav-bubble:hover .bubble-description {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+
+        
+        .nav-bubble.active {
+            background-color: var(--accent-gold);
+            color: var(--accent-black);
+            box-shadow: 0 8px 30px rgba(255, 199, 44, 0.4), 
+                      inset 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-bubble.active i {
+            color: var(--accent-black);
+            filter: none;
+        }
+        
+        /* --- User Panel --- */
+        #user-panel {
+            position: fixed;
+            bottom: 20px; /* Moved to bottom as requested */
+            right: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 200px;
+            animation: slideInRight 0.5s ease-out forwards;
+            border: 2px solid var(--accent-gold);
+            backdrop-filter: blur(10px);
+        }
+        .user-info { display: flex; align-items: center; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--accent-red); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 10px; font-size: 0.9em; text-transform: uppercase; }
+        .user-details { flex: 1; overflow: hidden; /* Prevent long names breaking layout */}
+        .user-name { 
+            font-weight: 700; 
+            font-size: 1.1em;
+            background: linear-gradient(45deg, var(--accent-red), var(--accent-gold));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+            letter-spacing: 0.5px;
+        } 
+        .user-role { font-size: 0.8em; color: var(--text-primary); font-weight: 500; }
+        .logout-btn { margin-top: 15px; width: 100%; display: flex; justify-content: center; align-items: center; }
+        .logout-btn i { margin-right: 8px;}
+
+        /* --- Content Container --- */
+        #content-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px;
+            scroll-behavior: smooth;
+            scroll-padding-top: 60px;
+        }
+        
+        /* Dashboard header title */
+        .dashboard-title {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--text-primary);
+            z-index: 100;
+            background-color: var(--card-bg);
+            padding: 10px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        /* Welcome message removed */
+        
+        /* --- Animations --- */
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        @keyframes bubbleFadeIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            70% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes slideInRight {
+            0% { transform: translateX(50px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes popEffect {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+        
+        /* fadeInOut animation removed */
+        
+        /* --- Feature Highlights Section --- */
+        #feature-highlights {
+            margin-top: 100vh;
+            padding: 40px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 50px;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-red));
+            border-radius: 2px;
+        }
+        
+        .feature-card {
+            display: flex;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+            border: 1px solid var(--border-color);
+        }
+        
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feature-icon {
+            width: 120px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-accent);
+            color: var(--accent-gold);
+            font-size: 3em;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-content {
+            padding: 25px;
+            flex-grow: 1;
+        }
+        
+        .feature-content h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            color: var(--text-primary);
+        }
+        
+        .feature-content p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+        
+        .feature-content ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-content li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+        
+        .feature-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--accent-gold);
+            color: var(--accent-black);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-link:hover {
+            background-color: var(--accent-red);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        /* Dark mode specific styling */
+        body.dark-mode .feature-icon {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: var(--accent-red);
+        }
+        
+        body.dark-mode .feature-card {
+            border: 1px solid rgba(255, 199, 44, 0.2);
+            background-color: rgba(26, 26, 26, 0.8);
+        }
+        
+        body.dark-mode .feature-link {
+            background-color: var(--accent-red);
+            color: white;
+        }
+        
+        body.dark-mode .feature-link:hover {
+            background-color: var(--accent-gold);
+            color: var(--accent-black);
+        }
+
+        /* Theme Toggle Button (Emoji Only in Header) */
+        .theme-toggle { background: none; border: none; color: var(--theme-toggle-color-light); width: auto; height: auto; padding: 0; border-radius: 0; cursor: pointer; transition: color 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 1.5em; }
+        .theme-toggle:hover { background: none; color: var(--theme-toggle-hover-light); }
+        body.dark-mode .theme-toggle { color: var(--theme-toggle-color-dark); }
+        body.dark-mode .theme-toggle:hover { background: none; color: var(--theme-toggle-hover-dark); }
+
+        .content { padding: 30px; }
+
+         /* --- Flashed Messages --- */
+         .flash-messages { margin-bottom: 20px; }
+         .alert { padding: 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid transparent; font-size: 0.95em; }
+         .alert-error { color: var(--error-color); background-color: var(--flash-bg-error); border-color: var(--flash-border-error); }
+         .alert-success { color: var(--success-color); background-color: var(--flash-bg-success); border-color: var(--flash-border-success); }
+         .alert-info { color: var(--info-color); background-color: var(--flash-bg-info); border-color: var(--flash-border-info); }
+         .alert-warning { color: var(--warning-color); background-color: var(--flash-bg-warning); border-color: var(--flash-border-warning); }
+         body.dark-mode .alert-error { color: #ffaaaa; }
+         body.dark-mode .alert-success { color: #aaffaa; }
+         body.dark-mode .alert-info { color: #aae0ff; }
+         body.dark-mode .alert-warning { color: #fff0aa; }
+
+        /* --- User Welcome Element --- */
+        .welcome-text {
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-right: 15px;
+        }
+        
+        /* --- Dashboard Components --- */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; margin-bottom: 30px; }
+        .dashboard-card { background-color: var(--card-bg); border-radius: 10px; box-shadow: 0 5px 15px var(--shadow-color); padding: 25px; transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; border: 1px solid var(--border-color); }
+        .dashboard-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px var(--shadow-color); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .card-title { font-size: 1.1em; font-weight: 600; color: var(--text-primary); }
+        .card-icon { width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background-color: var(--accent-gold); color: var(--accent-black); font-size: 1.2em; }
+        .card-content { margin-bottom: 15px; }
+        .stat-value { font-size: 2.2em; font-weight: 700; margin-bottom: 5px; color: var(--text-primary); }
+        .stat-label { color: var(--text-secondary); font-size: 0.9em; }
+        .progress-container { height: 8px; background-color: var(--bg-secondary); border-radius: 4px; overflow: hidden; margin-top: 10px; }
+         body.dark-mode .progress-container { background-color: #444; }
+        .progress-bar { height: 100%; background-color: var(--accent-red); border-radius: 4px; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; color: var(--text-secondary); }
+        .trend { display: flex; align-items: center; }
+        .trend-up { color: var(--success-color); }
+        .trend-down { color: var(--error-color); }
+        .trend i { margin-right: 5px; }
+
+        /* --- Skill Styling --- */
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+            font-size: 0.9em;
+        }
+        
+        /* --- Progress Module Specific Styles --- */
+        /* Make specific widget headings gold */
+        .progress-widget > h3,
+        .detailed-progress-view > h3 { 
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 20px;
+        }
+        .progress-widget > h3 i,
+        .detailed-progress-view > h3 i {
+            color: var(--accent-gold);
+            margin-right: 8px;
+        }
+
+        /* --- Theme Toggle Container --- */
+        #theme-toggle-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 26px; /* Larger size as requested */
+            color: var(--theme-toggle-color-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.2));
+            padding: 0;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(30deg) scale(1.1);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .rcb-logo { width: 100px; height: 100px; }
+            .logo-text { font-size: 2em; }
+            #user-panel { min-width: 180px; }
+            .theme-toggle { font-size: 26px; }
+        }
+        
+        @media (max-width: 576px) {
+            .rcb-logo { width: 90px; height: 90px; }
+            .logo-text { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Central Logo Area -->
+        <!-- Dashboard title in header -->
+        <div class="dashboard-title">Dashboard</div>
+        
+        <div id="central-logo">
+            <div class="logo-container">
+                <div class="logo-icon" title="EnginSync Logo">
+                    <img src="{{ url_for('static', filename='img/ESCN.jpg') }}" alt="RCB Logo" class="rcb-logo">
+                </div>
+                <div class="logo-text">EnginSync</div>
+            </div>
+        </div>
+        
+        <!-- Bubble Navigation -->
+        <div id="bubble-nav-container">
+            <!-- Bubbles will be created by JavaScript -->
+        </div>
+        
+        <!-- Theme Toggle Container (Top Right) -->
+        <div id="theme-toggle-container">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        </div>
+        
+        <!-- User Info Floating Panel (Bottom Right) -->
+        <div id="user-panel">
+            {% if g.user %}
+            <div class="user-info">
+                <div class="user-avatar">
+                    {% set name_parts = g.user.full_name.split(' ') %}
+                    {% if name_parts|length > 0 %}
+                        {{ name_parts[0][0]|upper }}{% if name_parts|length > 1 %}{{ name_parts[-1][0]|upper }}{% endif %}
+                    {% else %}
+                        U
+                    {% endif %}
+                </div>
+                <div class="user-details">
+                    <div class="user-name">{{ g.user.full_name }}</div>
+                </div>
+            </div>
+            <a href="{{ url_for('logout') }}" class="btn btn-secondary logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            {% else %}
+            <div class="user-info">
+                <div class="user-avatar">?</div>
+                <div class="user-details">
+                    <div class="user-name">Not Logged In</div>
+                </div>
+            </div>
+            <a href="{{ url_for('login') }}" class="btn btn-primary logout-btn">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            {% endif %}
+        </div>
+        
+        <!-- Navigation Data (hidden) - Dashboard bubble removed -->
+        <div id="nav-data" style="display: none;">
+            <div class="nav-item" data-href="{{ url_for('planner') }}" data-icon="fa-calendar-alt">Game Plan</div>
+            <div class="nav-item" data-href="{{ url_for('jobsearch') }}" data-icon="fa-briefcase">The Chase</div>
+            <div class="nav-item" data-href="{{ url_for('textbot') }}" data-icon="fa-robot">All Rounder</div>
+            <div class="nav-item" data-href="{{ url_for('ai_planner') }}" data-icon="fa-brain">Strategic Time Out</div>
+            <div class="nav-item" data-href="{{ url_for('interview_prep') }}" data-icon="fa-user-tie">Coach</div>
+            <div class="nav-item" data-href="{{ url_for('practice') }}" data-icon="fa-code">Training</div>
+        </div>
+
+        <!-- Content Container -->
+        <div id="content-container">
+
+            <div class="content">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                        {% for category, message in messages %}
+                            {% set alert_class = 'alert-info' %} {% if category == 'error' %}
+                                {% set alert_class = 'alert-error' %}
+                            {% elif category == 'success' %}
+                                {% set alert_class = 'alert-success' %}
+                            {% elif category == 'warning' %}
+                                {% set alert_class = 'alert-warning' %}
+                            {% endif %}
+                            <div class="alert {{ alert_class }}">{{ message }}</div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                
+                <!-- Feature descriptions that appear on scroll -->
+                <div id="feature-highlights">
+                    <div class="section-title">Feature Highlights</div>
+                    
+                    <!-- Planner Feature -->
+                    <div class="feature-card" data-feature="planner">
+                        <div class="feature-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="feature-content">
+                            <h3>Study Planner</h3>
+                            <p>Organize your study schedule with our intelligent planner that adapts to your learning style and goals.</p>
+                            <ul>
+                                <li>Create customized study schedules</li>
+                                <li>Set deadlines and milestones</li>
+                                <li>Track your progress over time</li>
+                            </ul>
+                            <a href="{{ url_for('planner') }}" class="feature-link">Open Planner <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Job Search Feature -->
+                    <div class="feature-card" data-feature="jobsearch">
+                        <div class="feature-icon"><i class="fas fa-briefcase"></i></div>
+                        <div class="feature-content">
+                            <h3>Job Search</h3>
+                            <p>Find the perfect career opportunities tailored to your skills and experience.</p>
+                            <ul>
+                                <li>Search thousands of job listings</li>
+                                <li>Filter by role, location, and salary</li>
+                                <li>Get personalized job recommendations</li>
+                            </ul>
+                            <a href="{{ url_for('jobsearch') }}" class="feature-link">Search Jobs <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Textbook Bot Feature -->
+                    <div class="feature-card" data-feature="textbot">
+                        <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                        <div class="feature-content">
+                            <h3>Textbook Assistant</h3>
+                            <p>Get instant answers and explanations from your textbooks with our AI-powered assistant.</p>
+                            <ul>
+                                <li>Upload and analyze textbook PDFs</li>
+                                <li>Ask questions about any concept</li>
+                                <li>Generate summaries and study notes</li>
+                            </ul>
+                            <a href="{{ url_for('textbot') }}" class="feature-link">Open Assistant <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Planner Feature -->
+                    <div class="feature-card" data-feature="ai_planner">
+                        <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                        <div class="feature-content">
+                            <h3>AI Study Planner</h3>
+                            <p>Let our advanced AI create personalized study plans optimized for your learning goals.</p>
+                            <ul>
+                                <li>Generate custom study plans</li>
+                                <li>Optimize for exams or projects</li>
+                                <li>Adapt to your learning style</li>
+                            </ul>
+                            <a href="{{ url_for('ai_planner') }}" class="feature-link">Generate Plan <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Interview Prep Feature -->
+                    <div class="feature-card" data-feature="interview_prep">
+                        <div class="feature-icon"><i class="fas fa-user-tie"></i></div>
+                        <div class="feature-content">
+                            <h3>Interview Preparation</h3>
+                            <p>Practice and prepare for technical interviews with our comprehensive tools.</p>
+                            <ul>
+                                <li>Practice with real interview questions</li>
+                                <li>Get feedback on your answers</li>
+                                <li>Prepare for different interview formats</li>
+                            </ul>
+                            <a href="{{ url_for('interview_prep') }}" class="feature-link">Start Practicing <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- DSA Practice Feature -->
+                    <div class="feature-card" data-feature="practice">
+                        <div class="feature-icon"><i class="fas fa-code"></i></div>
+                        <div class="feature-content">
+                            <h3>DSA Practice</h3>
+                            <p>Master data structures and algorithms with our curated collection of practice problems.</p>
+                            <ul>
+                                <li>Access hundreds of DSA problems</li>
+                                <li>Filter by difficulty and topic</li>
+                                <li>Track your progress and improvements</li>
+                            </ul>
+                            <a href="{{ url_for('practice') }}" class="feature-link">Practice Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Static Bubble Navigation System ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Welcome message removed
+            
+            // Feature cards scroll animation
+            const featureCards = document.querySelectorAll('.feature-card');
+            
+            // Set initial delays for staggered appearance
+            featureCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.1}s`;
+            });
+            
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            });
+            
+            // Observe all feature cards
+            featureCards.forEach(card => {
+                observer.observe(card);
+            });
+            // Get viewport dimensions
+            let viewportWidth = window.innerWidth;
+            let viewportHeight = window.innerHeight;
+            
+            // Generate navigation bubbles
+            const navItems = document.querySelectorAll('#nav-data .nav-item');
+            const bubbleContainer = document.getElementById('bubble-nav-container');
+            const bubbleSize = Math.min(viewportWidth, viewportHeight) * 0.2; // Extra large bubbles
+            
+            // Calculate center point
+            const centerX = viewportWidth / 2;
+            const centerY = viewportHeight / 2;
+            
+            // Calculate the ideal distance from center based on available space
+            const distance = Math.min(viewportWidth, viewportHeight) * 0.42; // 42% of the smaller viewport dimension
+            
+            // Create a bubble for each navigation item in perfect circle
+            // Define custom descriptions for each feature
+            const bubbleDescriptions = {
+                'Game Plan': 'Organize your study schedule with our intelligent planner that adapts to your learning style and personal goals.',
+                'The Chase': 'Find perfect career opportunities tailored to your skills and experience with our advanced job search tool.',
+                'All Rounder': 'Get instant answers and explanations from your textbooks with our powerful AI-powered assistant.',
+                'Strategic Time Out': 'Let our advanced AI create personalized study plans optimized for your specific learning goals.',
+                'Coach': 'Practice and prepare for technical interviews with comprehensive tools and realistic mock interviews.',
+                'Training': 'Master data structures and algorithms with our curated collection of practice problems tailored to your skill level.'
+            };
+
+            navItems.forEach((item, index) => {
+                // Create the visual bubble element
+                const bubble = document.createElement('div');
+                bubble.className = 'nav-bubble';
+                
+                // Calculate exact position in perfect circle around the center
+                const angle = (Math.PI * 2 / navItems.length) * index;
+                const x = centerX + Math.cos(angle) * distance;
+                const y = centerY + Math.sin(angle) * distance;
+                
+                // Set bubble content (icon and text)
+                bubble.innerHTML = `
+                    <i class="fas ${item.dataset.icon}"></i>
+                    <span>${item.textContent}</span>
+                `;
+                
+                // Create and add hover description
+                const description = document.createElement('div');
+                // Determine if bubble is on left or right side of circle
+                const isLeftSide = x < centerX;
+                description.className = `bubble-description ${isLeftSide ? 'left' : 'right'}`;
+                
+                // Set description content based on feature
+                const featureName = item.textContent;
+                const title = document.createElement('h4');
+                title.textContent = featureName;
+                description.appendChild(title);
+                
+                const desc = document.createElement('p');
+                
+                switch(featureName.toLowerCase()) {
+                    case 'planner':
+                        desc.textContent = 'Create customized study schedules, set deadlines, and track your progress. Our intelligent planner adapts to your learning style.';
+                        break;
+                    case 'job search':
+                        desc.textContent = 'Find the perfect career opportunities tailored to your skills and experience with advanced filtering and personalized recommendations.';
+                        break;
+                    case 'textbook bot':
+                        desc.textContent = 'Get instant answers from your textbooks with our AI-powered assistant. Upload PDFs, ask questions, and generate study notes.';
+                        break;
+                    case 'ai planner':
+                        desc.textContent = 'Let our advanced AI create personalized study plans optimized for your specific learning goals and timeline.';
+                        break;
+                    case 'interview prep':
+                        desc.textContent = 'Practice with real interview questions, get feedback on your answers, and prepare for technical interviews.';
+                        break;
+                    case 'dsa practice':
+                        desc.textContent = 'Master data structures and algorithms with hundreds of curated practice problems across different difficulty levels.';
+                        break;
+                    default:
+                        desc.textContent = 'Access this feature to enhance your learning experience with EnginSync.';
+                }
+                
+                description.appendChild(desc);
+                bubble.appendChild(description);
+                
+                // Position the bubble (static, no movement)
+                bubble.style.left = `${x - bubbleSize/2}px`;
+                bubble.style.top = `${y - bubbleSize/2}px`;
+                bubble.style.width = `${bubbleSize}px`;
+                bubble.style.height = `${bubbleSize}px`;
+                
+                // Set unique animation delay
+                bubble.style.setProperty('--delay', index + 1);
+                
+                // Add click handler for navigation
+                bubble.addEventListener('click', () => {
+                    // Create pop effect
+                    bubble.style.animation = 'popEffect 0.4s ease-out forwards';
+                    
+                    // Navigate to the target page after animation
+                    setTimeout(() => {
+                        window.location.href = item.dataset.href;
+                    }, 300);
+                });
+                
+                bubbleContainer.appendChild(bubble);
+            });
+            
+            // Handle window resize - reposition bubbles
+            window.addEventListener('resize', () => {
+                viewportWidth = window.innerWidth;
+                viewportHeight = window.innerHeight;
+                
+                // Recalculate center point
+                const centerX = viewportWidth / 2;
+                const centerY = viewportHeight / 2;
+                
+                // Recalculate bubble size and distance
+                const bubbleSize = Math.min(viewportWidth, viewportHeight) * 0.2;
+                const distance = Math.min(viewportWidth, viewportHeight) * 0.42;
+                
+                // Reposition all bubbles
+                const bubbles = document.querySelectorAll('.nav-bubble');
+                bubbles.forEach((bubble, index) => {
+                    const angle = (Math.PI * 2 / bubbles.length) * index;
+                    const x = centerX + Math.cos(angle) * distance;
+                    const y = centerY + Math.sin(angle) * distance;
+                    
+                    bubble.style.left = `${x - bubbleSize/2}px`;
+                    bubble.style.top = `${y - bubbleSize/2}px`;
+                    bubble.style.width = `${bubbleSize}px`;
+                    bubble.style.height = `${bubbleSize}px`;
+                });
+            });
+        });
+        
+        // --- Theme Toggle Functionality ---
+        const body = document.body;
+        const themeToggleButton = document.getElementById('theme-toggle');
+
+        function setTheme(theme) {
+            localStorage.setItem('theme', theme); // Store preference
+             if (theme === 'dark') {
+                 body.classList.add('dark-mode');
+                 body.classList.remove('light-mode');
+                 if(themeToggleButton) themeToggleButton.innerHTML = '<span style="font-size: 1.5em;">☀️</span>'; // Sun emoji for dark mode (bigger)
+                 if(themeToggleButton) themeToggleButton.setAttribute('title', 'Switch to light mode');
+             } else {
+                 body.classList.add('light-mode');
+                 body.classList.remove('dark-mode');
+                 if(themeToggleButton) themeToggleButton.innerHTML = '<span style="font-size: 1.5em;">🌙</span>'; // Moon emoji for light mode (bigger)
+                 if(themeToggleButton) themeToggleButton.setAttribute('title', 'Switch to dark mode');
+             }
+         }
+
+         // Check for saved theme preference or use device preference
+         const savedTheme = localStorage.getItem('theme');
+         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+         let initialTheme = 'light'; // Default to light
+         if (savedTheme) {
+             initialTheme = savedTheme;
+         } else if (prefersDark) {
+             initialTheme = 'dark';
+         }
+         // Apply initial theme class *before* DOMContentLoaded listener
+         if (initialTheme === 'dark') {
+             body.classList.add('dark-mode');
+             body.classList.remove('light-mode');
+         } else {
+             body.classList.add('light-mode');
+             body.classList.remove('dark-mode');
+         }
+         // Set initial emoji
+         if(themeToggleButton) {
+             themeToggleButton.innerHTML = initialTheme === 'dark' ? '☀️' : '🌙';
+             themeToggleButton.setAttribute('title', initialTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+         }
+
+         // Add click listener for the toggle button
+         if (themeToggleButton) {
+             themeToggleButton.addEventListener('click', () => {
+                 const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+                 setTheme(newTheme);
+             });
+         }
+         
+         // Make welcome message disappear after a few seconds
+         document.addEventListener('DOMContentLoaded', function() {
+            const welcomeText = document.querySelector('.welcome-text');
+            if (welcomeText) {
+                setTimeout(function() {
+                    welcomeText.style.transition = 'opacity 1s ease-out';
+                    welcomeText.style.opacity = '0';
+                    setTimeout(function() {
+                        welcomeText.style.display = 'none';
+                    }, 1000);
+                }, 3000); // Display for 3 seconds before fading out
+            }
+         });
+
+         // Update header title based on active nav item (server-side preferred)
+        document.addEventListener('DOMContentLoaded', function() {
+            const activeNavItem = document.querySelector('.sidebar-nav .nav-item.active span');
+            const headerTitle = document.querySelector('.header-title');
+            if (activeNavItem && headerTitle) {
+                headerTitle.textContent = activeNavItem.textContent;
+            } else if (headerTitle) {
+                // Fallback if no active item found (e.g., direct URL access)
+                const path = window.location.pathname.split('/').pop().replace('.html','');
+                if (path === 'dashboard' || path === '') headerTitle.textContent = 'Dashboard';
+                else if (path) headerTitle.textContent = path.charAt(0).toUpperCase() + path.slice(1); // Capitalize path name
+                else headerTitle.textContent = 'EnginSync'; // Default
+            }
+        });
+
+    </script>
+    
+    <!-- Chart Initialization Code -->
+    <script>
+        // Chart Instances (global scope for re-rendering)
+        let skillChartInstance = null;
+        let progressChartInstance = null;
+        let completionChartInstance = null;
+
+        // Function to get current theme colors for charts
+        function getChartThemeColors() {
+            const computedStyle = getComputedStyle(document.documentElement);
+            const getColor = (varName, fallback) => computedStyle.getPropertyValue(varName).trim() || fallback;
+            return {
+                primaryText: getColor('--text-primary', '#111'),
+                secondaryText: getColor('--text-secondary', '#555'),
+                gridColor: getColor('--chart-grid-color', 'rgba(0,0,0,0.08)'),
+                accentRed: getColor('--accent-red', '#D81B27'),
+                accentGold: getColor('--accent-gold', '#FFC72C'),
+                successColor: getColor('--success-color', '#28a745'),
+                cardBg: getColor('--card-bg', '#ffffff')
+            };
+        }
+
+        // Chart Initialization / Re-initialization Function
+        function initializeCharts() {
+            const themeColors = getChartThemeColors();
+
+            if (skillChartInstance) skillChartInstance.destroy();
+            if (progressChartInstance) progressChartInstance.destroy();
+            if (completionChartInstance) completionChartInstance.destroy();
+            skillChartInstance = null; progressChartInstance = null; completionChartInstance = null;
+
+            // --- Real Skill Data from Database ---
+            const skillMasteryData = {
+                labels: [{% for skill in skills %}"{{ skill.name }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+                datasets: [{
+                    label: 'Current Mastery',
+                    data: [{% for skill in skills %}{{ skill.proficiency_level }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                    backgroundColor: themeColors.accentRed + '4D', // RED transparent (~30%)
+                    borderColor: themeColors.accentRed, // RED solid
+                    borderWidth: 2,
+                    pointBackgroundColor: themeColors.accentRed,
+                    pointBorderColor: themeColors.cardBg,
+                    pointHoverBackgroundColor: themeColors.cardBg,
+                    pointHoverBorderColor: themeColors.accentRed
+                }]
+            };
+
+            // --- Weekly Progress Data ---
+            const progressOverTimeData = {
+                labels: [{% for week in weekly_progress %}"{{ week.week }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+                datasets: [{
+                    label: 'Activities Completed',
+                    data: [{% for week in weekly_progress %}{{ week.count }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                    fill: false,
+                    borderColor: themeColors.accentRed, // Red line
+                    tension: 0.1,
+                    pointBackgroundColor: themeColors.accentRed,
+                    pointBorderColor: themeColors.cardBg,
+                    pointHoverBackgroundColor: themeColors.cardBg,
+                    pointHoverBorderColor: themeColors.accentRed,
+                }]
+            };
+
+            // --- Assignment Completion Data ---
+            const completionRateData = {
+                labels: [{% for assignment in assignments %}"{{ assignment.description[:10] }}..."{% if not loop.last %}, {% endif %}{% endfor %}],
+                datasets: [{
+                    label: 'Score (%)',
+                    data: [{% for assignment in assignments %}{{ assignment.score if assignment.score else "null" }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                    backgroundColor: [
+                        {% for assignment in assignments %}
+                        {% if assignment.score and assignment.score > 85 %}themeColors.successColor + 'B3'{% else %}themeColors.accentRed + 'B3'{% endif %}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    ],
+                    borderColor: [
+                        {% for assignment in assignments %}
+                        {% if assignment.score and assignment.score > 85 %}themeColors.successColor{% else %}themeColors.accentRed{% endif %}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    ],
+                    borderWidth: 1, borderRadius: 4,
+                }]
+            };
+
+            // --- Chart Configurations ---
+            const ctxSkill = document.getElementById('skillMasteryChart');
+            if (ctxSkill) {
+                 skillChartInstance = new Chart(ctxSkill, {
+                    type: 'radar', data: skillMasteryData,
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                        scales: { r: { angleLines: { color: themeColors.gridColor }, grid: { color: themeColors.gridColor }, pointLabels: { color: themeColors.secondaryText, font: { size: 11 } }, suggestedMin: 0, suggestedMax: 100, ticks: { color: themeColors.secondaryText, backdropColor: 'transparent' } } } } });
+            }
+
+            const ctxProgress = document.getElementById('progressOverTimeChart');
+             if (ctxProgress) {
+                  progressChartInstance = new Chart(ctxProgress, {
+                    type: 'line', data: progressOverTimeData,
+                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, suggestedMax: 20, grid: { color: themeColors.gridColor }, ticks: { color: themeColors.secondaryText } }, x: { grid: { display: false }, ticks: { color: themeColors.secondaryText } } } } });
+             }
+
+             const ctxCompletion = document.getElementById('completionRateChart');
+             if (ctxCompletion) {
+                 completionChartInstance = new Chart(ctxCompletion, {
+                    type: 'bar', data: completionRateData,
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, suggestedMax: 100, grid: { color: themeColors.gridColor }, ticks: { color: themeColors.secondaryText, callback: function(value) { return value + '%' } } }, x: { grid: { display: false }, ticks: { color: themeColors.secondaryText } } } } });
+            }
+        }
+        
+        // Initialize charts when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCharts();
+        });
+        
+        // Re-initialize charts when theme is changed
+        document.addEventListener('themeChanged', () => {
+            setTimeout(initializeCharts, 50);
+        });
+    </script>
+</body>
+</html>

@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
+    <title>Login - VRise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+=======
     <title>Login - EnginSync</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
     <style>
         /* --- Theme Variables (RCB Theme) --- */
         :root {
@@ -15,7 +23,12 @@
             --bg-secondary: #f5f5f5;
             --bg-accent: #111111;
             --text-primary: #111111;
+<<<<<<< HEAD
+            --text-secondary: #ffffff; /* White text for specific uses */
+             --text-muted: #555555;     /* Muted text color */
+=======
             --text-secondary: #ffffff;
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
             --accent-red: #D81B27;
             --accent-gold: #FFC72C;
             --accent-black: #111111;
@@ -24,24 +37,38 @@
             --success-color: #28a745;
             --error-color: #dc3545;
             --border-color: #e0e0e0;
+<<<<<<< HEAD
+
+            /* Component specific */
+=======
             
             /* Other variables */
             --hero-bg: var(--accent-red);
             --hero-text: var(--text-secondary);
             --hero-highlight: var(--accent-gold);
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
             --link-color: var(--accent-red);
             --link-hover-color: var(--accent-gold);
             --button-primary-bg: var(--accent-gold);
             --button-primary-text: var(--accent-black);
             --button-primary-hover-bg: #e6b325;
             --navbar-bg: var(--accent-black);
+<<<<<<< HEAD
+            --navbar-link-color: #f0f0f0; /* Lighter text for navbar */
+=======
             --navbar-link-color: var(--text-secondary);
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
             --navbar-link-hover-color: var(--accent-gold);
             --navbar-logo-color: var(--accent-gold);
             --footer-bg: var(--accent-black);
             --footer-text-color: var(--bg-secondary);
             --footer-link-color: var(--accent-gold);
             --footer-link-hover-color: var(--text-secondary);
+<<<<<<< HEAD
+            --theme-toggle-color-light: var(--accent-gold);
+            --theme-toggle-hover-light: var(--accent-red);
+=======
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
         }
 
         body.dark-mode {
@@ -51,12 +78,24 @@
             --bg-accent: #000000;
             --text-primary: #f0f0f0;
             --text-secondary: #cccccc;
+<<<<<<< HEAD
+             --text-muted: #aaaaaa;
+=======
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
             --accent-red: #ff4d4d;
             --accent-gold: #FFD700;
             --accent-black: #ffffff;
             --shadow-color: rgba(0, 0, 0, 0.3);
             --shadow-color-glow: rgba(255, 77, 77, 0.2);
             --border-color: #444444;
+<<<<<<< HEAD
+
+            /* Component specific dark */
+            --link-color: var(--accent-gold);
+            --link-hover-color: var(--accent-red);
+            --button-primary-bg: var(--accent-gold);
+            --button-primary-text: #111111; /* Keep dark text on gold */
+=======
             
             /* Other variables remain the same for dark mode */
             --hero-bg: var(--bg-accent);
@@ -66,6 +105,7 @@
             --link-hover-color: var(--accent-gold);
             --button-primary-bg: var(--accent-gold);
             --button-primary-text: #111111;
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
             --button-primary-hover-bg: #e6b325;
             --navbar-bg: var(--bg-accent);
             --navbar-link-color: var(--text-primary);
@@ -75,10 +115,24 @@
             --footer-text-color: #aaaaaa;
             --footer-link-color: var(--accent-gold);
             --footer-link-hover-color: var(--text-primary);
+<<<<<<< HEAD
+            --theme-toggle-color-dark: var(--accent-red);
+            --theme-toggle-hover-dark: var(--accent-gold);
+=======
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
         }
 
         /* --- Global Styles --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+<<<<<<< HEAD
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
+=======
         body { 
             font-family: 'Poppins', sans-serif; 
             line-height: 1.6; 
@@ -86,6 +140,7 @@
             color: var(--text-primary); 
             scroll-behavior: smooth; 
             transition: background-color 0.3s ease, color 0.3s ease; 
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
             overflow-x: hidden;
             min-height: 100vh;
             display: flex;
@@ -96,6 +151,129 @@
         a:hover { color: var(--link-hover-color); }
         p { margin-bottom: 1em; color: var(--text-primary); }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+<<<<<<< HEAD
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+        .btn-primary {
+            background-color: var(--button-primary-bg);
+            color: var(--button-primary-text);
+        }
+        .btn-primary:hover {
+            background-color: var(--button-primary-hover-bg);
+            color: var(--button-primary-text);
+            box-shadow: 0 6px 15px var(--shadow-color);
+            transform: translateY(-2px);
+        }
+
+        /* --- Header/Navbar --- */
+        .navbar {
+            background-color: var(--navbar-bg);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0; left: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 12px var(--shadow-color);
+            transition: background-color 0.3s ease;
+        }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .navbar .logo { font-size: 1.8em; font-weight: 700; color: var(--navbar-logo-color); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); transition: color 0.3s ease; }
+        .navbar .nav-links ul { list-style: none; display: flex; align-items: center; }
+        .navbar .nav-links ul li { margin-left: 25px; }
+        .navbar .nav-links ul li a { color: var(--navbar-link-color); font-weight: 500; padding-bottom: 5px; position: relative; transition: color 0.3s ease; }
+        .navbar .nav-links ul li a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--accent-gold); transition: width 0.3s ease; }
+        .navbar .nav-links ul li a:hover { color: var(--navbar-link-hover-color); }
+        .navbar .nav-links ul li a:hover::after { width: 100%; }
+
+        /* Emoji Theme Toggle Button */
+        .theme-toggle-button {
+            background: none;
+            border: none; /* No border */
+            color: var(--theme-toggle-color-light); /* Use variable */
+            font-size: 1.5em; /* Emoji size */
+            padding: 0; /* Remove padding */
+            border-radius: 0;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            line-height: 1;
+            margin-left: 20px;
+            width: auto;
+            height: auto;
+            display: flex; /* Added for alignment */
+            align-items: center; /* Added for alignment */
+        }
+         body.dark-mode .theme-toggle-button { color: var(--theme-toggle-color-dark); }
+        .theme-toggle-button:hover {
+             color: var(--theme-toggle-hover-light); /* Use variable */
+         }
+        body.dark-mode .theme-toggle-button:hover {
+             color: var(--theme-toggle-hover-dark); /* Use variable */
+         }
+
+
+        /* --- Login Form Styles --- */
+        .auth-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 100px 20px 40px; }
+        .auth-card {
+            width: 100%; max-width: 450px; background: var(--bg-primary);
+            border-radius: 15px; box-shadow: 0 10px 30px var(--shadow-color);
+            padding: 40px; text-align: center; border: 1px solid var(--border-color);
+            position: relative; overflow: hidden;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .auth-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--accent-red), var(--accent-gold)); }
+        .auth-card h2 { color: var(--text-primary); margin-bottom: 30px; font-size: 2em; }
+        .form-group { margin-bottom: 25px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-primary); }
+        .form-group input { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-secondary); color: var(--text-primary); font-size: 1em; transition: all 0.3s ease; }
+        .form-group input:focus { outline: none; border-color: var(--accent-gold); box-shadow: 0 0 0 2px var(--shadow-color-glow); }
+        .auth-footer { margin-top: 30px; font-size: 0.9em; color: var(--text-muted); }
+        .auth-footer a { font-weight: 600; color: var(--link-color); }
+        .auth-footer a:hover { color: var(--link-hover-color); }
+
+        /* Flash messages styling */
+        .flash-messages { list-style: none; padding: 0; margin-bottom: 20px; }
+        .flash-messages li {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        .flash-messages .error { background-color: rgba(220, 53, 69, 0.1); color: var(--error-color); border: 1px solid rgba(220, 53, 69, 0.3); }
+        .flash-messages .success { background-color: rgba(40, 167, 69, 0.1); color: var(--success-color); border: 1px solid rgba(40, 167, 69, 0.3); }
+        .flash-messages .info { background-color: rgba(23, 162, 184, 0.1); color: #17a2b8; border: 1px solid rgba(23, 162, 184, 0.3); }
+        .flash-messages .warning { background-color: rgba(255, 193, 7, 0.1); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.3); }
+
+        /* --- Footer --- */
+        footer { background-color: var(--footer-bg); color: var(--footer-text-color); padding: 30px 0; margin-top: auto; transition: background-color 0.3s ease; }
+        footer .container { display: flex; justify-content: space-between; align-items: center; }
+        footer .copyright { font-size: 0.9em; }
+        footer .footer-links { display: flex; list-style: none; }
+        footer .footer-links li { margin-left: 20px; }
+        /* Removed specific links styling as links are removed */
+
+        /* Responsive */
+        @media (max-width: 768px) {
+             .auth-card { padding: 30px 20px; }
+             footer .container { flex-direction: column; text-align: center; }
+             footer .footer-links { margin-top: 15px; justify-content: center; }
+              /* Basic mobile nav hide, needs toggle logic if complex */
+               .navbar .nav-links ul { display: none; }
+         }
+          @media (max-width: 480px) {
+               h2 {font-size: 1.6em;}
+               .btn { padding: 10px 24px;}
+           }
+=======
         .btn { 
             display: inline-block; 
             padding: 12px 28px; 
@@ -332,17 +510,30 @@
                 margin-left: 0;
             }
         }
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
     </style>
 </head>
 <body>
     <header class="navbar">
         <div class="container">
+<<<<<<< HEAD
+             <a href="{{ url_for('home') }}" class="logo">VRise</a>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+                    <li>
+                        <button id="theme-toggle" class="theme-toggle-button" aria-label="Toggle theme">
+                            </button>
+                    </li>
+=======
             <a href="home.html" class="logo">EnginSync</a>
             <nav class="nav-links">
                 <ul>
                     <li><a href="home.html">Home</a></li>
                     <li><a href="signup.html">Sign Up</a></li>
                     <li><button id="theme-toggle" class="theme-toggle-button" aria-label="Toggle theme">🌓</button></li>
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
                 </ul>
             </nav>
         </div>
@@ -351,7 +542,22 @@
     <main class="auth-container">
         <div class="auth-card">
             <h2>Welcome Back</h2>
+<<<<<<< HEAD
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <ul class="flash-messages">
+                {% for category, message in messages %}
+                  <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+
+            <form id="login-form" method="POST" action="{{ url_for('login') }}">
+=======
             <form id="login-form">
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
@@ -361,12 +567,18 @@
                     <input type="password" id="password" name="password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Log In</button>
+<<<<<<< HEAD
+                 </form>
+            <div class="auth-footer">
+                 <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
+=======
                 <div id="error-message" class="error-message"></div>
                 <div id="success-message" class="success-message"></div>
             </form>
             <div class="auth-footer">
                 <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
                 <p><a href="forgot-password.html">Forgot Password?</a></p>
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
             </div>
         </div>
     </main>
@@ -374,6 +586,12 @@
     <footer>
         <div class="container">
             <div class="copyright">
+<<<<<<< HEAD
+                 &copy; <span id="current-year"></span> VRise
+            </div>
+            <ul class="footer-links">
+                 </ul>
+=======
                 &copy; 2025 EnginSync. All rights reserved.
             </div>
             <ul class="footer-links">
@@ -381,10 +599,55 @@
                 <li><a href="#">Terms of Service</a></li>
                 <li><a href="#">Contact Us</a></li>
             </ul>
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
         </div>
     </footer>
 
     <script>
+<<<<<<< HEAD
+        // Theme Toggle Functionality (Keep this JS)
+        const body = document.body;
+        const themeToggleButton = document.getElementById('theme-toggle');
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                if(themeToggleButton) themeToggleButton.innerHTML = '☀️'; // Sun emoji
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                if(themeToggleButton) themeToggleButton.innerHTML = '🌙'; // Moon emoji
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Check for saved theme preference or use device preference
+        const currentTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let initialTheme = 'light'; // Default to light
+
+        if (currentTheme) {
+            initialTheme = currentTheme;
+        } else if (prefersDark) {
+            initialTheme = 'dark';
+        }
+        setTheme(initialTheme); // Apply initial theme & emoji
+
+        if (themeToggleButton) {
+             themeToggleButton.addEventListener('click', () => {
+                 setTheme(body.classList.contains('dark-mode') ? 'light' : 'dark');
+             });
+         }
+
+        // Remove the frontend login form submission JS block
+        // The form now submits directly to the Flask backend
+
+        // Update copyright year dynamically
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
+=======
         // Theme Toggle Functionality
         const body = document.body;
         const themeToggleButton = document.getElementById('theme-toggle');
@@ -459,3 +722,4 @@
     </script>
 </body>
 </html>
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766

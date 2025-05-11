@@ -3,6 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
+    <title>EnginSync Multi-Function App</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- Base Theme Variables (RCB Theme) --- */
+        :root {
+            /* Light Mode - RCB Inspired */
+            --bg-primary: #ffffff;          /* White */
+            --bg-secondary: #f1f1f1;       /* Very Light Grey */
+            --card-bg: #ffffff;           /* White Cards */
+            --text-primary: #000000;       /* Black Text */
+            --text-secondary: #444444;      /* Dark Grey Text */
+            --accent-red: #D81B27;        /* RCB Red */
+            --accent-gold: #FFC72C;       /* RCB Gold */
+            --accent-black: #000000;      /* Pure Black */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --success-color: #28a745;
+            --error-color: #B00020;        /* Material Design Error Red */
+            --border-color: #dcdcdc;       /* Lighter Grey Border */
+            --input-bg: #ffffff;
+            --input-border: #cccccc;
+            --placeholder-bg: #e9ecef;     /* For placeholders */
+        }
+
+        body.dark-mode {
+             /* Dark Mode - RCB Inspired */
+             --bg-primary: #1a1a1a;         /* Very Dark Grey */
+             --bg-secondary: #0f0f0f;      /* Near Black */
+             --card-bg: #1f1f1f;           /* Dark Card Background */
+             --text-primary: #f0f0f0;       /* Light Grey/White Text */
+             --text-secondary: #aaaaaa;      /* Lighter Grey Text */
+             --accent-red: #E52531;        /* Slightly Brighter Red */
+             --accent-gold: #FFD700;       /* Keep Gold Bright */
+             --accent-black: #000000;      /* Pure Black */
+             --shadow-color: rgba(0, 0, 0, 0.5);
+             --success-color: #4caf50;
+             --error-color: #cf6679;        /* Material Design Dark Error */
+             --border-color: #333333;       /* Darker Border */
+             --input-bg: #2c2c2c;
+             --input-border: #555555;
+             --placeholder-bg: #343a40;    /* Dark Placeholder */
+=======
     <title>12th Man - Play Bold</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,12 +118,351 @@
             /* Back button colors remain consistent due to direct var usage */
             --button-submit-bg: var(--rcb-gold);
             --button-submit-text: var(--text-on-accent);
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
         }
 
         /* --- Global Styles --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
+<<<<<<< HEAD
+            line-height: 1.6;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 16px; /* Base font size */
+        }
+        .container {
+             max-width: 1400px; /* Wider container */
+             margin: 0 auto;
+             position: relative;
+             padding-top: 60px; /* Space for positioned buttons */
+        }
+        h1, h2, h3, h4, h5, h6 { font-weight: 600; line-height: 1.3; color: var(--text-primary); margin-bottom: 0.75em; transition: color 0.3s ease;}
+
+        h1 { /* Main App Title */
+            font-size: 2.2rem;
+            margin-bottom: 1.2em;
+            color: var(--accent-red);
+            text-align: center;
+            font-weight: 700;
+        }
+        h2 { /* Component Titles */
+            font-size: 1.4rem;
+            margin-bottom: 1em;
+            color: var(--accent-red);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 i { /* Icon color matches title */
+           color: inherit;
+           font-size: 1.1em;
+        }
+
+        h3 { font-size: 1.1rem; color: var(--text-primary); margin-bottom: 10px; font-weight: 500;}
+
+        a { text-decoration: none; color: var(--accent-gold); transition: color 0.3s ease; font-weight: 500;}
+        a:hover { color: var(--accent-red); }
+         body.dark-mode a { color: var(--accent-gold); }
+         body.dark-mode a:hover { color: var(--accent-red); }
+
+        p { margin-bottom: 1em; color: var(--text-secondary); font-size: 0.95rem;}
+
+        /* --- Buttons --- */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 25px; font-weight: 600; letter-spacing: 0.5px; transition: all 0.3s ease; cursor: pointer; border: none; box-shadow: 0 3px 8px var(--shadow-color); font-size: 0.95rem; line-height: 1.2; /* Ensure consistent line height */}
+        .btn-primary { background-color: var(--accent-gold); color: var(--accent-black); } /* Gold Primary */
+        .btn-primary:hover { background-color: #e6b325; transform: translateY(-2px); box-shadow: 0 5px 12px var(--shadow-color); }
+        .btn-secondary { background-color: var(--accent-red); color: white; } /* Red Secondary */
+        .btn-secondary:hover { background-color: #c01822; transform: translateY(-2px); box-shadow: 0 5px 12px var(--shadow-color); }
+
+        /* Small Button Modifier */
+        .btn-small {
+            padding: 8px 18px;  /* Reduced padding */
+            font-size: 0.85rem; /* Smaller font */
+            border-radius: 20px; /* Adjust radius if needed */
+            letter-spacing: 0.3px; /* Adjust letter spacing */
+        }
+
+        /* Icon Button */
+        .btn-icon { background: none; border: none; font-size: 1.2rem; color: var(--text-secondary); cursor: pointer; padding: 8px; transition: color 0.3s ease, background-color 0.3s ease; border-radius: 50%; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center;}
+        .btn-icon:hover { color: var(--accent-red); background-color: rgba(0,0,0,0.05); }
+         body.dark-mode .btn-icon:hover { color: var(--accent-red); background-color: rgba(255,255,255,0.1); }
+        .btn-icon:disabled { opacity: 0.5; cursor: not-allowed; background-color: transparent !important; }
+        .btn-icon.active { background-color: var(--accent-red); color: white; }
+        .btn-icon.active:hover { background-color: #c01822; }
+         body.dark-mode .btn-icon.active { background-color: var(--accent-red); color: white; }
+         body.dark-mode .btn-icon.active:hover { background-color: #ff6b6b; }
+
+        /* Back Button */
+        .btn-back { position: absolute; top: 20px; left: 20px; background: none; border: 1px solid var(--border-color); color: var(--text-secondary); width: 40px; height: 40px; padding: 0; border-radius: 50%; font-size: 1rem; line-height: 1; display: inline-flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 10; }
+        .btn-back:hover { background-color: var(--card-bg); border-color: var(--text-secondary); color: var(--text-primary); }
+        body.dark-mode .btn-back { border-color: var(--border-color); color: var(--text-secondary); }
+        body.dark-mode .btn-back:hover { background-color: var(--card-bg); border-color: var(--text-primary); color: var(--text-primary); }
+
+        /* Theme Toggle Button */
+         .theme-toggle-container { position: absolute; top: 20px; right: 20px; z-index: 10; }
+         .theme-toggle { background: none; border: none; color: var(--accent-gold); width: auto; height: auto; padding: 5px; border-radius: 0; cursor: pointer; transition: color 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 1.6em; /* Larger emoji */ }
+         .theme-toggle:hover { background: none; color: var(--accent-black); }
+         body.dark-mode .theme-toggle { color: var(--accent-red); border: none; }
+         body.dark-mode .theme-toggle:hover { background: none; color: white; }
+
+        /* --- App Grid Layout --- */
+        .app-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Default: 2 columns */
+            gap: 30px;
+        }
+
+        /* --- App Card Style --- */
+        .app-card {
+            background-color: var(--card-bg);
+            padding: 25px 30px;
+            border-radius: 16px; /* Softer radius */
+            box-shadow: 0 5px 15px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Column Spanning --- */
+        #video-card,
+        #tts-card {
+            grid-column: span 2; /* Make these span both columns */
+        }
+
+
+        /* --- Input & Form Elements --- */
+        label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-primary); font-size: 0.9rem; }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(255, 199, 44, 0.2); /* Gold focus ring */
+        }
+        select { cursor: pointer; }
+        /* Style file input label as a button */
+        input[type="file"] { display: none; } /* Hide default */
+        .file-upload-label { display: inline-block; /* Align with text */ margin-right: 10px; vertical-align: middle; /* Align label with text */ }
+        #pdf-filename { font-size: 0.9rem; color: var(--text-secondary); font-style: italic; vertical-align: middle; }
+        .error-message { color: var(--error-color); font-size: 0.85em; margin-top: 8px; font-weight: 500;}
+        .loading-indicator { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; color: var(--text-secondary); }
+        .loading-indicator i { font-size: 1.5em; color: var(--accent-red);}
+
+        /* --- Component Specific Styles --- */
+
+        /* PDF Summarize */
+        .summary-container {
+             margin-top: 20px;
+             padding: 15px;
+             border: 1px dashed var(--border-color);
+             border-radius: 8px;
+             background-color: var(--bg-secondary);
+             min-height: 100px;
+        }
+        
+        .summary-text {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .summary-stats {
+            color: var(--accent-red);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: right;
+            border-top: 1px solid var(--border-color);
+            padding-top: 8px;
+            margin-top: 10px;
+        }
+
+        /* Video Finder */
+        .prompt-suggestions { 
+            margin: 10px 0 15px 0; 
+            font-size: 0.9rem; 
+            color: var(--text-primary); 
+            font-weight: 500;
+        }
+        .suggestion-btn { 
+          display: inline-block; 
+          margin-right: 8px; 
+          margin-bottom: 8px;
+          padding: 5px 10px; 
+          background: var(--bg-primary); 
+          border: 1px solid var(--border-color); 
+          border-radius: 15px;
+          font-size: 0.85rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          color: var(--text-primary);
+          font-weight: 500;
+        }
+        
+        body.dark-mode .suggestion-btn {
+          background-color: rgba(255, 199, 44, 0.15);
+          border-color: var(--accent-gold);
+          color: var(--accent-gold);
+        }
+        .suggestion-btn:hover { 
+          background: var(--accent-gold); 
+          color: var(--accent-black);
+          border-color: var(--accent-gold);
+          transform: translateY(-2px);
+          box-shadow: 0 3px 8px var(--shadow-color);
+        }
+        
+        body.dark-mode .suggestion-btn:hover {
+          background-color: var(--accent-gold);
+          color: var(--accent-black);
+          border-color: var(--accent-gold);
+        }
+        
+        /* Video Results Style */
+        .video-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .video-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+        
+        .video-thumbnail {
+            flex: 0 0 120px;
+            margin-right: 15px;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+        
+        .video-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .video-title {
+            margin: 0 0 5px 0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        
+        .video-title a {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        
+        .video-title a:hover {
+            color: var(--accent-red);
+        }
+        
+        .video-channel {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Media query for mobile */
+        @media (max-width: 576px) {
+            .video-item {
+                flex-direction: column;
+            }
+            
+            .video-thumbnail {
+                flex: none;
+                margin-right: 0;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+        }
+
+        /* TTS Reader */
+        #pdf-viewer-placeholder {
+            height: 250px; /* Larger placeholder */
+            background-color: var(--placeholder-bg);
+            border: 1px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            text-align: center;
+            padding: 10px;
+        }
+         #pdf-viewer-placeholder span { color: var(--text-secondary); font-style: italic;}
+         #highlight-line { background-color: transparent; transition: background-color 0.3s ease; padding: 2px 0; font-style: italic; color: var(--text-secondary); font-size: 0.9rem;}
+         #highlight-line.highlighted { background-color: rgba(255, 199, 44, 0.3); /* Gold highlight */ }
+         body.dark-mode #highlight-line.highlighted { background-color: rgba(255, 215, 0, 0.2); /* Darker gold highlight */ }
+         .tts-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+         .tts-controls select { flex-grow: 1; min-width: 100px; margin-bottom: 0; } /* Remove bottom margin from select */
+
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 992px) { /* Tablet and below */
+            .app-grid {
+                grid-template-columns: 1fr; /* Stack everything into a single column */
+            }
+            #video-card,
+            #tts-card {
+                grid-column: auto; /* Reset column span */
+            }
+        }
+        @media (max-width: 768px) {
+             .container { padding-top: 70px; /* More space */ }
+             .btn-back { top: 15px; left: 15px; }
+             .theme-toggle-container { top: 15px; right: 15px; }
+             h1 { font-size: 2rem; }
+             h2 { font-size: 1.3rem; }
+         }
+         @media (max-width: 576px) {
+             body { padding: 15px; }
+             .container { padding-top: 60px; }
+             .btn-back { top: 10px; left: 10px; width: 36px; height: 36px; }
+             .theme-toggle-container { top: 10px; right: 10px; }
+             .theme-toggle { font-size: 1.4em; }
+             .app-card { padding: 15px 20px; border-radius: 12px;}
+             h1 { font-size: 1.8rem; margin-bottom: 1em;}
+             h2 { font-size: 1.2rem; }
+             .btn { padding: 10px 20px; font-size: 0.9rem;}
+             .btn-small { padding: 6px 15px; font-size: 0.8rem; } /* Adjust small button on mobile */
+             input[type="text"], select { padding: 8px 12px; font-size: 0.9rem;}
+             .video-list img { width: 100px; height: 56px; } /* Smaller thumbnails on mobile */
+             #pdf-viewer-placeholder { height: 200px; }
+         }
+=======
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
@@ -180,10 +567,580 @@
             .theme-toggle-button { width: 34px; height: 34px; font-size: 1.1rem; }
             .headlines h1 { font-size: 1.6rem; } .headlines p { font-size: 0.95rem; } .action-box h2 { font-size: 1.2rem; }
         }
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
 
     </style>
 </head>
 <body>
+<<<<<<< HEAD
+    <div class="container">
+        <a href="{{ back_url or url_for('dashboard') }}" class="btn-back" aria-label="Go Back">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+
+        <div class="theme-toggle-container">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                </button>
+        </div>
+
+        <h1>EnginSync Multi-Function</h1>
+
+        <div class="app-grid">
+
+            <div class="app-card" id="upload-card">
+                <h2><i class="fas fa-file-upload"></i> Upload PDF</h2>
+                <p>Select a PDF file for processing.</p>
+                <div style="margin-top: auto;"> <input type="file" id="pdf-upload" accept=".pdf">
+                    <label for="pdf-upload" class="btn btn-primary btn-small file-upload-label">Browse PDF</label> <span id="pdf-filename">No file selected.</span>
+                    <div id="pdf-error" class="error-message" style="display: none;">Please select a valid .pdf file.</div>
+                </div>
+            </div>
+
+            <div class="app-card" id="summary-card">
+                <h2><i class="fas fa-file-alt"></i> Summarize PDF</h2>
+                <p>Generate a concise summary of the uploaded document.</p>
+                 <div id="summary-error" class="error-message" style="display: none;">Please upload a PDF first.</div>
+                <div id="loading-spinner" class="loading-indicator" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i> Processing...
+                </div>
+                <div id="summary-output" class="summary-container" style="display: none;">
+                    </div>
+                 <button id="summarize-btn" class="btn btn-primary" style="margin-top: 15px;">Summarize PDF</button> </div>
+
+            <div class="app-card" id="video-card">
+                <h2><i class="fas fa-video"></i> Find Concept Videos</h2>
+                 <label for="concept-input">Enter Concept or Topic:</label>
+                 <input type="text" id="concept-input" placeholder="e.g., Fourier Transform">
+                 <div class="prompt-suggestions">
+                     Suggestions:
+                     <button class="suggestion-btn">Computer Networks</button>
+                     <button class="suggestion-btn">DBMS</button>
+                     <button class="suggestion-btn">Object Oriented Programming</button>
+                 </div>
+                 <button id="find-videos-btn" class="btn btn-primary">Find Related Videos</button>
+                 <div id="video-results" style="margin-top: 20px; display: none;">
+                     <h3>Video Results:</h3>
+                     <ul class="video-list">
+                         </ul>
+                 </div>
+            </div>
+
+            <div class="app-card" id="tts-card">
+                <h2><i class="fas fa-volume-up"></i> Listen to PDF</h2>
+                <p>Listen to the PDF document you uploaded. The text will be read aloud with highlighting.</p>
+                <div id="pdf-viewer" style="width: 100%; height: 450px; overflow-y: auto; border: 1px solid var(--border-color); margin-bottom: 15px; background-color: var(--card-bg); border-radius: 8px; display: none;">
+                </div>
+                <div id="pdf-viewer-placeholder">
+                    <span>Upload a PDF in the section above to view and listen to its content.</span>
+                </div>
+                <div id="sentence-container" style="margin-top: 15px; min-height: 60px; border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; background-color: var(--bg-secondary); display: none;">
+                    <p id="highlight-line">PDF text will appear here when reading aloud.</p>
+                </div>
+                <div class="tts-controls">
+                    <button id="read-aloud-btn" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 10px;">Read PDF Aloud</button>
+                    <button id="tts-pause" class="btn-icon" title="Pause"><i class="fas fa-pause"></i></button>
+                    <button id="tts-stop" class="btn-icon" title="Stop"><i class="fas fa-stop"></i></button>
+                </div>
+            </div>
+
+        </div> </div> <script>
+        // --- Theme Toggle Functionality ---
+        const body = document.body;
+        const themeToggleButton = document.getElementById('theme-toggle');
+
+        function setTheme(theme) {
+            if(!themeToggleButton) return; // Exit if button not found
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggleButton.innerHTML = '☀️'; // Sun emoji
+                localStorage.setItem('theme', 'dark');
+                themeToggleButton.setAttribute('title', 'Switch to light mode');
+            } else {
+                body.classList.remove('dark-mode');
+                themeToggleButton.innerHTML = '🌙'; // Moon emoji
+                localStorage.setItem('theme', 'light');
+                themeToggleButton.setAttribute('title', 'Switch to dark mode');
+            }
+        }
+        const currentTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let initialTheme = 'light';
+        if (currentTheme) { initialTheme = currentTheme; } else if (prefersDark) { initialTheme = 'dark'; }
+        setTheme(initialTheme); // Apply initial theme
+
+        if (themeToggleButton) {
+             themeToggleButton.addEventListener('click', () => {
+                 setTheme(body.classList.contains('dark-mode') ? 'light' : 'dark');
+             });
+         }
+
+         // --- Mock Functionality ---
+
+         // State variable to track if PDF is "uploaded"
+         let isPdfUploaded = false;
+         let uploadedFileName = '';
+
+         // PDF Upload Simulation
+         const pdfUploadInput = document.getElementById('pdf-upload');
+         const pdfFilenameSpan = document.getElementById('pdf-filename');
+         const pdfErrorDiv = document.getElementById('pdf-error');
+         const pdfViewer = document.getElementById('pdf-viewer');
+         const pdfViewerPlaceholder = document.getElementById('pdf-viewer-placeholder');
+         const sentenceContainer = document.getElementById('sentence-container');
+
+         if(pdfUploadInput){
+             pdfUploadInput.addEventListener('change', function(event) {
+                 const file = event.target.files[0];
+                 if (file) {
+                     if (file.type === 'application/pdf') {
+                         uploadedFileName = file.name;
+                         pdfFilenameSpan.textContent = uploadedFileName;
+                         pdfErrorDiv.style.display = 'none';
+                         isPdfUploaded = true;
+                         
+                         // Upload the PDF file to the server and display it in the TTS section
+                         const formData = new FormData();
+                         formData.append('pdf-file', file);
+                         formData.append('page', 0); // Start with first page
+                         
+                         // Show loading indicator
+                         pdfViewerPlaceholder.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing PDF...';
+                         
+                         fetch('/upload-pdf', {
+                             method: 'POST',
+                             body: formData
+                         })
+                         .then(response => response.json())
+                         .then(data => {
+                             if (data.success) {
+                                 // Show PDF viewer and hide placeholder
+                                 pdfViewer.style.display = 'block';
+                                 pdfViewerPlaceholder.style.display = 'none';
+                                 sentenceContainer.style.display = 'block';
+                                 
+                                 // Store total pages
+                                 window.totalPages = data.total_pages;
+                                 window.currentPage = 0;
+                                 
+                                 // Create page navigation controls if multiple pages
+                                 if (window.totalPages > 1) {
+                                     const pageNav = document.createElement('div');
+                                     pageNav.className = 'page-navigation';
+                                     pageNav.style.margin = '10px 0';
+                                     pageNav.style.textAlign = 'center';
+                                     
+                                     const prevBtn = document.createElement('button');
+                                     prevBtn.className = 'btn-icon';
+                                     prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                                     prevBtn.disabled = true;
+                                     prevBtn.id = 'prev-page';
+                                     
+                                     const pageInfo = document.createElement('span');
+                                     pageInfo.textContent = `Page 1 of ${window.totalPages}`;
+                                     pageInfo.style.margin = '0 10px';
+                                     pageInfo.id = 'page-info';
+                                     
+                                     const nextBtn = document.createElement('button');
+                                     nextBtn.className = 'btn-icon';
+                                     nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                                     nextBtn.id = 'next-page';
+                                     
+                                     pageNav.appendChild(prevBtn);
+                                     pageNav.appendChild(pageInfo);
+                                     pageNav.appendChild(nextBtn);
+                                     
+                                     // Add page navigation after PDF viewer
+                                     pdfViewer.parentNode.insertBefore(pageNav, pdfViewer.nextSibling);
+                                     
+                                     // Add event listeners for page navigation
+                                     prevBtn.addEventListener('click', () => {
+                                         if (window.currentPage > 0) {
+                                             navigateToPage(window.currentPage - 1);
+                                         }
+                                     });
+                                     
+                                     nextBtn.addEventListener('click', () => {
+                                         if (window.currentPage < window.totalPages - 1) {
+                                             navigateToPage(window.currentPage + 1);
+                                         }
+                                     });
+                                 }
+                                 
+                                 // Display the PDF image
+                                 pdfViewer.innerHTML = `<img src="${data.image}" style="width: 100%;">`;
+                                 
+                                 // Store sentences for TTS
+                                 window.pdfSentences = data.sentences;
+                                 window.currentSentenceIndex = 0;
+                                 
+                                 // Update the sentence container with the first sentence
+                                 if (data.sentences && data.sentences.length > 0) {
+                                    document.getElementById('highlight-line').textContent = data.sentences[0];
+                                 }
+                             } else {
+                                 pdfErrorDiv.textContent = data.error || 'Failed to process PDF.';
+                                 pdfErrorDiv.style.display = 'block';
+                                 pdfViewerPlaceholder.innerHTML = 'Error processing PDF. Please try again.';
+                             }
+                         })
+                         .catch(error => {
+                             console.error('Error:', error);
+                             pdfErrorDiv.textContent = 'An error occurred while processing the file.';
+                             pdfErrorDiv.style.display = 'block';
+                             pdfViewerPlaceholder.innerHTML = 'Error processing PDF. Please try again.';
+                         });
+                         
+                     } else {
+                         pdfFilenameSpan.textContent = 'Invalid file type. Please select a PDF.';
+                         pdfErrorDiv.style.display = 'block';
+                         isPdfUploaded = false;
+                     }
+                 }
+             });
+         }
+         
+        // Function to navigate to a specific page
+        function navigateToPage(pageNum) {
+            if (!isPdfUploaded) return;
+            
+            // Show loading indicator
+            pdfViewer.innerHTML = '<div style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Loading page...</div>';
+            
+            const formData = new FormData();
+            formData.append('page', pageNum);
+            
+            fetch('/get-pdf-page', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.currentPage = pageNum;
+                    
+                    // Update navigation buttons
+                    const prevBtn = document.getElementById('prev-page');
+                    const nextBtn = document.getElementById('next-page');
+                    const pageInfo = document.getElementById('page-info');
+                    
+                    if (prevBtn) prevBtn.disabled = pageNum === 0;
+                    if (nextBtn) nextBtn.disabled = pageNum === window.totalPages - 1;
+                    if (pageInfo) pageInfo.textContent = `Page ${pageNum + 1} of ${window.totalPages}`;
+                    
+                    // Update PDF viewer with new page
+                    pdfViewer.innerHTML = `<img src="${data.image}" style="width: 100%;">`;
+                    
+                    // Update sentences for TTS
+                    window.pdfSentences = data.sentences;
+                    window.currentSentenceIndex = 0;
+                    
+                    // Update sentence display
+                    if (data.sentences && data.sentences.length > 0) {
+                        document.getElementById('highlight-line').textContent = data.sentences[0];
+                    }
+                    
+                    // Stop any ongoing TTS
+                    if (audioElement) {
+                        audioElement.pause();
+                        audioElement.currentTime = 0;
+                        isPlaying = false;
+                        resetTTSButtons();
+                    }
+                } else {
+                    pdfViewer.innerHTML = `<div style="text-align: center; padding: 20px; color: var(--error-color);">
+                        <i class="fas fa-exclamation-triangle"></i> Error: ${data.error || 'Failed to load page'}
+                    </div>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                pdfViewer.innerHTML = `<div style="text-align: center; padding: 20px; color: var(--error-color);">
+                    <i class="fas fa-exclamation-triangle"></i> Error loading page
+                </div>`;
+            });
+        }
+
+        function clearHighlight() {
+            const highlightLine = document.getElementById('highlight-line');
+            if (highlightLine) {
+                highlightLine.classList.remove('highlighted');
+            }
+        }
+
+        function resetTTSButtons() {
+            const ttsPlayBtn = document.getElementById('read-aloud-btn');
+            const ttsPauseBtn = document.getElementById('tts-pause');
+            const ttsStopBtn = document.getElementById('tts-stop');
+            
+            if (ttsPlayBtn) ttsPlayBtn.disabled = false;
+            if (ttsPauseBtn) ttsPauseBtn.disabled = true;
+            if (ttsStopBtn) ttsStopBtn.disabled = true;
+        }
+
+        // Text-to-speech functionality
+        const readAloudBtn = document.getElementById('read-aloud-btn');
+        const ttsPauseBtn = document.getElementById('tts-pause');
+        const ttsStopBtn = document.getElementById('tts-stop');
+        const highlightLine = document.getElementById('highlight-line');
+
+        // Audio element for playing TTS
+        const audioElement = new Audio();
+        let isPlaying = false;
+
+        // Function to play the next sentence
+        function playNextSentence() {
+            if (!window.pdfSentences || window.currentSentenceIndex >= window.pdfSentences.length) {
+                resetTTSButtons();
+                return;
+            }
+            
+            const sentence = window.pdfSentences[window.currentSentenceIndex];
+            highlightLine.textContent = sentence;
+            highlightLine.classList.add('highlighted');
+            
+            // Generate speech for the current sentence
+            const formData = new FormData();
+            formData.append('text', sentence);
+            
+            fetch('/text-to-speech', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    audioElement.src = data.audio_url;
+                    audioElement.onended = function() {
+                        window.currentSentenceIndex++;
+                        clearHighlight();
+                        
+                        if (window.currentSentenceIndex < window.pdfSentences.length && isPlaying) {
+                            setTimeout(playNextSentence, 300); // Small delay between sentences
+                        } else {
+                            resetTTSButtons();
+                            isPlaying = false;
+                        }
+                    };
+                    
+                    audioElement.play();
+                } else {
+                    console.error('Error generating speech:', data.error);
+                    resetTTSButtons();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resetTTSButtons();
+            });
+        }
+        
+        // Start reading
+        if (readAloudBtn) {
+            readAloudBtn.addEventListener('click', () => {
+                if (!isPdfUploaded) {
+                    alert('Please upload a PDF first');
+                    return;
+                }
+                
+                isPlaying = true;
+                readAloudBtn.disabled = true;
+                ttsPauseBtn.disabled = false;
+                ttsStopBtn.disabled = false;
+                
+                // Start from the beginning
+                window.currentSentenceIndex = 0;
+                playNextSentence();
+            });
+        }
+        
+        // Pause reading
+        if (ttsPauseBtn) {
+            ttsPauseBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    audioElement.pause();
+                    isPlaying = false;
+                    ttsPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    ttsPauseBtn.title = 'Resume';
+                } else {
+                    audioElement.play();
+                    isPlaying = true;
+                    ttsPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    ttsPauseBtn.title = 'Pause';
+                }
+            });
+        }
+        
+        // Stop reading
+        if (ttsStopBtn) {
+            ttsStopBtn.addEventListener('click', () => {
+                audioElement.pause();
+                audioElement.currentTime = 0;
+                isPlaying = false;
+                resetTTSButtons();
+                clearHighlight();
+            });
+        }
+        
+        // Reset buttons initially
+        resetTTSButtons();
+
+        // Summarize PDF functionality
+        const summarizeBtn = document.getElementById('summarize-btn');
+        const summaryOutput = document.getElementById('summary-output');
+        const summaryError = document.getElementById('summary-error');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        
+        if (summarizeBtn) {
+            summarizeBtn.addEventListener('click', function() {
+                if (!isPdfUploaded) {
+                    summaryError.style.display = 'block';
+                    return;
+                }
+                
+                // Hide error and show loading
+                summaryError.style.display = 'none';
+                summaryOutput.style.display = 'none';
+                loadingSpinner.style.display = 'flex';
+                
+                // Create form data with summarization options
+                const formData = new FormData();
+                formData.append('method', 'ai'); // Use AI-based summarization
+                formData.append('sentences', 3); // Fallback to 3 sentences if extractive is used
+                
+                // Call the summarize endpoint
+                fetch('/summarize-pdf', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading
+                    loadingSpinner.style.display = 'none';
+                    
+                    if (data.success) {
+                        // Create formatted output
+                        const reductionText = data.reduction_percentage 
+                            ? `<div class="summary-stats">Reduced by ${data.reduction_percentage}%</div>` 
+                            : '';
+                        
+                        summaryOutput.innerHTML = `
+                            <div class="summary-text">${data.summary}</div>
+                            ${reductionText}
+                        `;
+                        summaryOutput.style.display = 'block';
+                    } else {
+                        summaryError.textContent = data.error || 'Failed to summarize PDF.';
+                        summaryError.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    loadingSpinner.style.display = 'none';
+                    summaryError.textContent = 'An error occurred while summarizing the PDF.';
+                    summaryError.style.display = 'block';
+                });
+            });
+        }
+         
+         // YouTube Video Search functionality
+         const conceptInput = document.getElementById('concept-input');
+         const findVideosBtn = document.getElementById('find-videos-btn');
+         const videoResults = document.getElementById('video-results');
+         const videoList = document.querySelector('.video-list');
+         const suggestionBtns = document.querySelectorAll('.suggestion-btn');
+         
+         // Function to search for videos
+         function searchVideos(concept) {
+             // Only proceed if we have a concept
+             if (!concept || concept.trim() === '') {
+                 alert('Please enter a concept or topic to search for');
+                 return;
+             }
+             
+             // Show loading state
+             videoList.innerHTML = '<li style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> Searching for videos...</li>';
+             videoResults.style.display = 'block';
+             
+             // Create form data
+             const formData = new FormData();
+             formData.append('concept', concept);
+             
+             // Call the search videos endpoint
+             fetch('/search-videos', {
+                 method: 'POST',
+                 body: formData
+             })
+             .then(response => response.json())
+             .then(data => {
+                 if (data.success && data.videos && data.videos.length > 0) {
+                     // Clear the loading indicator
+                     videoList.innerHTML = '';
+                     
+                     // Create video items with thumbnails
+                     data.videos.forEach(video => {
+                         const videoUrl = `https://www.youtube.com/watch?v=${video.video_id}`;
+                         const videoItem = document.createElement('li');
+                         videoItem.className = 'video-item';
+                         videoItem.innerHTML = `
+                             <div class="video-thumbnail">
+                                 <a href="${videoUrl}" target="_blank">
+                                     <img src="${video.thumbnail_url}" alt="${video.title}">
+                                 </a>
+                             </div>
+                             <div class="video-info">
+                                 <h4 class="video-title">
+                                     <a href="${videoUrl}" target="_blank">${video.title}</a>
+                                 </h4>
+                                 <p class="video-channel">${video.channel_title}</p>
+                             </div>
+                         `;
+                         videoList.appendChild(videoItem);
+                     });
+                 } else {
+                     // Show error or no results message
+                     videoList.innerHTML = '<li style="text-align: center;">No videos found or error occurred. Please try again.</li>';
+                 }
+             })
+             .catch(error => {
+                 console.error('Error:', error);
+                 videoList.innerHTML = '<li style="text-align: center;">Error fetching videos. Please try again later.</li>';
+             });
+         }
+         
+         // Add event listener to find videos button
+         if (findVideosBtn) {
+             findVideosBtn.addEventListener('click', function() {
+                 searchVideos(conceptInput.value);
+             });
+         }
+         
+         // Add event listeners to suggestion buttons
+         if (suggestionBtns) {
+             suggestionBtns.forEach(btn => {
+                 btn.addEventListener('click', function() {
+                     // Set the input value to the suggestion text
+                     conceptInput.value = this.textContent;
+                     // Trigger the search
+                     searchVideos(conceptInput.value);
+                 });
+             });
+         }
+         
+         // Allow search on Enter key in the concept input
+         if (conceptInput) {
+             conceptInput.addEventListener('keyup', function(event) {
+                 if (event.key === 'Enter') {
+                     searchVideos(conceptInput.value);
+                 }
+             });
+         }
+
+     </script>
+     <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+     <script src="https://files.bpcontent.cloud/2025/04/11/19/20250411192852-QG5OD9LK.js"></script>
+</body>
+</html>
+=======
 
     <header class="main-header">
         <div class="container">
@@ -272,3 +1229,4 @@
 
 </body>
 </html>
+>>>>>>> 7c6cdf441c6266ac6874efc5a6a6fc1b9beee766
